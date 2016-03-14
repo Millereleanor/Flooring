@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Flooring.Data
 {
-    public class CreateFile
+    class MinipulateFile
     {
     }
 }

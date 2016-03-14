@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Flooring.Data
+namespace Flooring.UI.Workflows
 {
-    public class ReadFile
+    public class EditWorkflow
     {
+        public void editWorkflow()
+        {
+            //
+        }
     }
 }
