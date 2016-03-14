@@ -8,10 +8,26 @@ namespace Flooring.UI.Ascii
 {
     public class LogoDisplay
     {
-        static void DisplayLogo()
+        public void DisplayLogoName()
         {
-            
+            Console.WriteLine(@"
+    #######           #         #######  #                                   ##
+  ##          ####  =====      #        # #   ##   ##   #  ##    ####       #
+  ##  =====# #====#  #         #======  # #  #  # #  #   ##  #  #====#   ####
+  ##       # #       #  #      #        #    #  # #  #   #      #       #   # 
+   ####### #  ####    ##       #      #  ###  ##   ##   #        ####    #####
 
+=================================================================================
+
+");
+
+
+
+        }
+
+        public void DisplayLogoPic()
+        {
+            Console.WriteLine();
         }
     }
 }

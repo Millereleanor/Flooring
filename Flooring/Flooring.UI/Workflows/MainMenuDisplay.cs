@@ -15,11 +15,15 @@ namespace Flooring.UI.Workflows
             do
             {
                 Console.Clear();
-                
+                LogoDisplay logo = new LogoDisplay();
+                logo.DisplayLogoName();
+                logo.DisplayLogoPic();
                 Console.WriteLine("\nWelcome to GET FLOORED! Inc.");
                 Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                Console.WriteLine("1. Lookup Account");
-                Console.WriteLine("2. Create Account");
+                Console.WriteLine("1. Display Order: ");
+                Console.WriteLine("2. Add Order: ");
+                Console.WriteLine("3. Edit Order:  ");
+                Console.WriteLine("4. Remove Order:  ");
                 Console.WriteLine();
                 Console.WriteLine("(Q) to Quit");
                 Console.WriteLine();
