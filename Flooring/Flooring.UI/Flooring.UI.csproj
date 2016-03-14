@@ -44,9 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ascii\AsciProductDisplay.cs" />
-    <Compile Include="DisplayOrder.cs" />
-    <Compile Include="MainMenuDisplay.cs" />
-    <Compile Include="ManipulateOrderDisplay.cs" />
+    <Compile Include="Workflows\DisplayOrder.cs" />
+    <Compile Include="Workflows\MainMenuDisplay.cs" />
+    <Compile Include="Workflows\ManipulateOrderDisplay.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserPromptsDisplay.cs" />
