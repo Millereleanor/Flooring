@@ -49,7 +49,6 @@
     <Compile Include="Workflows\DisplayOrdersfromDate.cs" />
     <Compile Include="Workflows\EditWorkflow.cs" />
     <Compile Include="Workflows\MainMenuDisplay.cs" />
-    <Compile Include="Workflows\ManipulateOrderDisplay.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
