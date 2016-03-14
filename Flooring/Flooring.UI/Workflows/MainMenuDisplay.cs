@@ -29,7 +29,7 @@ namespace Flooring.UI.Workflows
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.Write("Enter Choice: ");
-
+                Console.ReadLine();
                 input = Console.ReadLine();
 
                 if (input.ToUpper() != "Q")
@@ -46,8 +46,8 @@ namespace Flooring.UI.Workflows
             switch (choice)
             {
                 case "1":
-                    LookupWorkFlow lookup = new LookupWorkFlow();
-                    lookup.Execute();
+                    //LookupWorkFlow lookup = new LookupWorkFlow();
+                    //lookup.Execute();
                     break;
                 case "2":
 
@@ -64,4 +64,4 @@ namespace Flooring.UI.Workflows
         }
     }
 }
-}
+
