@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Flooring.Data
 {
-    class MockFloorRepository
+    public class MockFloorRepository
     {
     }
 }
