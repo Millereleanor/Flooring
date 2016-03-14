@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Flooring.Data
+namespace Flooring.UI.Ascii
 {
-    class MinipulateFile
+    public class AsciiProductDisplay
     {
     }
 }

@@ -55,6 +55,10 @@ namespace Flooring.UI.Workflows
                     Console.WriteLine("Press enter to continue");
                     Console.ReadLine();
                     break;
+                case "3":
+                    break;
+                case "4":
+                    break;
                 default:
                     Console.WriteLine("{0} is not valid", choice);
                     Console.WriteLine("Press enter to continue");

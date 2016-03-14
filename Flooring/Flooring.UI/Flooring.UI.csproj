@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ascii\AsciProductDisplay.cs" />
+    <Compile Include="Ascii\AsciiProductDisplay.cs" />
     <Compile Include="Ascii\LogoDisplay.cs" />
     <Compile Include="Workflows\DisplayOrder.cs" />
     <Compile Include="Workflows\DisplayOrdersfromDate.cs" />
@@ -68,6 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Orders_MMDDYYYY.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataFiles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
