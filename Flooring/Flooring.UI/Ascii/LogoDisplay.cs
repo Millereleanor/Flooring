@@ -4,9 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Flooring.UI.Workflows
+namespace Flooring.UI.Ascii
 {
-    public class DisplayOrder
+    public class LogoDisplay
     {
+        static void DisplayLogo()
+        {
+            
+
+        }
     }
 }
