@@ -40,11 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OrderOperations\ConvertState.cs" />
-    <Compile Include="OrderOperations\AddOrder.cs" />
-    <Compile Include="OrderOperations\DisplayOrder.cs" />
-    <Compile Include="OrderOperations\EditOrder.cs" />
-    <Compile Include="OrderOperations\RemoveOrder.cs" />
+    <Compile Include="OrderOperations\OrderOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
