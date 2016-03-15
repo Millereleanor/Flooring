@@ -65,7 +65,7 @@ namespace Flooring.UI.Workflows
             Console.Clear();
             Console.WriteLine("Order Information: ");
             Console.WriteLine("=====================================");
-            Console.WriteLine("Order Number: {0}", _currentOrder.AccountNumber);
+            Console.WriteLine("Order Number: {0}", _currentOrder.OrderNumber);
             Console.WriteLine("Customer Name: {0},{1}", _currentOrder.LastName, _currentOrder.FirstName);
             Console.WriteLine("Order State: {0}, ({1})      State Tax Rate: {3}",
                 _currentOrder.StateAbbr, _currentOrder.StateFull, _currentOrder.TaxRate);

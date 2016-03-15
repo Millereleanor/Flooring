@@ -45,8 +45,10 @@
   <ItemGroup>
     <Compile Include="Ascii\AsciiProductDisplay.cs" />
     <Compile Include="Ascii\LogoDisplay.cs" />
+    <Compile Include="Workflows\AddOrderWorkFlow.cs" />
+    <Compile Include="Workflows\DeleteOrderWorkFlow.cs" />
     <Compile Include="Workflows\DisplayOrderWorkflow.cs" />
-    <Compile Include="Workflows\EditWorkflow.cs" />
+    <Compile Include="Workflows\EditOrderWorkflow.cs" />
     <Compile Include="Workflows\MainMenuDisplay.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
