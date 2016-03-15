@@ -11,12 +11,14 @@ namespace Flooring.UI.Workflows
     public class DisplayOrderWorkflow
     {
         public DateTime Date;
+        public int orderNumber;
         private Order _currentOrder;
        
         public void Execute()
         {
             DateTime Date = GetOrderDateFromUser();
-            DisplayOrderbyDate(Date);
+            int orderNumber = GetOrderNumberFromUser();
+            DisplayOrderbyDateID(Date, orderNumber);
 
 
         }
@@ -39,7 +41,25 @@ namespace Flooring.UI.Workflows
             } while (true);
         }
 
-        private void DisplayOrderbyDate(DateTime Date)
+        public int GetOrderNumberFromUser()
+        {
+            do
+            {
+                Console.Clear();
+                Console.Write("Please enter the order number: ");
+                string numberoforder = Console.ReadLine();
+
+                if (int.TryParse(numberoforder, out orderNumber))
+                {
+                    return orderNumber;
+                }
+                Console.WriteLine("That is not a valid order number");
+                Console.WriteLine("Press enter to continue...");
+                Console.ReadLine();
+            } while (true);
+        }
+
+        private void DisplayOrderbyDateID(DateTime Date, int orderNumber)
         {
             var ops = new OrderOperations();
             var response = ops.GetOrders(Date);
