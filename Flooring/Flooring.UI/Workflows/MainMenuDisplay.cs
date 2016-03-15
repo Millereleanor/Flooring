@@ -46,8 +46,8 @@ namespace Flooring.UI.Workflows
             switch (choice)
             {
                 case "1":
-                    DisplayOrderWorkflow orderDisplay = new DisplayOrderWorkflow();
-                    orderDisplay.Execute();
+                    //DisplayOrderWorkflow orderDisplay = new DisplayOrderWorkflow();
+                    //orderDisplay.Execute();
                     break;
                 case "2":
 
