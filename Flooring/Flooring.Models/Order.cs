@@ -22,5 +22,6 @@ namespace Flooring.Models
         public decimal OrderTotal { get; set; }
        
         public DateTime OrderDate { get; set; }
+        public 
     }
 }

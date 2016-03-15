@@ -10,6 +10,7 @@ namespace Flooring.BLL.OrderOperations
 {
     public class OrderOperations
     {
+        private Order _currentOrder;
         public Response GetOrders(DateTime date)
         {
             var repo = new MockFloorRepository();
@@ -55,13 +56,43 @@ namespace Flooring.BLL.OrderOperations
             return response;
         }
 
-        //public Response AddOrder(DateTime date)
-        //{
-        //    var repo = new MockFloorRepository();
+        public Response AddOrder(string[] userInput)
+        {
 
-        //    var response = new Response();
+            var repo = new MockFloorRepository();
 
-        //    return response;
-        //}
+            var response = new Response();
+
+            Order tempOrder = new Order();
+
+            string[] nameSplit = userInput[0].Split(' ');
+
+            _currentOrder.FirstName = nameSplit[0];
+            _currentOrder.LastName = nameSplit[1];
+            _currentOrder.StateAbbr = userInput[1];
+            
+            int orderArea;
+            if (!int.TryParse(userInput[3], out orderArea))
+            {
+                response.Success = false;
+                response.Message = "The area {0} is not a number!";
+                return response;
+            }
+            if (orderArea < 0)
+            {
+                response.Success = false;
+                response.Message = "Please enter a positive number for area!";
+                return response;
+            }
+            _currentOrder.OrderArea = orderArea;
+            
+
+            return response;
+        }
+
+        private decimal CalculateTax(Product p, int area)
+        {
+            
+        }
     }
 }
