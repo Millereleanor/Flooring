@@ -13,17 +13,14 @@ namespace Flooring.Data
     {
         //todo:convert this to dictionary version
 
-        public Dictionary<DateTime, Order> Decode()
+        public Dictionary<DateTime, Order> GetAllOrders()
         {
             Dictionary<DateTime, Order> order = new Dictionary<DateTime, Order>();
 
             string filePath = ConfigurationManager.AppSettings["FileName"];
 
 
-            //todo:how do i write the date as the file name;
-            //check if file exit
-            //if not then make new one
-            //if yes then update file  to a new line
+           
 
             var reader = File.ReadAllLines(filePath);
             for (int i = 1; i < reader.Length; i++)
@@ -31,30 +28,36 @@ namespace Flooring.Data
                 var columns = reader[i].Split(',');
 
                 var newOrder = new Order();
-               
+                string Name = columns[1];
+                string[] nameParts = Name.Split(' ');
+                newOrder.FirstName = nameParts[0];
+                newOrder.LastName = nameParts[1];
 
                 newOrder.OrderNumber = int.Parse(columns[0]);
-                newOrder.OrderArea = int.Parse(columns[7]);
-                //Name = columns[2];
-                newOrder.ProductType = columns[6];
-                newOrder.StateAbbr = columns[3];
-                newOrder.StateFull = columns[4];
-                newOrder.CostperSqFt = decimal.Parse(columns[8]);
-                newOrder.LaborperSqFt = decimal.Parse(columns[9]);
-                newOrder.TaxRate = decimal.Parse(columns[5]);
-                //newOrder.TaxTotal = decimal.Parsecolumns[10];
-                //newOrder.Total = columns[11];
+                newOrder.OrderArea = int.Parse(columns[6]);
+                newOrder.ProductType = columns[5];
+                newOrder.StateAbbr = columns[2];
+                newOrder.StateFull = columns[3];
+                newOrder.CostperSqFt = decimal.Parse(columns[7]);
+                newOrder.LaborperSqFt = decimal.Parse(columns[8]);
+                newOrder.TaxRate = decimal.Parse(columns[4]);
+                newOrder.TaxTotal = decimal.Parse(columns[9]);
+                newOrder.OrderTotal = decimal.Parse(columns[10]);
                 
 
-                //do this with dictinary
-                //Order.Add(Order);
+                order.Add(DateTime.Parse("01/14/1992"), newOrder);
             }
-            return Order;
+            return order;
         }
 
 
     }
-    
+     //todo:how do i write the date as the file name;
+            //check if file exit
+            //if not then make new one
+            //if yes then update file  to a new line
+//do this with dictinary...
+                //Order.Add(Order);
 
     //refrence from banking app.....
     //public void WriteToFile(List<Order> orders)
