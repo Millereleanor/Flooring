@@ -16,7 +16,7 @@ namespace Flooring.BLL.OrderOperations
 
             var response = new Response();
 
-            var orders = repo.GetOrderByDate(date);
+            var orders = repo.GetOrdersByDate(date);
 
             if (orders == null)
             {
@@ -26,8 +26,10 @@ namespace Flooring.BLL.OrderOperations
             else
             {
                 response.Success = false;
-                response.OrderInfo = orders;
+                response.OrderList = orders;
             }
+
+            return response;
         }
 
         public Response GetSpecificOrder(int orderNumber, DateTime date)
@@ -35,6 +37,31 @@ namespace Flooring.BLL.OrderOperations
             var repo = new MockFloorRepository();
 
             var response = new Response();
+
+            var orders = GetOrdersByDate(date);
+
+            foreach (var order in orders)
+            {
+                if (order.OrderNumber == orderNumber)
+                {
+                    response.Success = true;
+                    response.OrderInfo = order;
+                    response.Message = String.Format("Here is the order information for order {0}.\n" +
+                                                     "This order was placed on {1}", date.ToShortDateString());
+                    return response;
+                }
+            }
+
+            return response;
         }
+
+        //public Response AddOrder(DateTime date)
+        //{
+        //    var repo = new MockFloorRepository();
+
+        //    var response = new Response();
+
+        //    return response;
+        //}
     }
 }
