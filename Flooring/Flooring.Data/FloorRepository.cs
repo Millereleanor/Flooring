@@ -11,7 +11,7 @@ namespace Flooring.Data
 {
     public class FloorRepository
     {
-        //todo:convert this to dictionary version
+        
 
         public Dictionary<DateTime, Order> GetAllOrders()
         {
@@ -76,4 +76,4 @@ namespace Flooring.Data
     ////    }
     //}
 }
-}
+
