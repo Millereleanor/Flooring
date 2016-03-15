@@ -18,7 +18,9 @@ namespace Flooring.Models
         public decimal CostperSqFt { get; set; }
         public decimal LaborperSqFt { get; set; }
         public decimal TaxRate { get; set; }
+       //public decimal OrderTotal();
         public DateTime OrderDate { get; set; }
+
 
     }
 }
