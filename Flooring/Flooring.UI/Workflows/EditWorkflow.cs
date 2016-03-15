@@ -11,6 +11,8 @@ namespace Flooring.UI.Workflows
     {
         public int productID;
         public int areanum;
+        private int[] products = {1, 2, 3, 4};
+        private bool validproduct = false;
 
         public void Execute()
         {
@@ -56,10 +58,18 @@ namespace Flooring.UI.Workflows
                 string product = Console.ReadLine();
                 if (!int.TryParse(product, out productID))
                 {
+                    Console.WriteLine("Please enter a valid product type by number: ");
+                }
+                if (products.Contains(productID))
+                {
+                    validproduct = true;
+                }
+                else
+                {
                     Console.WriteLine("Please enter a valid product type: ");
                 }
 
-            } while (productID==0);
+            } while (productID==0 && !validproduct);
 
             do
             {
@@ -74,12 +84,6 @@ namespace Flooring.UI.Workflows
             string ordertemp = String.Format(first+','+ last +','+ productID + ','+areanum);
             return ordertemp;
 
-            //In Add Method
-            //TODO: Prompt user for data to be added (Name, State, Product Type, Area)
-            //TODO: Check each for blank entries, or invalid entries
-            //TODO: Display whole new order before submitting
-            //TODO: Ask User to confirm submission
-            //TODO: Send order to BLL to be saved to Data
         }
 
        
