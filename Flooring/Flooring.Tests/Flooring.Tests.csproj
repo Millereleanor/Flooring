@@ -66,7 +66,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="DataFiles\Orders_01141992.txt" />
+    <Content Include="DataFiles\Orders_01141992.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
