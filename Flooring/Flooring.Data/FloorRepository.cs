@@ -19,50 +19,44 @@ namespace Flooring.Data
 
             string filePath = ConfigurationManager.AppSettings["FileName"];
 
-            var reader = File.ReadAllLines(filePath);
 
+            //todo:how do i write the date as the file name;
+            //check if file exit
+            //if not then make new one
+            //if yes then update file  to a new line
+
+            var reader = File.ReadAllLines(filePath);
             for (int i = 1; i < reader.Length; i++)
             {
                 var columns = reader[i].Split(',');
 
                 var newOrder = new Order();
-                var Name = newOrder.FirstName + " " + newOrder.LastName;
-                
-                newOrder.OrderNumber = int.Parse(columns[0]);
-                newOrder.OrderArea = int.Parse(columns[6]);
-                Name = columns[2];
-                newOrder.ProductType;
-                newOrder.
-                //order. = decimal.Parse(columns[3]);
+               
 
-                Order.Add(Order);
+                newOrder.OrderNumber = int.Parse(columns[0]);
+                newOrder.OrderArea = int.Parse(columns[7]);
+                //Name = columns[2];
+                newOrder.ProductType = columns[6];
+                newOrder.StateAbbr = columns[3];
+                newOrder.StateFull = columns[4];
+                newOrder.CostperSqFt = decimal.Parse(columns[8]);
+                newOrder.LaborperSqFt = decimal.Parse(columns[9]);
+                newOrder.TaxRate = decimal.Parse(columns[5]);
+                //newOrder.TaxTotal = decimal.Parsecolumns[10];
+                //newOrder.Total = columns[11];
+                
+
+                //do this with dictinary
+                //Order.Add(Order);
             }
             return Order;
         }
 
 
     }
-    //private static List<Orders> Decode()
-    //{
-    //    List<Orders> orders = new List<Account>();
-    //    string filePath = ConfigurationManager.AppSettings["FileName"];
+    
 
-    //    var reader = File.ReadAllLines(filePath);
-
-    //    for (int i = 1; i < reader.Length; i++)
-    //    {
-    //        var columns = reader[i].Split(',');
-    //        var order = new Order();
-    //        order.OrderNumber = int.Parse(columns[0]);
-    //        order.FirstName = columns[1];
-    //        order.LastName = columns[2];
-    //        //order. = decimal.Parse(columns[3]);
-
-    //        Orders.Add(Order);
-    //    }
-    //    return Orders;
-    //}
-
+    //refrence from banking app.....
     //public void WriteToFile(List<Order> orders)
     //{
     //    string filePath = ConfigurationManager.AppSettings["FileName"];
