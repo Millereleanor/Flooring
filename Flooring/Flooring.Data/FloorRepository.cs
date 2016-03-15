@@ -9,15 +9,21 @@ using Flooring.Models;
 
 namespace Flooring.Data
 {
-    public class FloorRepository
+    public class FloorRepository : IFloorRepository
     {
-
+        Dictionary<DateTime, List<Order>> orders = new Dictionary<DateTime, List<Order>>();
         //should used dictionary??
         //get file name??
-        public Dictionary<DateTime, Order> GetAllOrders()
+        public FloorRepository()
         {
-            Dictionary<DateTime, Order> order = new Dictionary<DateTime, Order>();
+            ReadOrders();
+        }
 
+        private void ReadOrders()
+        {
+            //todo: Read directory, get all FIles, Match contains 'Order_.txt'
+            //todo: Parse out date from file name
+            //todo: read file
             string filePath = ConfigurationManager.AppSettings["FileName"];
 
 
@@ -42,16 +48,53 @@ namespace Flooring.Data
                 newOrder.CostperSqFt = decimal.Parse(columns[7]);
                 newOrder.LaborperSqFt = decimal.Parse(columns[8]);
                 newOrder.TaxRate = decimal.Parse(columns[4]);
-                newOrder.TaxTotal = decimal.Parse(columns[9]);
+                //newOrder.TaxTotal = decimal.Parse(columns[9]);
                 newOrder.OrderTotal = decimal.Parse(columns[10]);
 
 
-                order.Add(DateTime.Parse("01/14/1992"), newOrder);
+                orders.Add(DateTime.Parse("01/14/1992"), newOrder);
             }
-            return order;
         }
+
+        public Order CreateOrder(DateTime date, Order order)
+        {
+            throw new NotImplementedException();
+        }
+
+        Dictionary<DateTime, List<Order>> IFloorRepository.GetAllOrders()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Order> GetAllOrderByDate(DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Order GetOrderByDateId(DateTime date, int orderId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateOrder(DateTime date, int orderId, Order updateOrder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoteOrder(DateTime date, int orderId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<DateTime, Order> GetAllOrders()
+        {
+
+
+            return orders;
+        }
+
         //dictionary???
-        public void WriteToFile(Dictionary<DateTime,Order> Order)
+        public void WriteToFile(Dictionary<DateTime, Order> Order)
         {
             string filePath = ConfigurationManager.AppSettings["FileName"];
             using (StreamWriter writer = new StreamWriter(filePath, false))
@@ -61,14 +104,16 @@ namespace Flooring.Data
 
                     foreach (var order in Order)
                     {
-                       // writer.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}", order, order.OrderArea, order.OrderDate);
+                        // writer.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}", order, order.OrderArea, order.OrderDate);
                     }
                 }
                 //    }
             }
         }
     }
-    //todo:how do i write the date as the file name;
+}
+
+//todo:how do i write the date as the file name;
     //check if file exit
     //if not then make new one
     //if yes then update file  to a new line
