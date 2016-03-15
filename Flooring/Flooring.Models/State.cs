@@ -9,6 +9,7 @@ namespace Flooring.Models
     public class State
     {
         public string FullName { get; set; }
+        public string Abbr { get; set; }
         public decimal TaxRate { get; set; }
     }
 }

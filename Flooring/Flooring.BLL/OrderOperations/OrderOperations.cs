@@ -69,13 +69,14 @@ namespace Flooring.BLL.OrderOperations
 
             _currentOrder.FirstName = nameSplit[0];
             _currentOrder.LastName = nameSplit[1];
-            _currentOrder.StateAbbr = userInput[1];
+            State state = GetState();
+            _currentOrder.StateAbbr = state.Abbr;
             
             int orderArea;
             if (!int.TryParse(userInput[3], out orderArea))
             {
                 response.Success = false;
-                response.Message = "The area {0} is not a number!";
+                response.Message = String.Format("The area {0} is not a number!",userInput[3]);
                 return response;
             }
             if (orderArea < 0)
@@ -85,14 +86,29 @@ namespace Flooring.BLL.OrderOperations
                 return response;
             }
             _currentOrder.OrderArea = orderArea;
-            
-
+            Product p = PopulateProdut(userInput[2]);
+            decimal totalBeforeTax = CalculateCost(p, orderArea);
+            _currentOrder.TaxTotal = CalculateTax(totalBeforeTax, _currentOrder.StateAbbr);
             return response;
         }
 
-        private decimal CalculateTax(Product p, int area)
+        private Product PopulateProdut(string productType)
         {
-            
+            switch (productType)
+            {
+                case "1":
+                    return 
+            }
+        }
+
+        private decimal CalculateCost(Product p, int area)
+        {
+            return (p.CostperSqFt*area) + p.LaborperSqFt*area;
+        }
+
+        private decimal CalculateTax(decimal total, State state)
+        {
+            return total*state.TaxRate;
         }
     }
 }
