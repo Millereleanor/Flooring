@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Flooring.BLL.OrderOperations;
@@ -11,14 +12,14 @@ namespace Flooring.UI.Workflows
     public class DisplayOrderWorkflow
     {
         public DateTime Date;
-        public int orderNumber;
+       
         private Order _currentOrder;
        
         public void Execute()
         {
             DateTime Date = GetOrderDateFromUser();
-            int orderNumber = GetOrderNumberFromUser();
-            DisplayOrderbyDateID(Date, orderNumber);
+            
+            DisplayOrderbyDate(Date);
 
 
         }
@@ -41,35 +42,19 @@ namespace Flooring.UI.Workflows
             } while (true);
         }
 
-        public int GetOrderNumberFromUser()
-        {
-            do
-            {
-                Console.Clear();
-                Console.Write("Please enter the order number: ");
-                string numberoforder = Console.ReadLine();
 
-                if (int.TryParse(numberoforder, out orderNumber))
-                {
-                    return orderNumber;
-                }
-                Console.WriteLine("That is not a valid order number");
-                Console.WriteLine("Press enter to continue...");
-                Console.ReadLine();
-            } while (true);
-        }
 
-        private void DisplayOrderbyDateID(DateTime Date, int orderNumber)
+        public void DisplayOrderbyDate(DateTime Date)
         {
             var ops = new OrderOperations();
             var response = ops.GetOrders(Date);
-            
+
 
             if (response.Success)
             {
                 _currentOrder = response.OrderInfo;
                 PrintOrderInformation(response.OrderList);
-                
+
             }
             else
             {
@@ -79,7 +64,6 @@ namespace Flooring.UI.Workflows
                 Console.ReadLine();
             }
         }
-
         private void PrintOrderInformation(List<Order>orderList )
         {
             

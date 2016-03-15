@@ -12,10 +12,12 @@ namespace Flooring.UI.Workflows
 {
     public class EditOrderWorkflow
     {
+        public int orderNumber;
         //public void Execute()
         //{
         //    GetOrderDateFromUser();
-        //    DisplayOrderbyDate();
+        //    orderNumber = GetOrderNumberFromUser();
+        //    DisplayOrderbyDateID();
 
         //}
 
@@ -37,7 +39,27 @@ namespace Flooring.UI.Workflows
         //    } while (true);
         //}
 
-        //private void DisplayOrderbyDate(DateTime Date)
+        //public int GetOrderNumberFromUser()
+        //{
+        //    do
+        //    {
+        //        Console.Clear();
+        //        Console.Write("Please enter the order number: ");
+        //        string numberoforder = Console.ReadLine();
+
+        //        if (int.TryParse(numberoforder, out orderNumber))
+        //        {
+        //            return orderNumber;
+        //        }
+        //        Console.WriteLine("That is not a valid order number");
+        //        Console.WriteLine("Press enter to continue...");
+        //        Console.ReadLine();
+        //    } while (true);
+        //}
+
+
+
+        //private void DisplayOrderbyDateID(DateTime Date, int orderNumber)
         //{
         //    var ops = new OrderOperations();
         //    var response = ops.GetOrders(Date);
@@ -46,7 +68,7 @@ namespace Flooring.UI.Workflows
         //    if (response.Success)
         //    {
         //        _currentOrder = response.OrderInfo;
-        //        PrintOrderInformation();
+        //        PrintOrderInformation(response.OrderList);
 
         //    }
         //    else
@@ -75,7 +97,7 @@ namespace Flooring.UI.Workflows
 
         //}
 
-          
+
 
 
         //    //In Edit Method
@@ -91,7 +113,7 @@ namespace Flooring.UI.Workflows
         //    //TODO: Ask if user would like to edit another order
 
 
-        }
+    }
 
     }
 
