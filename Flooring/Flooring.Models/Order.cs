@@ -20,5 +20,6 @@ namespace Flooring.Models
         public decimal TaxRate { get; set; }
        //public decimal OrderTotal();
         public DateTime OrderDate { get; set; }
+        public 
     }
 }
