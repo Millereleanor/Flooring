@@ -10,41 +10,43 @@ namespace Flooring.Data
 {
     public class FloorRepository
     {
-        private static List<Orders> Decode()
-        {
-            List<Orders> orders = new List<Account>();
-            string filePath = ConfigurationManager.AppSettings["FileName"];
+        //todo:convert this to dictionary version
 
-            var reader = File.ReadAllLines(filePath);
+        //private static List<Orders> Decode()
+        //{
+        //    List<Orders> orders = new List<Account>();
+        //    string filePath = ConfigurationManager.AppSettings["FileName"];
 
-            for (int i = 1; i < reader.Length; i++)
-            {
-                var columns = reader[i].Split(',');
-                var order = new Order();
-                order.OrderNumber = int.Parse(columns[0]);
-                order.FirstName = columns[1];
-                order.LastName = columns[2];
-                //order. = decimal.Parse(columns[3]);
+        //    var reader = File.ReadAllLines(filePath);
 
-                Orders.Add(Order);
-            }
-            return Orders;
-        }
+        //    for (int i = 1; i < reader.Length; i++)
+        //    {
+        //        var columns = reader[i].Split(',');
+        //        var order = new Order();
+        //        order.OrderNumber = int.Parse(columns[0]);
+        //        order.FirstName = columns[1];
+        //        order.LastName = columns[2];
+        //        //order. = decimal.Parse(columns[3]);
 
-        public void WriteToFile(List<Order> orders)
-        {
-            string filePath = ConfigurationManager.AppSettings["FileName"];
-            using (StreamWriter writer = new StreamWriter(filePath, false))
-            {
-                {
-                    writer.WriteLine("");
+        //        Orders.Add(Order);
+        //    }
+        //    return Orders;
+        //}
 
-                    foreach (var order in orders)
-                    {
-                        writer.WriteLine("{0},{1},{2},{3}", order.OrderNumber,order.OrderArea,order.OrderDate);
-                    }
-                }
-            }
-        }
+        //public void WriteToFile(List<Order> orders)
+        //{
+        //    string filePath = ConfigurationManager.AppSettings["FileName"];
+        //    using (StreamWriter writer = new StreamWriter(filePath, false))
+        //    {
+        //        {
+        //            writer.WriteLine("");
+
+        //            foreach (var order in orders)
+        //            {
+        //                writer.WriteLine("{0},{1},{2},{3}", order.OrderNumber,order.OrderArea,order.OrderDate);
+        //            }
+        //        }
+        ////    }
+        //}
     }
 }

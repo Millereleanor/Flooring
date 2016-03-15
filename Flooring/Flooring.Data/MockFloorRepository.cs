@@ -9,6 +9,13 @@ namespace Flooring.Data
 {
     public class MockFloorRepository
     {
-       // Dictionary<Order> orders = GetAllOrders();
+       // Dictionary<date,string> orders = new Dictionary<date,string>();
+
+        //creat a dictionary using the key==date from the data file
+
+
+        //get dictionary list 
+                //group by date then print out orderinfo
+        
     }
 }
