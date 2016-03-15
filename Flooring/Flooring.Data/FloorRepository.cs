@@ -12,6 +12,8 @@ namespace Flooring.Data
     {
         //todo:convert this to dictionary version
 
+        public Dictionary<DateTime, Order> Order;
+
         //private static List<Orders> Decode()
         //{
         //    List<Orders> orders = new List<Account>();

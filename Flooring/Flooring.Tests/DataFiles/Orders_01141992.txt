@@ -1,0 +1,2 @@
+﻿OrderNumber,Customer Name,State,TaxRate,Product type, Area, Cost/SQFT,Labor Cost/SQFT,Tax,and total
+1,Elle Miller,FL,0.07,Wood,100,5.00,,0,35.00,535.00
