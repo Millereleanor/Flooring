@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Flooring.BLL.OrderOperations;
+using Flooring.Models;
 
 namespace Flooring.UI.Workflows
 {
     public class DisplayOrderWorkflow
     {
         public DateTime Date;
-
-        //inishalize order _currentOrder
+        private Order _currentOrder;
+       
         public void Execute()
         {
             DateTime Date = GetOrderDateFromUser();
@@ -40,22 +41,23 @@ namespace Flooring.UI.Workflows
 
         private void DisplayOrderbyDate(DateTime Date)
         {
-            var ops = new DisplayOrder();
-            //var response = ops;
+            var ops = new OrderOperations();
+            var response = ops.GetOrders(Date);
+            
 
-            //if (response.Success)
-            //{
-            //    _currentOrder = response.OrderInfo;
-            //    PrintOrderInformation();
-            //    DisplayOrderMenu();
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Error: ");
-            //    Console.WriteLine(response.Message);
-            //    Console.WriteLine("Move along...");
-            //    Console.ReadLine();
-            //}
+            if (response.Success)
+            {
+                _currentOrder = response.OrderInfo;
+                PrintOrderInformation();
+                
+            }
+            else
+            {
+                Console.WriteLine("Error: ");
+                Console.WriteLine(response.Message);
+                Console.WriteLine("Move along...");
+                Console.ReadLine();
+            }
         }
 
         private void PrintOrderInformation()
