@@ -11,7 +11,7 @@ namespace Flooring.Data
         List<Order> GetAllOrderByDate(DateTime date);
         Order GetOrderByDateId(DateTime date, int orderId);
         void UpdateOrder(DateTime date, int orderId, Order updateOrder);
-        void RemoteOrder(DateTime date, int orderId);
+        void RemoveOrder(DateTime date, int orderId);
         void WriteToFile(Dictionary<DateTime, Order> Order);
 
     }

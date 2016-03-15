@@ -48,11 +48,13 @@ namespace Flooring.Data
                 newOrder.CostperSqFt = decimal.Parse(columns[7]);
                 newOrder.LaborperSqFt = decimal.Parse(columns[8]);
                 newOrder.TaxRate = decimal.Parse(columns[4]);
+
+                //todo:randall wtf whyyyyyyyyyy?
                 //newOrder.TaxTotal = decimal.Parse(columns[9]);
                 newOrder.OrderTotal = decimal.Parse(columns[10]);
 
 
-                orders.Add(DateTime.Parse("01/14/1992"), newOrder);
+                orders.Add(DateTime.Parse("01/14/1992"),newOrder);
             }
         }
 
@@ -81,7 +83,7 @@ namespace Flooring.Data
             throw new NotImplementedException();
         }
 
-        public void RemoteOrder(DateTime date, int orderId)
+        public void RemoveOrder(DateTime date, int orderId)
         {
             throw new NotImplementedException();
         }

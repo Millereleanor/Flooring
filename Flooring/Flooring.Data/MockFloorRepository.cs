@@ -42,7 +42,7 @@ namespace Flooring.Data
             throw new NotImplementedException();
         }
 
-        public void RemoteOrder(DateTime date, int orderId)
+        public void RemoveOrder(DateTime date, int orderId)
         {
             throw new NotImplementedException();
         }
