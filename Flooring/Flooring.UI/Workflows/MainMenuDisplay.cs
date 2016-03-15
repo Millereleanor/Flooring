@@ -30,7 +30,6 @@ namespace Flooring.UI.Workflows
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.Write("Enter Choice: ");
-                Console.ReadLine();
                 input = Console.ReadLine();
 
                 if (input.ToUpper() != "Q")
@@ -47,8 +46,8 @@ namespace Flooring.UI.Workflows
             switch (choice)
             {
                 case "1":
-                    //DisplayOrderWorkflow orderDisplay = new DisplayOrderWorkflow();
-                    //orderDisplay.Execute();
+                    DisplayOrderWorkflow orderDisplay = new DisplayOrderWorkflow();
+                    orderDisplay.Execute();
                     break;
                 case "2":
 

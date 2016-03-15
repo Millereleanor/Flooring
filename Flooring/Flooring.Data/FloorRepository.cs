@@ -12,8 +12,8 @@ namespace Flooring.Data
     public class FloorRepository : IFloorRepository
     {
         Dictionary<DateTime, List<Order>> orders = new Dictionary<DateTime, List<Order>>();
-        //should used dictionary??
-        //get file name??
+
+
         public FloorRepository()
         {
             ReadOrders();
@@ -26,15 +26,16 @@ namespace Flooring.Data
             //todo: read file
             string filePath = ConfigurationManager.AppSettings["FileName"];
 
+            var newOrder = new Order();
 
-
+            List<Order> orderList = new List<Order>();
 
             var reader = File.ReadAllLines(filePath);
             for (int i = 1; i < reader.Length; i++)
             {
                 var columns = reader[i].Split(',');
 
-                var newOrder = new Order();
+
                 string Name = columns[1];
                 string[] nameParts = Name.Split(' ');
                 newOrder.FirstName = nameParts[0];
@@ -48,14 +49,14 @@ namespace Flooring.Data
                 newOrder.CostperSqFt = decimal.Parse(columns[7]);
                 newOrder.LaborperSqFt = decimal.Parse(columns[8]);
                 newOrder.TaxRate = decimal.Parse(columns[4]);
+                orderList.Add(newOrder);
 
-                //todo:randall wtf whyyyyyyyyyy?
                 //newOrder.TaxTotal = decimal.Parse(columns[9]);
-                newOrder.OrderTotal = decimal.Parse(columns[10]);
-
-
-                orders.Add(DateTime.Parse("01/14/1992"),newOrder);
+                //newOrder.OrderTotal = decimal.Parse(columns[10]);
             }
+
+            orders.Add(DateTime.Parse("01/14/1992"), orderList);
+
         }
 
         public Order CreateOrder(DateTime date, Order order)
@@ -65,12 +66,15 @@ namespace Flooring.Data
 
         Dictionary<DateTime, List<Order>> IFloorRepository.GetAllOrders()
         {
+            //find all txt files
+            //run ReadOrders() for all the txt files
+            //display files based on catigory of date
             throw new NotImplementedException();
         }
 
         public List<Order> GetAllOrderByDate(DateTime date)
         {
-            throw new NotImplementedException();
+            return orders[date];
         }
 
         public Order GetOrderByDateId(DateTime date, int orderId)
@@ -80,19 +84,22 @@ namespace Flooring.Data
 
         public void UpdateOrder(DateTime date, int orderId, Order updateOrder)
         {
+
             throw new NotImplementedException();
         }
 
         public void RemoveOrder(DateTime date, int orderId)
         {
+
+            //deleat file
             throw new NotImplementedException();
         }
 
         public Dictionary<DateTime, Order> GetAllOrders()
         {
 
-
-            return orders;
+            return null;
+            //return orders;
         }
 
         //dictionary???
@@ -116,11 +123,11 @@ namespace Flooring.Data
 }
 
 //todo:how do i write the date as the file name;
-    //check if file exit
-    //if not then make new one
-    //if yes then update file  to a new line
-    //do this with dictinary...
-    //Order.Add(Order);
+//check if file exit
+//if not then make new one
+//if yes then update file  to a new line
+//do this with dictinary...
+//Order.Add(Order);
 
 //refrence from banking app.....
 

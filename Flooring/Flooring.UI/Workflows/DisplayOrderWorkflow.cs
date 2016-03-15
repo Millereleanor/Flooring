@@ -48,7 +48,7 @@ namespace Flooring.UI.Workflows
             if (response.Success)
             {
                 _currentOrder = response.OrderInfo;
-                PrintOrderInformation();
+                PrintOrderInformation(response.OrderList);
                 
             }
             else
@@ -60,21 +60,25 @@ namespace Flooring.UI.Workflows
             }
         }
 
-        private void PrintOrderInformation()
+        private void PrintOrderInformation(List<Order>orderList )
         {
+            
             Console.Clear();
-            Console.WriteLine("Order Information: ");
-            Console.WriteLine("=====================================");
-            Console.WriteLine("Order Number: {0}", _currentOrder.OrderNumber);
-            Console.WriteLine("Customer Name: {0},{1}", _currentOrder.LastName, _currentOrder.FirstName);
-            Console.WriteLine("Order State: {0}, ({1})      State Tax Rate: {3}",
-                _currentOrder.StateAbbr, _currentOrder.StateFull, _currentOrder.TaxRate);
-            Console.WriteLine("Product Type: {0}     Order Area: {1}", _currentOrder.ProductType, _currentOrder.OrderArea);
-            Console.WriteLine("Material Cost per Ft^2: {0}        Labor Cost per Ft^2: {1}",
-                _currentOrder.CostperSqFt, _currentOrder.LaborperSqFt);
-            Console.WriteLine("Order Total: {0}", _currentOrder.Total);
-            Console.WriteLine();
-
+            foreach (var order in orderList)
+            {
+                Console.WriteLine("Order Information: ");
+                Console.WriteLine("=====================================");
+                Console.WriteLine("Order Number: {0}", order.OrderNumber);
+                Console.WriteLine("Customer Name: {0},{1}", order.LastName, order.FirstName);
+                Console.WriteLine("Order State: {0}, ({1})      State Tax Rate: {2}",
+                    order.StateAbbr, order.StateFull, order.TaxRate);
+                Console.WriteLine("Product Type: {0}     Order Area: {1}", order.ProductType, order.OrderArea);
+                Console.WriteLine("Material Cost per Ft^2: {0}        Labor Cost per Ft^2: {1}",
+                    order.CostperSqFt, order.LaborperSqFt);
+                Console.WriteLine("Order Total: {0:C}", order.OrderTotal+order.TaxTotal);
+                Console.WriteLine();
+                Console.ReadLine();
+            }
         }
 
 

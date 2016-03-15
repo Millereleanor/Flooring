@@ -19,7 +19,7 @@ namespace Flooring.UI.Workflows
             string input = Console.ReadLine();
             if (input.ToUpper() == "YES")
             {
-                op.DeleteOrder(order);
+                //op.DeleteOrder(order);
                 Console.WriteLine("Press enter to continue... Goodbye!");
                 Console.ReadLine();
                 MainMenuDisplay back = new MainMenuDisplay();
