@@ -78,19 +78,28 @@ namespace Flooring.Data
             }
 
             String fileName = "Orders_" + monthString + dayString + order.OrderDate.Year + ".txt";
-
+            
             if (File.Exists(fileName) == true)
             {
                 //add to txt
+                TextWriter tw = new StreamWriter(fileName);
+                tw.WriteLine("{0},{1},{2} {3},{4},{5},{6},{7},{8},{9},{10},{11}", 
+                    order.OrderNumber, order.FirstName, order.LastName, order.StateAbbr, order.StateFull,
+                    order.TaxRate, order.ProductType, order.OrderArea, order.CostperSqFt, order.LaborperSqFt, order.TaxTotal, order.OrderTotal);
+                tw.Close();
             }
             //creat new txt
-            using (File.Create(fileName))
+            if (!File.Exists(fileName)) 
             {
-                return null;
+                File.Create(fileName);
+                TextWriter tw = new StreamWriter(fileName);
+                tw.WriteLine("{0},{1},{2} {3},{4},{5},{6},{7},{8},{9},{10},{11}",order.OrderNumber,order.FirstName,order.LastName,order.StateAbbr,order.StateFull,order.TaxRate,order.ProductType,order.OrderArea,order.CostperSqFt,order.LaborperSqFt,order.TaxTotal,order.OrderTotal);
+                tw.Close();
+            }
+            return null;
         }
-    }
 
-    Dictionary<DateTime, List<Order>> IFloorRepository.GetAllOrders()
+        Dictionary<DateTime, List<Order>> IFloorRepository.GetAllOrders()
         {
             //find all txt files
             //run ReadOrders() for all the txt files
@@ -105,7 +114,7 @@ namespace Flooring.Data
                 return orders[date];
             }
             return new List<Order>();
-            
+
         }
 
         public Order GetOrderByDateId(DateTime date, int orderId)
