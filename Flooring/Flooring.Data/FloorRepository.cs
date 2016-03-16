@@ -73,7 +73,12 @@ namespace Flooring.Data
 
         public List<Order> GetAllOrderByDate(DateTime date)
         {
-            return orders[date];
+            if (orders.ContainsKey(date))
+            {
+                return orders[date];
+            }
+            return new List<Order>();
+            
         }
 
         public Order GetOrderByDateId(DateTime date, int orderId)
