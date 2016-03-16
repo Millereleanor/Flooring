@@ -12,83 +12,98 @@ namespace Flooring.UI.Workflows
     {
         public int productID;
         public int areanum;
-        public string stateabbr;
-        private int[] products = { 1, 2, 3, 4 };
+        public int stateID;
+        private int[] products = {1, 2, 3, 4};
+        private int[] states = {1, 2, 3, 4};
         private bool validproduct = false;
+        private bool validstate = false;
 
         public string Execute(Order order)
         {
-                string first;
-                string last;
-                do
+            string first;
+            string last;
+            do
+            {
+                Console.Write("Please enter your first name: ");
+                first = Console.ReadLine();
+
+                if (first == "")
                 {
-                    Console.Write("Please enter your first name: ");
-                    first = Console.ReadLine();
+                    Console.WriteLine("Please enter a valid first name: ");
+                }
+            } while (first == "");
 
-                    if (first == "")
-                    {
-                        Console.WriteLine("Please enter a valid first name: ");
-                    }
-                } while (first == "");
+            do
+            {
+                Console.Write("Please enter your last name: ");
+                last = Console.ReadLine();
 
-                do
+                if (last == "")
                 {
-                    Console.Write("Please enter your last name: ");
-                    last = Console.ReadLine();
-
-                    if (last == "")
-                    {
-                        Console.WriteLine("Please enter a valid last name: ");
-                    }
-                } while (last == "");
+                    Console.WriteLine("Please enter a valid last name: ");
+                }
+            } while (last == "");
 
             do
             {
                 Console.Write("Please enter the state abbreviation you are ordering from: ");
-                stateabbr = Console.ReadLine();
 
-                if (stateabbr == "" || stateabbr.Length>3)
+                Console.WriteLine("1. Ohio: ");
+                Console.WriteLine("2. Florida: ");
+                Console.WriteLine("3. Illinois:  ");
+                Console.WriteLine("4. Alaska:  ");
+                Console.Write("Please enter your choice: ");
+                string statestr = Console.ReadLine();
+                if (!int.TryParse(statestr, out stateID))
                 {
-                    Console.WriteLine("Please enter a valid state abbreviation: ");
+                    Console.WriteLine("Please choose a valid state by number: ");
                 }
-            } while (stateabbr == "" || stateabbr.Length>3);
+                if (states.Contains(stateID))
+                {
+                    validstate = true;
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid state: ");
+                }
+            } while (stateID == 0 && !validstate);
 
             do
+            {
+                Console.Write("Please enter the Product Type you would like to order: ");
+                Console.WriteLine("1. Cherrywood Flooring: ");
+                Console.WriteLine("2. Plush Carpet: ");
+                Console.WriteLine("3. Shiny Laminant:  ");
+                Console.WriteLine("4. Blingy Granite:  ");
+                Console.Write("Please enter your choice: ");
+                string product = Console.ReadLine();
+                if (!int.TryParse(product, out productID))
                 {
-                    Console.Write("Please enter the Product Type you would like to order: ");
-                    Console.WriteLine("1. Cherrywood Flooring: ");
-                    Console.WriteLine("2. Plush Carpet: ");
-                    Console.WriteLine("3. Shiny Laminant:  ");
-                    Console.WriteLine("4. Blingy Granite:  ");
-                    Console.Write("Please enter your choice: ");
-                    string product = Console.ReadLine();
-                    if (!int.TryParse(product, out productID))
-                    {
-                        Console.WriteLine("Please enter a valid product type by number: ");
-                    }
-                    if (products.Contains(productID))
-                    {
-                        validproduct = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please enter a valid product type: ");
-                    }
-
-                } while (productID == 0 && !validproduct);
-
-                do
+                    Console.WriteLine("Please enter a valid product type by number: ");
+                }
+                if (products.Contains(productID))
                 {
-                    Console.Write("Please enter the area in square feet you would like to order: ");
-                    string area = Console.ReadLine();
-                    if (!int.TryParse(area, out areanum))
-                    {
-                        Console.WriteLine("Please enter a valid number of square feet: ");
-                    }
-                } while (areanum == 0);
+                    validproduct = true;
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid product type: ");
+                }
 
-                string ordertemp = String.Format(first + ',' + last + ','+stateabbr+','+ productID + ',' + areanum);
-                return ordertemp;
+            } while (productID == 0 && !validproduct);
+
+            do
+            {
+                Console.Write("Please enter the area in square feet you would like to order: ");
+                string area = Console.ReadLine();
+                if (!int.TryParse(area, out areanum))
+                {
+                    Console.WriteLine("Please enter a valid number of square feet: ");
+                }
+            } while (areanum == 0);
+
+            string ordertemp = String.Format(first + ',' + last + ',' + stateID + ',' + productID + ',' + areanum);
+            return ordertemp;
 
         }
     }
