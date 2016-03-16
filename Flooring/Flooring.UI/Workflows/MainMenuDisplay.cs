@@ -50,7 +50,11 @@ namespace Flooring.UI.Workflows
                     orderDisplay.Execute();
                     break;
                 case "2":
+
                 case "3":
+                    //AddOrderWorkflow 
+                    
+
                 case "4":
                     Console.WriteLine("This feature is not implemented yet!");
                     Console.WriteLine("Press enter to continue");
