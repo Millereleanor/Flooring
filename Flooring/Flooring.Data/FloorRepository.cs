@@ -12,7 +12,7 @@ namespace Flooring.Data
     public class FloorRepository : IFloorRepository
     {
         Dictionary<DateTime, List<Order>> orders = new Dictionary<DateTime, List<Order>>();
-
+        private Order workingOrder = new Order();
 
         public FloorRepository()
         {
@@ -52,8 +52,9 @@ namespace Flooring.Data
 
                 //newOrder.TaxTotal = decimal.Parse(columns[9]);
                 //newOrder.OrderTotal = decimal.Parse(columns[10]);
+                newOrder = workingOrder;
             }
-
+            
             orders.Add(DateTime.Parse("01/14/1992"), orderList);
 
         }
@@ -79,7 +80,7 @@ namespace Flooring.Data
 
             String fileName = "Orders_" + monthString + dayString + order.OrderDate.Year + ".txt";
             
-            if (File.Exists(fileName) == true)
+            if (File.Exists(fileName))
             {
                 //add to txt
                 TextWriter tw = new StreamWriter(fileName);

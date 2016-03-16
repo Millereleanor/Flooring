@@ -18,7 +18,7 @@ namespace Flooring.UI.Workflows
         private bool validproduct = false;
         private bool validstate = false;
 
-        public string Execute(Order order)
+        public string Execute()
         {
             string first;
             string last;
@@ -103,6 +103,8 @@ namespace Flooring.UI.Workflows
             } while (areanum == 0);
 
             string ordertemp = String.Format(first + ',' + last + ',' + stateID + ',' + productID + ',' + areanum);
+            OrderOperations oop = new OrderOperations();
+            oop.AddOrder(ordertemp);
             return ordertemp;
 
         }

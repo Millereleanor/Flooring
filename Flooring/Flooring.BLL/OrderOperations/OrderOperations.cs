@@ -73,8 +73,8 @@ namespace Flooring.BLL.OrderOperations
 
             string[] inputSplit = userInput.Split(',');
 
-            _currentOrder.FirstName = inputSplit[0];
-            _currentOrder.LastName = inputSplit[1];
+            tempOrder.FirstName = inputSplit[0];
+            tempOrder.LastName = inputSplit[1];
 
             int orderArea;
             if (!int.TryParse(inputSplit[4], out orderArea))
@@ -89,20 +89,20 @@ namespace Flooring.BLL.OrderOperations
                 response.Message = "Please enter a positive number for area!";
                 return response;
             }
-            _currentOrder.OrderArea = orderArea;
+            tempOrder.OrderArea = orderArea;
             
             Product p = GetProduct(inputSplit[3]);
-            _currentOrder.ProductType = p.ProductType;
-            _currentOrder.CostperSqFt = p.CostperSqFt;
-            _currentOrder.LaborperSqFt = p.LaborperSqFt;
+            tempOrder.ProductType = p.ProductType;
+            tempOrder.CostperSqFt = p.CostperSqFt;
+            tempOrder.LaborperSqFt = p.LaborperSqFt;
 
             State s = GetState(inputSplit[2]);
-            _currentOrder.StateAbbr = s.Abbr;
-            _currentOrder.StateFull = s.FullName;
-            _currentOrder.TaxRate = s.TaxRate;
-            _currentOrder.OrderDate = DateTime.Today;
-            _currentOrder.OrderNumber = repo.GetAllOrderByDate(_currentOrder.OrderDate).Count + 1;
-
+            tempOrder.StateAbbr = s.Abbr;
+            tempOrder.StateFull = s.FullName;
+            tempOrder.TaxRate = s.TaxRate;
+            tempOrder.OrderDate = DateTime.Today;
+            tempOrder.OrderNumber = repo.GetAllOrderByDate(tempOrder.OrderDate).Count + 1;
+            repo.CreateOrder(tempOrder);
 
             return response;
         }

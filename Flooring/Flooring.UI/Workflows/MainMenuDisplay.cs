@@ -50,7 +50,9 @@ namespace Flooring.UI.Workflows
                     orderDisplay.Execute();
                     break;
                 case "2":
-
+                    AddOrderWorkFlow addOrder = new AddOrderWorkFlow();
+                    addOrder.Execute();
+                    break;
                 case "3":
                     //AddOrderWorkflow 
                     
