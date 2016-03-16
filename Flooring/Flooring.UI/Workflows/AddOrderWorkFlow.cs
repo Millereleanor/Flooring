@@ -12,6 +12,7 @@ namespace Flooring.UI.Workflows
     {
         public int productID;
         public int areanum;
+        public string stateabbr;
         private int[] products = { 1, 2, 3, 4 };
         private bool validproduct = false;
 
@@ -41,8 +42,18 @@ namespace Flooring.UI.Workflows
                     }
                 } while (last == "");
 
+            do
+            {
+                Console.Write("Please enter the state abbreviation you are ordering from: ");
+                stateabbr = Console.ReadLine();
 
-                do
+                if (stateabbr == "" || stateabbr.Length>3)
+                {
+                    Console.WriteLine("Please enter a valid state abbreviation: ");
+                }
+            } while (stateabbr == "" || stateabbr.Length>3);
+
+            do
                 {
                     Console.Write("Please enter the Product Type you would like to order: ");
                     Console.WriteLine("1. Cherrywood Flooring: ");
@@ -76,7 +87,7 @@ namespace Flooring.UI.Workflows
                     }
                 } while (areanum == 0);
 
-                string ordertemp = String.Format(first + ',' + last + ',' + productID + ',' + areanum);
+                string ordertemp = String.Format(first + ',' + last + ','+stateabbr+','+ productID + ',' + areanum);
                 return ordertemp;
 
         }
