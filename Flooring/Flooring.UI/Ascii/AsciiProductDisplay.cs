@@ -71,4 +71,4 @@ Labor:       $2.10 per SqFt           $2.10 per SqFt           $4.15 per SqFt   
         }
 
     }
-}
+
