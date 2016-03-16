@@ -77,8 +77,8 @@ namespace Flooring.Data
             {
                 dayString = "0" + day;
             }
-
-            String fileName = "Orders_" + monthString + dayString + order.OrderDate.Year + ".txt";
+            string folderName = ConfigurationManager.AppSettings["FileName"];
+            String fileName = folderName + "Orders_" + monthString + dayString + order.OrderDate.Year + ".txt";
             
             if (File.Exists(fileName))
             {
@@ -94,7 +94,9 @@ namespace Flooring.Data
             {
                 File.Create(fileName);
                 TextWriter tw = new StreamWriter(fileName);
-                tw.WriteLine("{0},{1},{2} {3},{4},{5},{6},{7},{8},{9},{10},{11}",order.OrderNumber,order.FirstName,order.LastName,order.StateAbbr,order.StateFull,order.TaxRate,order.ProductType,order.OrderArea,order.CostperSqFt,order.LaborperSqFt,order.TaxTotal,order.OrderTotal);
+                tw.WriteLine("{0},{1},{2} {3},{4},{5},{6},{7},{8},{9},{10},{11}",
+                    order.OrderNumber,order.FirstName,order.LastName,order.StateAbbr,order.StateFull,
+                    order.TaxRate,order.ProductType,order.OrderArea,order.CostperSqFt,order.LaborperSqFt,order.TaxTotal,order.OrderTotal);
                 tw.Close();
             }
             return null;
