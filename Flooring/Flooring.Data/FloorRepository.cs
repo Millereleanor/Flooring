@@ -77,7 +77,7 @@ namespace Flooring.Data
                 dayString = "0" + day;
             }
 
-            String fileName = "Orders_"+ monthString+ dayString + order.OrderDate.Year+".txt"
+            String fileName = "Orders_" + monthString + dayString + order.OrderDate.Year + ".txt";
             
             if (File.Exists(fileName)==true)
             {
