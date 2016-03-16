@@ -62,51 +62,80 @@ namespace Flooring.BLL.OrderOperations
             return response;
         }
 
-        //public Response AddOrder(string[] userInput)
-        //{
+        public Response AddOrder(string userInput)
+        {
 
-        //    var repo = new MockFloorRepository();
+            var repo = new FloorRepository();
 
-        //    var response = new Response();
+            var response = new Response();
 
-        //    Order tempOrder = new Order();
+            Order tempOrder = new Order();
 
-        //    string[] nameSplit = userInput[0].Split(' ');
+            string[] inputSplit = userInput.Split(',');
 
-        //    _currentOrder.FirstName = nameSplit[0];
-        //    _currentOrder.LastName = nameSplit[1];
-        //    //State state = GetState();
-        //    //_currentOrder.StateAbbr = state.Abbr;
+            _currentOrder.FirstName = inputSplit[0];
+            _currentOrder.LastName = inputSplit[1];
+            //State state = GetState();
+            //_currentOrder.StateAbbr = state.Abbr;
 
-        //    int orderArea;
-        //    if (!int.TryParse(userInput[3], out orderArea))
-        //    {
-        //        response.Success = false;
-        //        response.Message = String.Format("The area {0} is not a number!", userInput[3]);
-        //        return response;
-        //    }
-        //    if (orderArea < 0)
-        //    {
-        //        response.Success = false;
-        //        response.Message = "Please enter a positive number for area!";
-        //        return response;
-        //    }
-        //    _currentOrder.OrderArea = orderArea;
-        //    Product p = PopulateProdut(userInput[2]);
-        //    decimal totalBeforeTax = CalculateCost(p, orderArea);
-        //    //_currentOrder.TaxTotal = CalculateTax(totalBeforeTax, _currentOrder.StateAbbr);
-        //    return response;
-        //}
+            int orderArea;
+            if (!int.TryParse(inputSplit[3], out orderArea))
+            {
+                response.Success = false;
+                response.Message = String.Format("The area {0} is not a number!", inputSplit[3]);
+                return response;
+            }
+            if (orderArea < 0)
+            {
+                response.Success = false;
+                response.Message = "Please enter a positive number for area!";
+                return response;
+            }
+            _currentOrder.OrderArea = orderArea;
+            
+            Product p = GetProduct(inputSplit[2]);
+            _currentOrder.ProductType = p.ProductType;
+            _currentOrder.CostperSqFt = p.CostperSqFt;
+            _currentOrder.LaborperSqFt = p.LaborperSqFt;
 
-        //private Product PopulateProdut(string productType)
-        //{
-        //    switch (productType)
-        //    {
-        //        case "1":
-        //            return null;
-        //    }
-        //    return null;
-        //}
+            State s = GetState()
+
+            _currentOrder.OrderNumber = repo.GetAllOrders().Count + 1;
+            _currentOrder.OrderDate = DateTime.Today;
+
+
+            return response;
+        }
+
+        private Product GetProduct(string productType)
+        {
+            Product p = new Product();
+            switch (productType)
+            {
+                case "1":
+                    p.ProductType="Cherrywood Flooring";
+                    p.CostperSqFt = 15.00m;
+                    p.LaborperSqFt = 10.00m;
+                    return p;
+                case "2":
+                    p.ProductType="Plush Carpet";
+                    p.CostperSqFt = 5.00m;
+                    p.LaborperSqFt = 2.00m;
+                    return p;
+                case "3":
+                    p.ProductType="Shiny Laminant";
+                    p.CostperSqFt = 3.00m;
+                    p.LaborperSqFt = 1.00m;
+                    return p;
+                case "4":
+                    p.ProductType="Blingy Granite";
+                    p.CostperSqFt = 30.00m;
+                    p.LaborperSqFt = 15.00m;
+                    return p;
+                default:
+                    return null;
+            }
+        }
 
         //private decimal CalculateCost(Product p, int area)
         //{

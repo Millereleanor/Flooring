@@ -68,7 +68,7 @@ namespace Flooring.Data
             //find all txt files
             //run ReadOrders() for all the txt files
             //display files based on catigory of date
-            throw new NotImplementedException();
+            return orders;
         }
 
         public List<Order> GetAllOrderByDate(DateTime date)
