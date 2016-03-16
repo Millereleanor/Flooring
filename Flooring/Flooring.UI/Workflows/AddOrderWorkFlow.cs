@@ -47,7 +47,7 @@ namespace Flooring.UI.Workflows
 
             do
             {
-                Console.Write("Please enter the state abbreviation you are ordering from: ");
+                Console.WriteLine("Please enter the state abbreviation you are ordering from: ");
 
                 Console.WriteLine("1. Ohio: ");
                 Console.WriteLine("2. Pennsylvania: ");
@@ -73,7 +73,7 @@ namespace Flooring.UI.Workflows
             {
                 AsciiProductDisplay disp = new AsciiProductDisplay();
                 disp.DisplayCatalog(productID);
-                Console.Write("Please enter the Product Type you would like to order: ");
+                Console.WriteLine("Please enter the Product Type you would like to order: ");
                 Console.WriteLine("1. Plush Carpet: ");
                 Console.WriteLine("2. Shiny Laminant: ");
                 Console.WriteLine("3. Gorgeous Tile:  ");
