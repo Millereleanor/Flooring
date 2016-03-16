@@ -17,7 +17,7 @@ namespace Flooring.Data
         //get dictionary list 
                 //group by date then print out orderinfo
 
-        public Order CreateOrder(DateTime date, Order order)
+        public Order CreateOrder(Order order)
         {
             throw new NotImplementedException();
         }

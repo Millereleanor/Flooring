@@ -6,7 +6,7 @@ namespace Flooring.Data
 {
     public interface IFloorRepository
     {
-        Order CreateOrder(DateTime date, Order order);
+        Order CreateOrder(Order order);
         Dictionary<DateTime, List<Order>> GetAllOrders();
         List<Order> GetAllOrderByDate(DateTime date);
         Order GetOrderByDateId(DateTime date, int orderId);

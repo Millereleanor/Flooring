@@ -58,7 +58,7 @@ namespace Flooring.Data
 
         }
 
-        public Order CreateOrder(DateTime date, Order order)
+        public Order CreateOrder(Order order)
         {
             throw new NotImplementedException();
         }
@@ -83,8 +83,12 @@ namespace Flooring.Data
 
         public void UpdateOrder(DateTime date, int orderId, Order updateOrder)
         {
-
-            throw new NotImplementedException();
+            //need test will it mess up
+            //var order = GetAllOrderByDate(date);
+            //for (int i = 0; i < order.Count; i++)
+            //{
+            //    if()
+            //}
         }
 
         public void RemoveOrder(DateTime date, int orderId)
