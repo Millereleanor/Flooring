@@ -66,6 +66,15 @@ namespace Flooring.UI.Workflows
                 Console.ReadLine();
             }
         }
+
+        private static Random _randomColor = new Random();
+
+        private static ConsoleColor GetRandomConsoleColor()
+        {
+            var consoleColors = Enum.GetValues(typeof(ConsoleColor));
+            return (ConsoleColor)consoleColors.GetValue(_randomColor.Next(0, 5));
+        }
+
         private void PrintOrderInformation(Response response)
         {
             
@@ -76,20 +85,29 @@ namespace Flooring.UI.Workflows
             Console.WriteLine();
             foreach (var order in response.OrderList)
             {
-                Console.WriteLine("Order Information: ");
+                Console.ForegroundColor = GetRandomConsoleColor();
+                
+                Console.WriteLine();
+                Console.WriteLine("ORDER INFORMATION: ");
                 Console.WriteLine("=====================================");
-                Console.WriteLine("Order Number: {0}", order.OrderNumber);
-                Console.WriteLine("Customer Name: {0},{1}", order.LastName, order.FirstName);
-                Console.WriteLine("Order State: {0} ({1})          State Tax Rate: {2:P}",
+                Console.WriteLine("ORDER NUMBER: {0}", order.OrderNumber);
+                Console.WriteLine("CUSTOMER NAME: {0},{1}", order.LastName, order.FirstName);
+                Console.WriteLine("ORDER STATE: {0} ({1})          STATE TAX RATE: {2:P}",
                     order.StateAbbr, order.StateFull, order.TaxRate);
-                Console.WriteLine("Product Type: {0}                  Order Area: {1}", order.ProductType, order.OrderArea);
-                Console.WriteLine("Material Cost per Ft^2: {0}        Labor Cost per Ft^2: {1}",
+                Console.WriteLine("PRODUCT TYPE: {0}                  ORDER AREA: {1}", order.ProductType, order.OrderArea);
+                Console.WriteLine("MATERIAL COST PER Ft^2: {0}        LABOR COST PER Ft^2: {1}",
                     order.CostperSqFt, order.LaborperSqFt);
-                Console.WriteLine("Order Total: {0:C}", order.OrderTotal+order.TaxTotal);
+                Console.WriteLine("ORDER TOTAL: {0:C}", 
+                    order.OrderTotal+order.TaxTotal);
                 Console.WriteLine();
                 
+                
             }
+            
+            Console.WriteLine("Please press enter to continue...");
             Console.ReadLine();
+            Console.ResetColor();
+            Console.Clear();
         }
 
 
