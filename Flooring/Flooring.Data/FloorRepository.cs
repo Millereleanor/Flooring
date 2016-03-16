@@ -63,12 +63,12 @@ namespace Flooring.Data
             //check if date exist
             //if yes update
             //if no create 
-           
+
             int month = order.OrderDate.Month;
             string monthString = order.OrderDate.Month.ToString();
             if (month <= 9)
             {
-                monthString =  "0" + month;
+                monthString = "0" + month;
             }
             int day = order.OrderDate.Day;
             string dayString = order.OrderDate.Day.ToString();
@@ -78,19 +78,19 @@ namespace Flooring.Data
             }
 
             String fileName = "Orders_" + monthString + dayString + order.OrderDate.Year + ".txt";
-            
-            if (File.Exists(fileName)==true)
+
+            if (File.Exists(fileName) == true)
             {
                 //add to txt
             }
             //creat new txt
             using (File.Create(fileName))
             {
-                
-            }
+                return null;
         }
+    }
 
-        Dictionary<DateTime, List<Order>> IFloorRepository.GetAllOrders()
+    Dictionary<DateTime, List<Order>> IFloorRepository.GetAllOrders()
         {
             //find all txt files
             //run ReadOrders() for all the txt files
