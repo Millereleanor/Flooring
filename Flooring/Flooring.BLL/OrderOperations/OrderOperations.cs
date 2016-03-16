@@ -100,9 +100,8 @@ namespace Flooring.BLL.OrderOperations
             _currentOrder.StateAbbr = s.Abbr;
             _currentOrder.StateFull = s.FullName;
             _currentOrder.TaxRate = s.TaxRate;
-
-            _currentOrder.OrderNumber = repo.GetAllOrders().Count + 1;
             _currentOrder.OrderDate = DateTime.Today;
+            _currentOrder.OrderNumber = repo.GetAllOrderByDate(_currentOrder.OrderDate).Count + 1;
 
 
             return response;
