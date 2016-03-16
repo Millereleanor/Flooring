@@ -75,14 +75,12 @@ namespace Flooring.BLL.OrderOperations
 
             _currentOrder.FirstName = inputSplit[0];
             _currentOrder.LastName = inputSplit[1];
-            //State state = GetState();
-            //_currentOrder.StateAbbr = state.Abbr;
 
             int orderArea;
-            if (!int.TryParse(inputSplit[3], out orderArea))
+            if (!int.TryParse(inputSplit[4], out orderArea))
             {
                 response.Success = false;
-                response.Message = String.Format("The area {0} is not a number!", inputSplit[3]);
+                response.Message = String.Format("The area {0} is not a number!", inputSplit[4]);
                 return response;
             }
             if (orderArea < 0)
@@ -93,12 +91,15 @@ namespace Flooring.BLL.OrderOperations
             }
             _currentOrder.OrderArea = orderArea;
             
-            Product p = GetProduct(inputSplit[2]);
+            Product p = GetProduct(inputSplit[3]);
             _currentOrder.ProductType = p.ProductType;
             _currentOrder.CostperSqFt = p.CostperSqFt;
             _currentOrder.LaborperSqFt = p.LaborperSqFt;
 
-            State s = GetState()
+            State s = GetState(inputSplit[2]);
+            _currentOrder.StateAbbr = s.Abbr;
+            _currentOrder.StateFull = s.FullName;
+            _currentOrder.TaxRate = s.TaxRate;
 
             _currentOrder.OrderNumber = repo.GetAllOrders().Count + 1;
             _currentOrder.OrderDate = DateTime.Today;
@@ -132,6 +133,36 @@ namespace Flooring.BLL.OrderOperations
                     p.CostperSqFt = 30.00m;
                     p.LaborperSqFt = 15.00m;
                     return p;
+                default:
+                    return null;
+            }
+        }
+
+        private State GetState(string state)
+        {
+            State s = new State();
+            switch (state)
+            {
+                case "1":
+                    s.FullName = "Ohio";
+                    s.Abbr = "OH";
+                    s.TaxRate = .07m;
+                    return s;
+                case "2":
+                    s.FullName = "Florida";
+                    s.Abbr = "FL";
+                    s.TaxRate = .03m;
+                    return s;
+                case "3":
+                    s.FullName = "Illinois";
+                    s.Abbr = "IL";
+                    s.TaxRate = .09m;
+                    return s;
+                case "4":
+                    s.FullName = "Alaska";
+                    s.Abbr = "AK";
+                    s.TaxRate = .01m;
+                    return s;
                 default:
                     return null;
             }
