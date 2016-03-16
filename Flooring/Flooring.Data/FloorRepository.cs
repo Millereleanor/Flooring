@@ -19,20 +19,19 @@ namespace Flooring.Data
             ReadOrders();
         }
 
-        private void ReadOrders()
+        private void ReadOrders()   //Populates Dictionary Key DATE Value List<Orders>
         {
             //todo: Read directory, get all FIles, Match contains 'Order_.txt'
             //todo: Parse out date from file name
             //todo: read file
             string filePath = ConfigurationManager.AppSettings["FileName"];
 
-            var newOrder = new Order();
-
             List<Order> orderList = new List<Order>();
 
             var reader = File.ReadAllLines(filePath);
             for (int i = 1; i < reader.Length; i++)
             {
+                var newOrder = new Order();
                 var columns = reader[i].Split(',');
 
 
