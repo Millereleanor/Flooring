@@ -51,13 +51,14 @@ namespace Flooring.UI.Workflows
                     break;
                 case "2":
 
+                case "3":
+                    //AddOrderWorkflow 
+                    
+
+                case "4":
                     Console.WriteLine("This feature is not implemented yet!");
                     Console.WriteLine("Press enter to continue");
                     Console.ReadLine();
-                    break;
-                case "3":
-                    break;
-                case "4":
                     break;
                 default:
                     Console.WriteLine("{0} is not valid", choice);
