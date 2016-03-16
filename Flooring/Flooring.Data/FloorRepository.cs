@@ -21,7 +21,7 @@ namespace Flooring.Data
 
         public FloorRepository(DateTime orderDate)
         {
-            ReadOrders(orderDate);
+            //ReadOrders(orderDate);
         }
 
         private void ReadOrders(DateTime orderDate)   //Populates Dictionary Key DATE Value List<Orders>
@@ -29,37 +29,40 @@ namespace Flooring.Data
             //todo: Read directory, get all FIles, Match contains 'Order_.txt'
             //todo: Parse out date from file name
             //todo: read file
-            string fileName = GetPath(orderDate);
-            List<Order> orderList = new List<Order>();
 
-            var reader = File.ReadAllLines(fileName);
-            for (int i = 1; i < reader.Length; i++)
+            if (File.Exists(GetPath(orderDate)))
             {
-                var newOrder = new Order();
-                var columns = reader[i].Split(',');
+                string fileName = GetPath(orderDate);
+                List<Order> orderList = new List<Order>();
+
+                var reader = File.ReadAllLines(fileName);
+                for (int i = 1; i < reader.Length; i++)
+                {
+                    var newOrder = new Order();
+                    var columns = reader[i].Split(',');
 
 
-                string Name = columns[1];
-                string[] nameParts = Name.Split(' ');
-                newOrder.FirstName = nameParts[0];
-                newOrder.LastName = nameParts[1];
+                    string Name = columns[1];
+                    string[] nameParts = Name.Split(' ');
+                    newOrder.FirstName = nameParts[0];
+                    newOrder.LastName = nameParts[1];
 
-                newOrder.OrderNumber = int.Parse(columns[0]);
-                newOrder.OrderArea = int.Parse(columns[6]);
-                newOrder.ProductType = columns[5];
-                newOrder.StateAbbr = columns[2];
-                newOrder.StateFull = columns[3];
-                newOrder.CostperSqFt = decimal.Parse(columns[7]);
-                newOrder.LaborperSqFt = decimal.Parse(columns[8]);
-                newOrder.TaxRate = decimal.Parse(columns[4]);
-                orderList.Add(newOrder);
+                    newOrder.OrderNumber = int.Parse(columns[0]);
+                    newOrder.OrderArea = int.Parse(columns[6]);
+                    newOrder.ProductType = columns[5];
+                    newOrder.StateAbbr = columns[2];
+                    newOrder.StateFull = columns[3];
+                    newOrder.CostperSqFt = decimal.Parse(columns[7]);
+                    newOrder.LaborperSqFt = decimal.Parse(columns[8]);
+                    newOrder.TaxRate = decimal.Parse(columns[4]);
+                    orderList.Add(newOrder);
 
-                //newOrder.TaxTotal = decimal.Parse(columns[9]);
-                //newOrder.OrderTotal = decimal.Parse(columns[10]);
+                    //newOrder.TaxTotal = decimal.Parse(columns[9]);
+                    //newOrder.OrderTotal = decimal.Parse(columns[10]);
+                }
+
+                orders.Add(orderDate, orderList);
             }
-            
-            orders.Add(orderDate, orderList);
-
         }
 
         public Order CreateOrder(Order order)
@@ -73,7 +76,7 @@ namespace Flooring.Data
             if (File.Exists(fileName))
             {
                 //add to txt
-                TextWriter tw = new StreamWriter(fileName);
+                TextWriter tw = new StreamWriter(fileName,true);
                 tw.WriteLine("{0},{1} {2},{3},{4},{5},{6},{7},{8},{9},{10},{11}", 
                     order.OrderNumber, order.FirstName, order.LastName, order.StateAbbr, order.StateFull,
                     order.TaxRate, order.ProductType, order.OrderArea, order.CostperSqFt, order.LaborperSqFt, order.TaxTotal, order.OrderTotal);
@@ -82,8 +85,8 @@ namespace Flooring.Data
             //creat new txt
             if (!File.Exists(fileName)) 
             {
-                File.Create(fileName);
                 TextWriter tw = new StreamWriter(fileName);
+                tw.WriteLine("OrderNumber,Customer Name,State Abbreviation,State Name,TaxRate,Product type, Area, Cost/SQFT,Labor Cost/SQFT,Tax,and total");
                 tw.WriteLine("{0},{1} {2},{3},{4},{5},{6},{7},{8},{9},{10},{11}",
                     order.OrderNumber,order.FirstName,order.LastName,order.StateAbbr,order.StateFull,
                     order.TaxRate,order.ProductType,order.OrderArea,order.CostperSqFt,order.LaborperSqFt,order.TaxTotal,order.OrderTotal);
@@ -111,6 +114,15 @@ namespace Flooring.Data
             return fileName;
         }
 
+        public bool DictionaryContainsKey(DateTime orderDate)
+        {
+            if (orders.ContainsKey(orderDate))
+            {
+                return true;
+            }
+            return false;
+        }
+
         Dictionary<DateTime, List<Order>> IFloorRepository.GetAllOrders()
         {
             //find all txt files
@@ -121,6 +133,7 @@ namespace Flooring.Data
 
         public List<Order> GetAllOrderByDate(DateTime date)
         {
+            ReadOrders(date);
             if (orders.ContainsKey(date))
             {
                 return orders[date];

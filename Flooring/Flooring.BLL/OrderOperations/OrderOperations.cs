@@ -101,7 +101,16 @@ namespace Flooring.BLL.OrderOperations
             tempOrder.StateFull = s.FullName;
             tempOrder.TaxRate = s.TaxRate;
             tempOrder.OrderDate = DateTime.Today;
-            tempOrder.OrderNumber = repo.GetAllOrderByDate(tempOrder.OrderDate).Count + 1;
+
+            if (repo.DictionaryContainsKey(tempOrder.OrderDate))
+            {
+                tempOrder.OrderNumber = 1;
+            }
+            else
+            {
+                tempOrder.OrderNumber = (repo.GetAllOrderByDate(tempOrder.OrderDate).Count) + 1;
+            }
+
             repo.CreateOrder(tempOrder);
 
             return response;
