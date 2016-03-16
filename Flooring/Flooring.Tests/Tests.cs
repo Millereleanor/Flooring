@@ -17,12 +17,12 @@ namespace Flooring.Tests
         {
             var repo = new FloorRepository();
 
-            var orders = repo.GetAllOrders();
+            
             DateTime orderDate = DateTime.Parse("01/14/1992");
-
-            Assert.AreEqual(1, orders[orderDate].OrderNumber );
-            Assert.AreEqual("Elle Miller", orders[orderDate].FirstName + " " + orders[orderDate].LastName);
-            Assert.AreEqual(100,orders[orderDate].OrderArea);
+            var orders = repo.GetAllOrderByDate(orderDate);
+            Assert.AreEqual(1, orders[0].OrderNumber);
+            Assert.AreEqual("Elle Miller", orders[0].FirstName + " " + orders[0].LastName);
+           Assert.AreEqual(100,orders[0].OrderArea);
         }
     }
 }
