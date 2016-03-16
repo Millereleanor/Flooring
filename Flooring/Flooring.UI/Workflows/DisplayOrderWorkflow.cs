@@ -46,7 +46,7 @@ namespace Flooring.UI.Workflows
 
         public void DisplayOrderbyDate(DateTime Date)
         {
-            var ops = new OrderOperations();
+            var ops = new OrderOperations(Date);
             var response = ops.GetOrders(Date);
 
 

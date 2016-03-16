@@ -13,7 +13,7 @@ namespace Flooring.UI.Workflows
         public void DeleteOrder()
         {
 
-            OrderOperations op = new OrderOperations();
+            OrderOperations op = new OrderOperations(DateTime.Now);
 
             Console.Write("Are you sure you want to delete this order? (Yes/No): ");
             string input = Console.ReadLine();

@@ -103,7 +103,7 @@ namespace Flooring.UI.Workflows
             } while (areanum == 0);
 
             string ordertemp = String.Format(first + ',' + last + ',' + stateID + ',' + productID + ',' + areanum);
-            OrderOperations oop = new OrderOperations();
+            OrderOperations oop = new OrderOperations(DateTime.Now);
             oop.AddOrder(ordertemp);
             return ordertemp;
 

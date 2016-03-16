@@ -16,19 +16,23 @@ namespace Flooring.Data
 
         public FloorRepository()
         {
-            ReadOrders();
+            //ReadOrders();
         }
 
-        private void ReadOrders()   //Populates Dictionary Key DATE Value List<Orders>
+        public FloorRepository(DateTime orderDate)
+        {
+            ReadOrders(orderDate);
+        }
+
+        private void ReadOrders(DateTime orderDate)   //Populates Dictionary Key DATE Value List<Orders>
         {
             //todo: Read directory, get all FIles, Match contains 'Order_.txt'
             //todo: Parse out date from file name
             //todo: read file
-            string filePath = ConfigurationManager.AppSettings["FileName"];
-
+            string fileName = GetPath(orderDate);
             List<Order> orderList = new List<Order>();
 
-            var reader = File.ReadAllLines(filePath);
+            var reader = File.ReadAllLines(fileName);
             for (int i = 1; i < reader.Length; i++)
             {
                 var newOrder = new Order();
@@ -52,10 +56,9 @@ namespace Flooring.Data
 
                 //newOrder.TaxTotal = decimal.Parse(columns[9]);
                 //newOrder.OrderTotal = decimal.Parse(columns[10]);
-                newOrder = workingOrder;
             }
             
-            orders.Add(DateTime.Parse("01/14/1992"), orderList);
+            orders.Add(orderDate, orderList);
 
         }
 
@@ -65,26 +68,13 @@ namespace Flooring.Data
             //if yes update
             //if no create 
 
-            int month = order.OrderDate.Month;
-            string monthString = order.OrderDate.Month.ToString();
-            if (month <= 9)
-            {
-                monthString = "0" + month;
-            }
-            int day = order.OrderDate.Day;
-            string dayString = order.OrderDate.Day.ToString();
-            if (day <= 9)
-            {
-                dayString = "0" + day;
-            }
-            string folderName = ConfigurationManager.AppSettings["FileName"];
-            String fileName = folderName + "Orders_" + monthString + dayString + order.OrderDate.Year + ".txt";
+            string fileName = GetPath(order.OrderDate);
             
             if (File.Exists(fileName))
             {
                 //add to txt
                 TextWriter tw = new StreamWriter(fileName);
-                tw.WriteLine("{0},{1},{2} {3},{4},{5},{6},{7},{8},{9},{10},{11}", 
+                tw.WriteLine("{0},{1} {2},{3},{4},{5},{6},{7},{8},{9},{10},{11}", 
                     order.OrderNumber, order.FirstName, order.LastName, order.StateAbbr, order.StateFull,
                     order.TaxRate, order.ProductType, order.OrderArea, order.CostperSqFt, order.LaborperSqFt, order.TaxTotal, order.OrderTotal);
                 tw.Close();
@@ -94,12 +84,31 @@ namespace Flooring.Data
             {
                 File.Create(fileName);
                 TextWriter tw = new StreamWriter(fileName);
-                tw.WriteLine("{0},{1},{2} {3},{4},{5},{6},{7},{8},{9},{10},{11}",
+                tw.WriteLine("{0},{1} {2},{3},{4},{5},{6},{7},{8},{9},{10},{11}",
                     order.OrderNumber,order.FirstName,order.LastName,order.StateAbbr,order.StateFull,
                     order.TaxRate,order.ProductType,order.OrderArea,order.CostperSqFt,order.LaborperSqFt,order.TaxTotal,order.OrderTotal);
                 tw.Close();
             }
             return null;
+        }
+
+        private string GetPath(DateTime OrderDate)
+        {
+            int month = OrderDate.Month;
+            string monthString = OrderDate.Month.ToString();
+            if (month <= 9)
+            {
+                monthString = "0" + month;
+            }
+            int day = OrderDate.Day;
+            string dayString = OrderDate.Day.ToString();
+            if (day <= 9)
+            {
+                dayString = "0" + day;
+            }
+            string folderName = ConfigurationManager.AppSettings["FileName"];
+            string fileName = folderName + "Orders_" + monthString + dayString + OrderDate.Year + ".txt";
+            return fileName;
         }
 
         Dictionary<DateTime, List<Order>> IFloorRepository.GetAllOrders()

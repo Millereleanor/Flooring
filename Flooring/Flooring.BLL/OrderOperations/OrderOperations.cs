@@ -13,9 +13,9 @@ namespace Flooring.BLL.OrderOperations
         private Order _currentOrder;
         private IFloorRepository repo;
 
-        public OrderOperations()
+        public OrderOperations(DateTime orderDate)
         {
-            repo = new FloorRepository();
+            repo = new FloorRepository(orderDate);
 
         }
         public Response GetOrders(DateTime date)
