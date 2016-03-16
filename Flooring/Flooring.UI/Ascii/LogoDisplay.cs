@@ -10,7 +10,7 @@ namespace Flooring.UI.Ascii
     {
         public void DisplayLogoName()
         {
-            Console.SetWindowSize(100,40);
+            Console.SetWindowSize(120,40);
             Console.BackgroundColor=ConsoleColor.Gray;
             Console.ForegroundColor=ConsoleColor.DarkCyan;
             Console.Clear();

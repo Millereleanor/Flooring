@@ -23,6 +23,7 @@ namespace Flooring.UI.Workflows
         {
             string first;
             string last;
+            Console.Clear();
             do
             {
                 Console.Write("Please enter your first name: ");
