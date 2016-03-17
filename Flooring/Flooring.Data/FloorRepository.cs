@@ -158,9 +158,6 @@ namespace Flooring.Data
                 }
             }
             return null;
-
-
-
         }
 
         public void UpdateOrder(DateTime date, int orderId, Order updateOrder)
@@ -197,10 +194,6 @@ namespace Flooring.Data
             //    delate the file
             //}
             //do i need to dealat file if there is only one order???
-
-
-
-
         }
 
         public Dictionary<DateTime, Order> GetAllOrders()
@@ -238,5 +231,4 @@ namespace Flooring.Data
 //Order.Add(Order);
 
 //refrence from banking app.....
-
 

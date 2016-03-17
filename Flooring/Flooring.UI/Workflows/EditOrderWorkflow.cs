@@ -32,102 +32,109 @@ namespace Flooring.UI.Workflows
         {
             DisplayOrderWorkflow dispdatID = new DisplayOrderWorkflow();
             Date = dispdatID.GetOrderDateFromUser();
-            orderNumber = dispdatID.GetOrderNumberFromUser();
-            dispdatID.DisplayOrderbyDateID(Date, orderNumber);
-
-            Console.WriteLine("EDIT ORDER MENU: ");
-            Console.WriteLine("Press Enter if you want to skip a field");
-            Console.WriteLine("-----------------------------------------");
-            Console.WriteLine();
-            Console.Write("Please enter your first name: ");
-            input = Console.ReadLine();
-            if (input != "")
-            {
-                nfirst = input;
-            }
-            Console.Write("Please enter your last name: ");
-            input = Console.ReadLine();
-            if (input != "")
-            {
-                nlast = input;
-            }
-            Console.WriteLine("Please enter the state abbreviation you are ordering from: ");
-
-            Console.WriteLine("1. Ohio: ");
-            Console.WriteLine("2. Pennsylvania: ");
-            Console.WriteLine("3. Michigan:  ");
-            Console.WriteLine("4. Indiana:  ");
-            Console.Write("Please enter your choice: ");
-            string statestr = Console.ReadLine();
-            if (statestr != "")
-            {
-                do
-                {
-                    if (!int.TryParse(statestr, out stateID))
-                    {
-                        Console.WriteLine("Please choose a valid state by number: ");
-                    }
-                    if (states.Contains(stateID))
-                    {
-                        validstate = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please enter a valid state: ");
-                    }
-                } while (stateID == 0 && !validstate);
-            }
-
-
-
-            AsciiProductDisplay disp = new AsciiProductDisplay();
-            disp.DisplayCatalog(productID);
-            Console.WriteLine("Please enter the Product Type you would like to order: ");
-            Console.WriteLine("1. Plush Carpet: ");
-            Console.WriteLine("2. Shiny Laminant: ");
-            Console.WriteLine("3. Gorgeous Tile:  ");
-            Console.WriteLine("4. Cherrywood:  ");
-            Console.Write("Please enter your choice: ");
-            string product = Console.ReadLine();
-            if (product != "")
-            {
-                do
-                {
-                    if (!int.TryParse(product, out productID))
-                    {
-                        Console.WriteLine("Please enter a valid product type by number: ");
-                    }
-                    if (products.Contains(productID))
-                    {
-                        validproduct = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please enter a valid product type: ");
-                    }
-
-                } while (productID == 0 && !validproduct);
-            }
-
-
-            Console.Write("Please enter the area in square feet you would like to order: ");
-            string area = Console.ReadLine();
-            if (area != "")
-            {
-                do
-                {
-                    if (!int.TryParse(area, out areanum))
-                    {
-                        Console.WriteLine("Please enter a valid number of square feet: ");
-                    }
-                } while (areanum == 0);
-            }
-
-            string orderedit = String.Format(nfirst + ',' + nlast + ',' + stateID + ',' + productID + ',' + areanum);
             OrderOperations oop = new OrderOperations(Date);
-            //oop.EditOrder(ordertemp);
+            orderNumber = dispdatID.GetOrderNumberFromUser();
+            Response validOrderNumber = oop.GetSpecificOrder(orderNumber, Date);
+            
+            if (validOrderNumber.Success)
+            {
+                
+                dispdatID.DisplayOrderbyDateID(Date, orderNumber);
+
+                Console.WriteLine("EDIT ORDER MENU: ");
+                Console.WriteLine("Press Enter if you want to skip a field");
+                Console.WriteLine("-----------------------------------------");
+                Console.WriteLine();
+                Console.Write("Please enter your first name: ");
+                input = Console.ReadLine();
+                if (input != "")
+                {
+                    nfirst = input;
+                }
+                Console.Write("Please enter your last name: ");
+                input = Console.ReadLine();
+                if (input != "")
+                {
+                    nlast = input;
+                }
+                Console.WriteLine("Please enter the state abbreviation you are ordering from: ");
+
+                Console.WriteLine("1. Ohio: ");
+                Console.WriteLine("2. Pennsylvania: ");
+                Console.WriteLine("3. Michigan:  ");
+                Console.WriteLine("4. Indiana:  ");
+                Console.Write("Please enter your choice: ");
+                string statestr = Console.ReadLine();
+                if (statestr != "")
+                {
+                    do
+                    {
+                        if (!int.TryParse(statestr, out stateID))
+                        {
+                            Console.WriteLine("Please choose a valid state by number: ");
+                        }
+                        if (states.Contains(stateID))
+                        {
+                            validstate = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please enter a valid state: ");
+                        }
+                    } while (stateID == 0 && !validstate);
+                }
 
 
+                AsciiProductDisplay disp = new AsciiProductDisplay();
+                disp.DisplayCatalog(productID);
+                Console.WriteLine("Please enter the Product Type you would like to order: ");
+                Console.WriteLine("1. Plush Carpet: ");
+                Console.WriteLine("2. Shiny Laminant: ");
+                Console.WriteLine("3. Gorgeous Tile:  ");
+                Console.WriteLine("4. Cherrywood:  ");
+                Console.Write("Please enter your choice: ");
+                string product = Console.ReadLine();
+                if (product != "")
+                {
+                    do
+                    {
+                        if (!int.TryParse(product, out productID))
+                        {
+                            Console.WriteLine("Please enter a valid product type by number: ");
+                        }
+                        if (products.Contains(productID))
+                        {
+                            validproduct = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please enter a valid product type: ");
+                        }
+
+                    } while (productID == 0 && !validproduct);
+                }
+
+                Console.Write("Please enter the area in square feet you would like to order: ");
+                string area = Console.ReadLine();
+                if (area != "")
+                {
+                    do
+                    {
+                        if (!int.TryParse(area, out areanum))
+                        {
+                            Console.WriteLine("Please enter a valid number of square feet: ");
+                        }
+                    } while (areanum == 0);
+                }
+                string orderedit = String.Format(nfirst + ',' + nlast + ',' + stateID + ',' + productID + ',' + areanum);
+                oop.EditOrder(Date, orderNumber, orderedit);
+            }
+            else
+            {
+                Console.WriteLine(validOrderNumber.Message);
+                Console.WriteLine("Press enter to continue...");
+                Console.ReadLine();
+            }
         }
     }
 
