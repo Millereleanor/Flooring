@@ -33,7 +33,7 @@ namespace Flooring.Tests
             
 
             DateTime date = DateTime.Parse("01/14/1992");
-            var createOrder = repo.CreateOrder();
+           // var createOrder = repo.CreateOrder();
             //creat and order
             //check the order number
             //deleat an order

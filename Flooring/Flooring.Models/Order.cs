@@ -36,8 +36,10 @@ namespace Flooring.Models
         public override string ToString()
         {
 
-            return this.OrderNumber+ "," + this.FirstName+ "," + this.LastName+ "," + this.StateAbbr+ "," + this.StateFull+ "," +
-                    this.TaxRate+ "," + this.ProductType+ "," + this.OrderArea+ "," + this.CostperSqFt+ "," + this.LaborperSqFt+ "," + this.TaxTotal+ "," + this.OrderTotal
+            return this.OrderNumber + "," + this.FirstName + "," + this.LastName + "," + this.StateAbbr + "," +
+                   this.StateFull + "," +
+                   this.TaxRate + "," + this.ProductType + "," + this.OrderArea + "," + this.CostperSqFt + "," +
+                   this.LaborperSqFt + "," + this.TaxTotal + "," + this.OrderTotal;
         }
     }
 }

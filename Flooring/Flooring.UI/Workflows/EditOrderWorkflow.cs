@@ -18,8 +18,21 @@ namespace Flooring.UI.Workflows
         public int productID;
         public int areanum;
         public int stateID;
-        private int[] products = {1, 2, 3, 4};
-        private int[] states = {1, 2, 3, 4};
+        public enum Products
+        {
+            Carpet = 1,
+            Laminate = 2,
+            Tile = 3,
+            Cherrywood = 4
+        };
+
+        public enum States
+        {
+            Ohio = 1,
+            Pennsylvania = 2,
+            Michigan = 3,
+            Indiana = 4
+        };
         private bool validproduct = false;
         private bool validstate = false;
         public DateTime Date;
@@ -59,6 +72,7 @@ namespace Flooring.UI.Workflows
             Console.WriteLine("4. Indiana:  ");
             Console.Write("Please enter your choice: ");
             string statestr = Console.ReadLine();
+            States states;
             if (statestr != "")
             {
                 do
@@ -67,7 +81,7 @@ namespace Flooring.UI.Workflows
                     {
                         Console.WriteLine("Please choose a valid state by number: ");
                     }
-                    if (states.Contains(stateID))
+                    if (Enum.TryParse<States>(statestr, out states))
                     {
                         validstate = true;
                     }
@@ -79,7 +93,6 @@ namespace Flooring.UI.Workflows
             }
 
 
-
             AsciiProductDisplay disp = new AsciiProductDisplay();
             disp.DisplayCatalog(productID);
             Console.WriteLine("Please enter the Product Type you would like to order: ");
@@ -89,6 +102,7 @@ namespace Flooring.UI.Workflows
             Console.WriteLine("4. Cherrywood:  ");
             Console.Write("Please enter your choice: ");
             string product = Console.ReadLine();
+            Products products;
             if (product != "")
             {
                 do
@@ -97,7 +111,8 @@ namespace Flooring.UI.Workflows
                     {
                         Console.WriteLine("Please enter a valid product type by number: ");
                     }
-                    if (products.Contains(productID))
+                    
+                    if (Enum.TryParse<Products>(product, out products))
                     {
                         validproduct = true;
                     }
@@ -122,7 +137,16 @@ namespace Flooring.UI.Workflows
                     }
                 } while (areanum == 0);
             }
-
+            Console.WriteLine();
+            Console.WriteLine("EDITED ORDER");
+            Console.WriteLine("====================================================");
+            Console.WriteLine("CUSTOMER NAME: {0},{1}", nlast, nfirst);
+            Console.WriteLine("ORDERING STATE: {0}", ((States)stateID).ToString());
+            Console.WriteLine("PRODUCT TYPE: {0}", ((Products)productID).ToString());
+            Console.WriteLine("AREA ORDERED (in Sq Ft.): {0} Ft^2", areanum);
+            Console.WriteLine();
+            Console.WriteLine("Press enter to submit order: ");
+            Console.ReadLine();
             string orderedit = String.Format(nfirst + ',' + nlast + ',' + stateID + ',' + productID + ',' + areanum);
             OrderOperations oop = new OrderOperations(Date);
             //oop.EditOrder(ordertemp);
