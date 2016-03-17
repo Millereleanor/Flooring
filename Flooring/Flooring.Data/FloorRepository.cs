@@ -72,24 +72,24 @@ namespace Flooring.Data
             //if no create 
 
             string fileName = GetPath(order.OrderDate);
-            
+
             if (File.Exists(fileName))
             {
                 //add to txt
-                TextWriter tw = new StreamWriter(fileName,true);
-                tw.WriteLine("{0},{1} {2},{3},{4},{5},{6},{7},{8},{9},{10},{11}", 
+                TextWriter tw = new StreamWriter(fileName, true);
+                tw.WriteLine("{0},{1} {2},{3},{4},{5},{6},{7},{8},{9},{10},{11}",
                     order.OrderNumber, order.FirstName, order.LastName, order.StateAbbr, order.StateFull,
                     order.TaxRate, order.ProductType, order.OrderArea, order.CostperSqFt, order.LaborperSqFt, order.TaxTotal, order.OrderTotal);
                 tw.Close();
             }
             //creat new txt
-            if (!File.Exists(fileName)) 
+            if (!File.Exists(fileName))
             {
                 TextWriter tw = new StreamWriter(fileName);
                 tw.WriteLine("OrderNumber,Customer Name,State Abbreviation,State Name,TaxRate,Product type, Area, Cost/SQFT,Labor Cost/SQFT,Tax,and total");
                 tw.WriteLine("{0},{1} {2},{3},{4},{5},{6},{7},{8},{9},{10},{11}",
-                    order.OrderNumber,order.FirstName,order.LastName,order.StateAbbr,order.StateFull,
-                    order.TaxRate,order.ProductType,order.OrderArea,order.CostperSqFt,order.LaborperSqFt,order.TaxTotal,order.OrderTotal);
+                    order.OrderNumber, order.FirstName, order.LastName, order.StateAbbr, order.StateFull,
+                    order.TaxRate, order.ProductType, order.OrderArea, order.CostperSqFt, order.LaborperSqFt, order.TaxTotal, order.OrderTotal);
                 tw.Close();
             }
             return null;
@@ -144,7 +144,23 @@ namespace Flooring.Data
 
         public Order GetOrderByDateId(DateTime date, int orderId)
         {
-            throw new NotImplementedException();
+            
+            List<Order> orders = GetAllOrderByDate(date);
+            var results = from o in orders
+                select o;
+
+
+            foreach (var result in results)
+            {
+                if (result.OrderNumber == orderId)
+                {
+                    return result;
+                }
+            }
+            return null;
+
+
+
         }
 
         public void UpdateOrder(DateTime date, int orderId, Order updateOrder)
@@ -158,7 +174,7 @@ namespace Flooring.Data
             //        //write there input to file
             //        if ()
             //        {
-                        
+
             //        }
             //        break;
             //    }
@@ -167,9 +183,24 @@ namespace Flooring.Data
 
         public void RemoveOrder(DateTime date, int orderId)
         {
+            Order orderToRemove = GetOrderByDateId(date,orderId);
+            string orderToDeleat = orderToRemove.ToString();
+            string file = GetPath(date);
 
-            //deleat file
-            throw new NotImplementedException();
+            var linesInFile = File.ReadAllLines(file);
+            var keepLines = linesInFile.Where(line => !line.Contains(orderToDeleat));
+            File.WriteAllLines(file,keepLines);
+            //file .close?????
+
+            //if (file Data is 1||less)
+            //{
+            //    delate the file
+            //}
+            //do i need to dealat file if there is only one order???
+
+
+
+
         }
 
         public Dictionary<DateTime, Order> GetAllOrders()
