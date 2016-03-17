@@ -77,6 +77,7 @@ namespace Flooring.Data
             {
                 //add to txt
                 TextWriter tw = new StreamWriter(fileName, true);
+                //can make toString()
                 tw.WriteLine("{0},{1} {2},{3},{4},{5},{6},{7},{8},{9},{10},{11}",
                     order.OrderNumber, order.FirstName, order.LastName, order.StateAbbr, order.StateFull,
                     order.TaxRate, order.ProductType, order.OrderArea, order.CostperSqFt, order.LaborperSqFt, order.TaxTotal, order.OrderTotal);
@@ -87,6 +88,7 @@ namespace Flooring.Data
             {
                 TextWriter tw = new StreamWriter(fileName);
                 tw.WriteLine("OrderNumber,Customer Name,State Abbreviation,State Name,TaxRate,Product type, Area, Cost/SQFT,Labor Cost/SQFT,Tax,and total");
+                //can make todString()
                 tw.WriteLine("{0},{1} {2},{3},{4},{5},{6},{7},{8},{9},{10},{11}",
                     order.OrderNumber, order.FirstName, order.LastName, order.StateAbbr, order.StateFull,
                     order.TaxRate, order.ProductType, order.OrderArea, order.CostperSqFt, order.LaborperSqFt, order.TaxTotal, order.OrderTotal);
@@ -162,6 +164,11 @@ namespace Flooring.Data
 
         public void UpdateOrder(DateTime date, int orderId, Order updateOrder)
         {
+            Order orderToUpdate = GetOrderByDateId(date, orderId);
+            //take old order and convert to string
+            //take each spot in oreder and check if they are the same
+            //string oldOrder = order
+            return;
             ////need test will it mess up
             //var orderlist = GetAllOrderByDate(date);
             //for (int i = 0; i < orderlist.Count ; i++)
@@ -180,6 +187,7 @@ namespace Flooring.Data
 
         public void RemoveOrder(DateTime date, int orderId)
         {
+            //todo:may not work
             Order orderToRemove = GetOrderByDateId(date,orderId);
             string orderToDeleat = orderToRemove.ToString();
             string file = GetPath(date);
@@ -188,17 +196,15 @@ namespace Flooring.Data
             var keepLines = linesInFile.Where(line => !line.Contains(orderToDeleat));
             File.WriteAllLines(file,keepLines);
             //file .close?????
-
-            //if (file Data is 1||less)
-            //{
-            //    delate the file
-            //}
-            //do i need to dealat file if there is only one order???
+            if (keepLines.Count() <= 1)
+            {
+             File.Delete(file);   
+            }
         }
 
         public Dictionary<DateTime, Order> GetAllOrders()
         {
-
+            //todo:take this out its a duplicate
             return null;
             //return orders;
         }
@@ -206,6 +212,9 @@ namespace Flooring.Data
         //dictionary???
         public void WriteToFile(Dictionary<DateTime, Order> Order)
         {
+
+            //todo:take out interface???
+
             string filePath = ConfigurationManager.AppSettings["FileName"];
             using (StreamWriter writer = new StreamWriter(filePath, false))
             {
@@ -223,12 +232,4 @@ namespace Flooring.Data
     }
 }
 
-//todo:how do i write the date as the file name;
-//check if file exit
-//if not then make new one
-//if yes then update file  to a new line
-//do this with dictinary...
-//Order.Add(Order);
-
-//refrence from banking app.....
 
