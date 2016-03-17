@@ -12,9 +12,11 @@ namespace Flooring.UI.Workflows
     {
         public void DeleteOrder()
         {
-
-            OrderOperations op = new OrderOperations(DateTime.Now);
-
+            DisplayOrderWorkflow disp = new DisplayOrderWorkflow();
+            var Date =disp.GetOrderDateFromUser();
+            var OrderNumber =disp.GetOrderNumberFromUser();
+            disp.DisplayOrderbyDateID(Date,OrderNumber);
+           
             Console.Write("Are you sure you want to delete this order? (Yes/No): ");
             string input = Console.ReadLine();
             if (input.ToUpper() == "YES")

@@ -54,8 +54,9 @@ namespace Flooring.UI.Workflows
                     addOrder.Execute();
                     break;
                 case "3":
-                    //AddOrderWorkflow 
-                    
+                    EditOrderWorkflow editOrder = new EditOrderWorkflow();
+                    editOrder.Execute();
+                    break;
 
                 case "4":
                     Console.WriteLine("This feature is not implemented yet!");

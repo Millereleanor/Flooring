@@ -12,7 +12,7 @@ namespace Flooring.UI.Workflows
     public class DisplayOrderWorkflow
     {
         public DateTime Date;
-       
+        public int orderNumber;
         private Order _currentOrder;
        
         public void Execute()
@@ -24,7 +24,7 @@ namespace Flooring.UI.Workflows
 
         }
 
-        private DateTime GetOrderDateFromUser()
+        public DateTime GetOrderDateFromUser()
         {
             do
             {
@@ -42,7 +42,23 @@ namespace Flooring.UI.Workflows
             } while (true);
         }
 
+        public int GetOrderNumberFromUser()
+        {
+            do
+            {
+                Console.Clear();
+                Console.Write("Please enter the order number: ");
+                string numberoforder = Console.ReadLine();
 
+                if (int.TryParse(numberoforder, out orderNumber))
+                {
+                    return orderNumber;
+                }
+                Console.WriteLine("That is not a valid order number");
+                Console.WriteLine("Press enter to continue...");
+                Console.ReadLine();
+            } while (true);
+        }
 
         public void DisplayOrderbyDate(DateTime Date)
         {
@@ -67,6 +83,28 @@ namespace Flooring.UI.Workflows
             }
         }
 
+        public void DisplayOrderbyDateID(DateTime Date, int orderNumber)
+        {
+            var ops = new OrderOperations(Date);
+            var response = ops.GetSpecificOrder(orderNumber, Date);
+
+
+            if (response.Success)
+            {
+                _currentOrder = response.OrderInfo;
+                PrintOrderInformation(response);
+
+            }
+            else
+            {
+                Console.WriteLine("Error: ");
+                Console.WriteLine(response.Message);
+                Console.WriteLine("Move along...");
+                Console.ReadLine();
+            }
+        }
+
+
         private static Random _randomColor = new Random();
 
         private static ConsoleColor GetRandomConsoleColor()
@@ -75,7 +113,7 @@ namespace Flooring.UI.Workflows
             return (ConsoleColor)consoleColors.GetValue(_randomColor.Next(0, 5));
         }
 
-        private void PrintOrderInformation(Response response)
+        public void PrintOrderInformation(Response response)
         {
             
             Console.Clear();
