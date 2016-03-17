@@ -16,6 +16,7 @@ namespace Flooring.Data
 
         public FloorRepository()
         {
+           
             //ReadOrders();
         }
 
@@ -26,9 +27,9 @@ namespace Flooring.Data
 
         private void ReadOrders(DateTime orderDate)   //Populates Dictionary Key DATE Value List<Orders>
         {
-            //todo: Read directory, get all FIles, Match contains 'Order_.txt'
-            //todo: Parse out date from file name
-            //todo: read file
+            // Read directory, get all FIles, Match contains 'Order_.txt'
+            //Parse out date from file name
+            // read file
 
             if (File.Exists(GetPath(orderDate)))
             {
@@ -41,7 +42,7 @@ namespace Flooring.Data
                     var newOrder = new Order();
                     var columns = reader[i].Split(',');
 
-
+                    
                     string Name = columns[1];
                     string[] nameParts = Name.Split(' ');
                     newOrder.FirstName = nameParts[0];
@@ -63,6 +64,7 @@ namespace Flooring.Data
 
                 orders.Add(orderDate, orderList);
             }
+
         }
 
         public Order CreateOrder(Order order)
@@ -70,30 +72,20 @@ namespace Flooring.Data
             //check if date exist
             //if yes update
             //if no create 
-
-            string fileName = GetPath(order.OrderDate);
-
-            if (File.Exists(fileName))
+            if (orders.ContainsKey(order.OrderDate))
             {
-                //add to txt
-                TextWriter tw = new StreamWriter(fileName, true);
-                //can make toString()
-                tw.WriteLine("{0},{1} {2},{3},{4},{5},{6},{7},{8},{9},{10},{11}",
-                    order.OrderNumber, order.FirstName, order.LastName, order.StateAbbr, order.StateFull,
-                    order.TaxRate, order.ProductType, order.OrderArea, order.CostperSqFt, order.LaborperSqFt, order.TaxTotal, order.OrderTotal);
-                tw.Close();
+                int nextId = orders[order.OrderDate].Max(O => O.OrderNumber);
+                nextId++;
+                order.OrderNumber = nextId;
+                orders[order.OrderDate].Add(order);
             }
-            //creat new txt
-            if (!File.Exists(fileName))
+            else
             {
-                TextWriter tw = new StreamWriter(fileName);
-                tw.WriteLine("OrderNumber,Customer Name,State Abbreviation,State Name,TaxRate,Product type, Area, Cost/SQFT,Labor Cost/SQFT,Tax,and total");
-                //can make todString()
-                tw.WriteLine("{0},{1} {2},{3},{4},{5},{6},{7},{8},{9},{10},{11}",
-                    order.OrderNumber, order.FirstName, order.LastName, order.StateAbbr, order.StateFull,
-                    order.TaxRate, order.ProductType, order.OrderArea, order.CostperSqFt, order.LaborperSqFt, order.TaxTotal, order.OrderTotal);
-                tw.Close();
+                order.OrderNumber = 1;
+                orders.Add(order.OrderDate, new List<Order>() { order });
             }
+            this.WriteToFile(orders);
+
             return null;
         }
 
@@ -114,6 +106,8 @@ namespace Flooring.Data
             string folderName = ConfigurationManager.AppSettings["FileName"];
             string fileName = folderName + "Orders_" + monthString + dayString + OrderDate.Year + ".txt";
             return fileName;
+
+            
         }
 
         public bool DictionaryContainsKey(DateTime orderDate)
@@ -146,10 +140,10 @@ namespace Flooring.Data
 
         public Order GetOrderByDateId(DateTime date, int orderId)
         {
-            
+
             List<Order> orders = GetAllOrderByDate(date);
             var results = from o in orders
-                select o;
+                          select o;
 
 
             foreach (var result in results)
@@ -170,7 +164,27 @@ namespace Flooring.Data
             Order orderToUpdate = GetOrderByDateId(date, orderId);
             //take old order and convert to string
             //take each spot in oreder and check if they are the same
-            string oldOrder = order
+            for (var i = 0; i < orders[date].Count; i++)
+            {
+                if (orders[date][i].OrderNumber == orderId)
+                {
+                    orders[date][i] = updateOrder;
+                    break;
+                }
+            }
+            WriteToFile(orders);
+            //string oldOrder = orderToUpdate.ToString();
+            //string newOrderInfo = updateOrder.ToString();
+            //string file = GetPath(date);
+
+            //for (int i = 0; i < oldOrder.Length; i++)
+            //{
+            //    if (oldOrder[i] != newOrderInfo[i])
+            //    {
+            //        File.
+            //        //replace that info
+            //    }
+            //}
 
             ////need test will it mess up
             //var orderlist = GetAllOrderByDate(date);
@@ -190,21 +204,24 @@ namespace Flooring.Data
 
         public void RemoveOrder(DateTime date, int orderId)
         {
-            //todo:may not work
-            Order orderToRemove = GetOrderByDateId(date,orderId);
-            string orderToDeleat = orderToRemove.ToString();
-            string file = GetPath(date);
+            orders[date].Remove(orders[date].FirstOrDefault(o => o.OrderNumber == orderId));
+            WriteToFile(orders);
+           
 
-            var linesInFile = File.ReadAllLines(file);
-            var keepLines = linesInFile.Where(line => !line.Contains(orderToDeleat));
-            File.WriteAllLines(file,keepLines);
-            //file .close?????
+            //what elle had before...
+            //Order orderToRemove = GetOrderByDateId(date, orderId);
+            //string orderToDeleat = orderToRemove.ToString();
+            //string file = GetPath(date);
 
-            if (keepLines.Count() <= 1)
-            {
-             File.Delete(file);   
-            }
+            //var linesInFile = File.ReadAllLines(file);
+            //var keepLines = linesInFile.Where(line => !line.Contains(orderToDeleat));
+            //File.WriteAllLines(file, keepLines);
             
+            //if (keepLines.Count() <= 1)
+            //{
+            //    File.Delete(file);
+            //}
+         
         }
 
         public Dictionary<DateTime, Order> GetAllOrders()
@@ -215,27 +232,31 @@ namespace Flooring.Data
         }
 
         //dictionary???
-        public void WriteToFile(Dictionary<DateTime, Order> Order)
+        public void WriteToFile(Dictionary<DateTime, List<Order>> Order)
         {
 
-            //todo:take out interface???
 
-            string filePath = ConfigurationManager.AppSettings["FileName"];
-            using (StreamWriter writer = new StreamWriter(filePath, false))
+
+            foreach (var key in orders.Keys)
             {
-                {
-                    writer.WriteLine("");
 
-                    foreach (var order in Order)
-                    {
-                        // writer.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}", order, order.OrderArea, order.OrderDate);
-                    }
+                string fileName = GetPath(key);
+                TextWriter tw = new StreamWriter(fileName);
+                tw.WriteLine(
+                            "OrderNumber,Customer Name,State Abbreviation,State Name,TaxRate,Product type, Area, Cost/SQFT,Labor Cost/SQFT,Tax,and total");
+                foreach (Order order in orders[key])
+                {
+                    
+                    tw.WriteLine(order.ToString());
+
                 }
-                //    }
+                tw.Close();
             }
+
         }
     }
 }
+
 
 
 

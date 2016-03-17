@@ -47,7 +47,7 @@ namespace Flooring.Data
             throw new NotImplementedException();
         }
 
-        public void WriteToFile(Dictionary<DateTime, Order> Order)
+        public void WriteToFile(Dictionary<DateTime, List<Order>> Order)
         {
             throw new NotImplementedException();
         }
