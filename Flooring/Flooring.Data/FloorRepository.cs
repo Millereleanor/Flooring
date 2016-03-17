@@ -167,6 +167,10 @@ namespace Flooring.Data
 
         public void UpdateOrder(DateTime date, int orderId, Order updateOrder)
         {
+            Order orderToUpdate = GetOrderByDateId(date, orderId);
+            //take old order and convert to string
+            //take each spot in oreder and check if they are the same
+            string oldOrder = order
 
             ////need test will it mess up
             //var orderlist = GetAllOrderByDate(date);
