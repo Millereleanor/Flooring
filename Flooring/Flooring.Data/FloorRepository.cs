@@ -149,11 +149,19 @@ namespace Flooring.Data
 
         public void UpdateOrder(DateTime date, int orderId, Order updateOrder)
         {
-            //need test will it mess up
-            //var order = GetAllOrderByDate(date);
-            //for (int i = 0; i < order.Count; i++)
+            ////need test will it mess up
+            //var orderlist = GetAllOrderByDate(date);
+            //for (int i = 0; i < orderlist.Count ; i++)
             //{
-            //    if()
+            //    if (orderlist[i].OrderNumber == orderId)
+            //    {
+            //        //write there input to file
+            //        if ()
+            //        {
+                        
+            //        }
+            //        break;
+            //    }
             //}
         }
 
