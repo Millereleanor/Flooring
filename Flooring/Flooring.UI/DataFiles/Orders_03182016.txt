@@ -1,2 +1,0 @@
-OrderNumber,Customer Name,State Abbreviation,State Name,TaxRate,Product type, Area, Cost/SQFT,Labor Cost/SQFT,Tax,and total
-1,lkajf alsikdjf,FL,Florida,0.03,Shiny Laminant,93,3.00,1.00,11.1600,372.00

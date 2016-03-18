@@ -49,7 +49,7 @@ namespace Flooring.Data
                 {
                     var newOrder = new Order();
                     var columns = reader[i].Split(',');
-
+                    
                     
                     string Name = columns[1];
                     string[] nameParts = Name.Split(' ');
