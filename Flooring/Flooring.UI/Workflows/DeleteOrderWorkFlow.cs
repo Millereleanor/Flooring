@@ -17,18 +17,18 @@ namespace Flooring.UI.Workflows
             var OrderNumber =disp.GetOrderNumberFromUser();
             disp.DisplayOrderbyDateID(Date,OrderNumber);
            
-            Console.Write("Are you sure you want to delete this order? (Yes/No): ");
+            Console.Write("Are you sure you want to delete this order? (Y/N): ");
             string input = Console.ReadLine();
-            if (input.ToUpper() == "YES")
+            if (input.ToUpper() == "Y")
             {
                 //op.DeleteOrder(order);
-                Console.WriteLine("Press enter to continue... Goodbye!");
+                Console.WriteLine("Press enter to continue...");
                 Console.ReadLine();
                 MainMenuDisplay back = new MainMenuDisplay();
                 back.Display();
                 return;
             }
-            if (input.ToUpper() == "NO")
+            if (input.ToUpper() == "N")
             {
                 return;
             }
