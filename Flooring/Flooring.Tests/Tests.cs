@@ -38,6 +38,7 @@ namespace Flooring.Tests
 
             var o = repo.CreateOrder(new Order()
             {
+                OrderDate = orderDate,
                 FirstName = "jen",
                 LastName = "Miller",
                 ProductType = "wood",
@@ -74,6 +75,7 @@ namespace Flooring.Tests
 
             var o = repo.CreateOrder(new Order()
             {
+                OrderDate = orderDate,
                 FirstName = "jen",
                 LastName = "Miller",
                 ProductType = "wood",

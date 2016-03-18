@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,8 +17,13 @@ namespace Flooring.Data
 
         public FloorRepository()
         {
-           
-            //ReadOrders();
+            var files = Directory.GetFiles(ConfigurationManager.AppSettings["FileName"], "Orders_*.txt",
+                SearchOption.TopDirectoryOnly);
+            foreach (string file in files)
+            {
+                ReadOrders(file);
+            }
+            
         }
 
         public FloorRepository(DateTime orderDate)
@@ -25,18 +31,20 @@ namespace Flooring.Data
             //ReadOrders(orderDate);
         }
 
-        private void ReadOrders(DateTime orderDate)   //Populates Dictionary Key DATE Value List<Orders>
+        private void ReadOrders(string orderDate)   //Populates Dictionary Key DATE Value List<Orders>
         {
             // Read directory, get all FIles, Match contains 'Order_.txt'
             //Parse out date from file name
             // read file
-
-            if (File.Exists(GetPath(orderDate)))
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            if (File.Exists(orderDate))
             {
-                string fileName = GetPath(orderDate);
+                string fileName =orderDate;
                 List<Order> orderList = new List<Order>();
 
                 var reader = File.ReadAllLines(fileName);
+                var file = Path.GetFileName(fileName);
+                DateTime od = DateTime.ParseExact(file.Substring(7, 8),"MMddyyyy", provider);
                 for (int i = 1; i < reader.Length; i++)
                 {
                     var newOrder = new Order();
@@ -57,12 +65,13 @@ namespace Flooring.Data
                     newOrder.LaborperSqFt = decimal.Parse(columns[8]);
                     newOrder.TaxRate = decimal.Parse(columns[4]);
                     orderList.Add(newOrder);
+                    
 
                     //newOrder.TaxTotal = decimal.Parse(columns[9]);
                     //newOrder.OrderTotal = decimal.Parse(columns[10]);
                 }
 
-                orders.Add(orderDate, orderList);
+                orders.Add(od, orderList);
             }
 
         }
@@ -86,25 +95,14 @@ namespace Flooring.Data
             }
             this.WriteToFile(orders);
 
-            return null;
+            return order;
         }
 
         private string GetPath(DateTime OrderDate)
         {
-            int month = OrderDate.Month;
-            string monthString = OrderDate.Month.ToString();
-            if (month <= 9)
-            {
-                monthString = "0" + month;
-            }
-            int day = OrderDate.Day;
-            string dayString = OrderDate.Day.ToString();
-            if (day <= 9)
-            {
-                dayString = "0" + day;
-            }
+      
             string folderName = ConfigurationManager.AppSettings["FileName"];
-            string fileName = folderName + "Orders_" + monthString + dayString + OrderDate.Year + ".txt";
+            string fileName = folderName + "Orders_" + OrderDate.ToString("MMddyyyy") + ".txt";
             return fileName;
 
             
@@ -129,7 +127,7 @@ namespace Flooring.Data
 
         public List<Order> GetAllOrderByDate(DateTime date)
         {
-            ReadOrders(date);
+            //ReadOrders(date);
             if (orders.ContainsKey(date))
             {
                 return orders[date];
@@ -154,9 +152,6 @@ namespace Flooring.Data
                 }
             }
             return null;
-
-
-
         }
 
         public void UpdateOrder(DateTime date, int orderId, Order updateOrder)
@@ -164,6 +159,7 @@ namespace Flooring.Data
             Order orderToUpdate = GetOrderByDateId(date, orderId);
             //take old order and convert to string
             //take each spot in oreder and check if they are the same
+
             for (var i = 0; i < orders[date].Count; i++)
             {
                 if (orders[date][i].OrderNumber == orderId)
@@ -186,24 +182,13 @@ namespace Flooring.Data
             //    }
             //}
 
-            ////need test will it mess up
-            //var orderlist = GetAllOrderByDate(date);
-            //for (int i = 0; i < orderlist.Count ; i++)
-            //{
-            //    if (orderlist[i].OrderNumber == orderId)
-            //    {
-            //        //write there input to file
-            //        if ()
-            //        {
 
-            //        }
-            //        break;
-            //    }
-            //}
+        
         }
 
         public void RemoveOrder(DateTime date, int orderId)
         {
+
             orders[date].Remove(orders[date].FirstOrDefault(o => o.OrderNumber == orderId));
             WriteToFile(orders);
            
@@ -222,6 +207,7 @@ namespace Flooring.Data
             //    File.Delete(file);
             //}
          
+
         }
 
         public Dictionary<DateTime, Order> GetAllOrders()
@@ -256,7 +242,4 @@ namespace Flooring.Data
         }
     }
 }
-
-
-
 

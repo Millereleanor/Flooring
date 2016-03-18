@@ -63,21 +63,21 @@ namespace Flooring.UI.Workflows
         public void DisplayOrderbyDate(DateTime Date)
         {
             var ops = new OrderOperations(Date);
-            var response = ops.GetOrders(Date);
+            var getOrdersResponse = ops.GetOrders(Date);
 
 
-            if (response.Success)
+            if (getOrdersResponse.Success)
             {
-                _currentOrder = response.OrderInfo;
+                _currentOrder = getOrdersResponse.OrderInfo;
                 
                 
-                PrintOrderInformation(response);
+                PrintOrderInformation(getOrdersResponse);
 
             }
             else
             {
                 Console.WriteLine("Error: ");
-                Console.WriteLine(response.Message);
+                Console.WriteLine(getOrdersResponse.Message);
                 Console.WriteLine("Move along...");
                 Console.ReadLine();
             }

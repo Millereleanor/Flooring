@@ -18,6 +18,7 @@ namespace Flooring.UI.Workflows
         public int productID;
         public int areanum;
         public int stateID;
+
         public enum Products
         {
             Carpet = 1,
@@ -33,6 +34,7 @@ namespace Flooring.UI.Workflows
             Michigan = 3,
             Indiana = 4
         };
+
         private bool validproduct = false;
         private bool validstate = false;
         public DateTime Date;
@@ -45,136 +47,117 @@ namespace Flooring.UI.Workflows
         {
             DisplayOrderWorkflow dispdatID = new DisplayOrderWorkflow();
             Date = dispdatID.GetOrderDateFromUser();
-            orderNumber = dispdatID.GetOrderNumberFromUser();
-            dispdatID.DisplayOrderbyDateID(Date, orderNumber);
-
-            Console.WriteLine("EDIT ORDER MENU: ");
-            Console.WriteLine("Press Enter if you want to skip a field");
-            Console.WriteLine("-----------------------------------------");
-            Console.WriteLine();
-            Console.Write("Please enter your first name: ");
-            input = Console.ReadLine();
-            if (input != "")
-            {
-                nfirst = input;
-            }
-            Console.Write("Please enter your last name: ");
-            input = Console.ReadLine();
-            if (input != "")
-            {
-                nlast = input;
-            }
-            Console.WriteLine("Please enter the state abbreviation you are ordering from: ");
-
-            Console.WriteLine("1. Ohio: ");
-            Console.WriteLine("2. Pennsylvania: ");
-            Console.WriteLine("3. Michigan:  ");
-            Console.WriteLine("4. Indiana:  ");
-            Console.Write("Please enter your choice: ");
-            string statestr = Console.ReadLine();
-            States states;
-            if (statestr != "")
-            {
-                do
-                {
-                    if (!int.TryParse(statestr, out stateID))
-                    {
-                        Console.WriteLine("Please choose a valid state by number: ");
-                    }
-                    if (Enum.TryParse<States>(statestr, out states))
-                    {
-                        validstate = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please enter a valid state: ");
-                    }
-                } while (stateID == 0 && !validstate);
-            }
-
-
-            AsciiProductDisplay disp = new AsciiProductDisplay();
-            disp.DisplayCatalog(productID);
-            Console.WriteLine("Please enter the Product Type you would like to order: ");
-            Console.WriteLine("1. Plush Carpet: ");
-            Console.WriteLine("2. Shiny Laminant: ");
-            Console.WriteLine("3. Gorgeous Tile:  ");
-            Console.WriteLine("4. Cherrywood:  ");
-            Console.Write("Please enter your choice: ");
-            string product = Console.ReadLine();
-            Products products;
-            if (product != "")
-            {
-                do
-                {
-                    if (!int.TryParse(product, out productID))
-                    {
-                        Console.WriteLine("Please enter a valid product type by number: ");
-                    }
-                    
-                    if (Enum.TryParse<Products>(product, out products))
-                    {
-                        validproduct = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please enter a valid product type: ");
-                    }
-
-                } while (productID == 0 && !validproduct);
-            }
-
-
-            Console.Write("Please enter the area in square feet you would like to order: ");
-            string area = Console.ReadLine();
-            if (area != "")
-            {
-                do
-                {
-                    if (!int.TryParse(area, out areanum))
-                    {
-                        Console.WriteLine("Please enter a valid number of square feet: ");
-                    }
-                } while (areanum == 0);
-            }
-            Console.WriteLine();
-            Console.WriteLine("EDITED ORDER");
-            Console.WriteLine("====================================================");
-            Console.WriteLine("CUSTOMER NAME: {0},{1}", nlast, nfirst);
-            Console.WriteLine("ORDERING STATE: {0}", ((States)stateID).ToString());
-            Console.WriteLine("PRODUCT TYPE: {0}", ((Products)productID).ToString());
-            Console.WriteLine("AREA ORDERED (in Sq Ft.): {0} Ft^2", areanum);
-            Console.WriteLine();
-            Console.WriteLine("Press enter to submit order: ");
-            Console.ReadLine();
-            string orderedit = String.Format(nfirst + ',' + nlast + ',' + stateID + ',' + productID + ',' + areanum);
             OrderOperations oop = new OrderOperations(Date);
-            //oop.EditOrder(ordertemp);
+            orderNumber = dispdatID.GetOrderNumberFromUser();
+            Response validOrderNumber = oop.GetSpecificOrder(orderNumber, Date);
+
+            if (validOrderNumber.Success)
+            {
+                Console.WriteLine("EDIT ORDER MENU: ");
+                Console.WriteLine("Press Enter if you want to skip a field");
+                Console.WriteLine("-----------------------------------------");
+                Console.WriteLine();
+                Console.Write("Please enter your first name: ");
+                input = Console.ReadLine();
+                if (input != "")
+                {
+                    nfirst = input;
+                }
+                Console.Write("Please enter your last name: ");
+                input = Console.ReadLine();
+                if (input != "")
+                {
+                    nlast = input;
+                }
+                Console.WriteLine("Please enter the state abbreviation you are ordering from: ");
+
+                Console.WriteLine("1. Ohio: ");
+                Console.WriteLine("2. Pennsylvania: ");
+                Console.WriteLine("3. Michigan:  ");
+                Console.WriteLine("4. Indiana:  ");
+                Console.Write("Please enter your choice: ");
+                string statestr = Console.ReadLine();
+                States states;
+                if (statestr != "")
+                {
+                    do
+                    {
+                        if (!int.TryParse(statestr, out stateID))
+                        {
+                            Console.WriteLine("Please choose a valid state by number: ");
+                        }
+                        if (Enum.TryParse<States>(statestr, out states))
+                        {
+                            validstate = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please enter a valid state: ");
+                        }
+                    } while (stateID == 0 && !validstate);
+                }
 
 
+                AsciiProductDisplay disp = new AsciiProductDisplay();
+                disp.DisplayCatalog(productID);
+                Console.WriteLine("Please enter the Product Type you would like to order: ");
+                Console.WriteLine("1. Plush Carpet: ");
+                Console.WriteLine("2. Shiny Laminant: ");
+                Console.WriteLine("3. Gorgeous Tile:  ");
+                Console.WriteLine("4. Cherrywood:  ");
+                Console.Write("Please enter your choice: ");
+                string product = Console.ReadLine();
+                Products products;
+                if (product != "")
+                {
+                    do
+                    {
+                        if (!int.TryParse(product, out productID))
+                        {
+                            Console.WriteLine("Please enter a valid product type by number: ");
+                        }
+
+                        if (Enum.TryParse<Products>(product, out products))
+                        {
+                            validproduct = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please enter a valid product type: ");
+                        }
+
+                    } while (productID == 0 && !validproduct);
+                }
+
+
+                Console.Write("Please enter the area in square feet you would like to order: ");
+                string area = Console.ReadLine();
+                if (area != "")
+                {
+                    do
+                    {
+                        if (!int.TryParse(area, out areanum))
+                        {
+                            Console.WriteLine("Please enter a valid number of square feet: ");
+                        }
+                    } while (areanum == 0);
+                }
+                Console.WriteLine();
+                Console.WriteLine("EDITED ORDER");
+                Console.WriteLine("====================================================");
+                Console.WriteLine("CUSTOMER NAME: {0},{1}", nlast, nfirst);
+                Console.WriteLine("ORDERING STATE: {0}", ((States) stateID).ToString());
+                Console.WriteLine("PRODUCT TYPE: {0}", ((Products) productID).ToString());
+                Console.WriteLine("AREA ORDERED (in Sq Ft.): {0} Ft^2", areanum);
+                Console.WriteLine();
+                Console.WriteLine("Press enter to submit order: ");
+                Console.ReadLine();
+                string orderedit = String.Format(nfirst + ',' + nlast + ',' + stateID + ',' + productID + ',' + areanum);
+                //OrderOperations oop = new OrderOperations(Date);
+                oop.EditOrder(Date,orderNumber,orderedit);
+
+
+            }
         }
     }
-
-
-
-    //    //In Edit Method
-    //    //TODO: Ask User for a date
-    //    //TODO: Ask User for order
-    //    //TODO: Check to see if date and # are valid (Possibly in validInput(dateTime, int))
-    //    //TODO: Call GetOrder() in DisplayWorkflow
-    //    //TODO: Display the Order recieved
-    //    //TODO: Displays the variables to be edited (Name, State, Product Type, Area
-    //    //TODO: Asks User if they want to edit or just press enter to keep previous data
-    //    //TODO: Send to BLL passthrough to data with each iteration (in loop)
-    //    //TODO: Display new (After Edited) order
-    //    //TODO: Ask if user would like to edit another order
-
-
 }
-
-    
-
-
-
-
-
