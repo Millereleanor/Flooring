@@ -9,9 +9,8 @@ namespace Flooring.Data
         Order CreateOrder(Order order);
 
         //Get all orders is duplicate of get all order by date...so no need
-        Dictionary<DateTime, List<Order>> GetAllOrders();
         List<Order> GetAllOrderByDate(DateTime date);
-
+        Dictionary<DateTime, List<Order>> GetAllOrders();
         Order GetOrderByDateId(DateTime date, int orderId);
         void UpdateOrder(DateTime date, int orderId, Order updateOrder);
         //todo:test remove order
