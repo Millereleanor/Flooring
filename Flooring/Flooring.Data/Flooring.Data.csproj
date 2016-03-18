@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FlooringRepositoryFactory.cs" />
     <Compile Include="FloorRepository.cs" />
     <Compile Include="IFloorRepository.cs" />
     <Compile Include="MockFloorRepository.cs" />

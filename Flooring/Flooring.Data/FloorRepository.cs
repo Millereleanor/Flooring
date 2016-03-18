@@ -200,7 +200,7 @@ namespace Flooring.Data
         }
 
         public void WriteToFile(Dictionary<DateTime, List<Order>> Order)
-        {
+        { 
 
             foreach (var key in orders.Keys)
             {
