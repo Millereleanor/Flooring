@@ -59,9 +59,8 @@ namespace Flooring.UI.Workflows
                     break;
 
                 case "4":
-                    Console.WriteLine("This feature is not implemented yet!");
-                    Console.WriteLine("Press enter to continue");
-                    Console.ReadLine();
+                    DeleteOrderWorkFlow deleteOrder = new DeleteOrderWorkFlow();
+                    deleteOrder.DeleteOrder();
                     break;
                 default:
                     Console.WriteLine("{0} is not valid", choice);

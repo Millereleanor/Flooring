@@ -12,19 +12,20 @@ namespace Flooring.Tests
     [TestFixture]
     public class Tests
     {
-        //testing the floor repo
+
         [Test]
         public void CanLoadOrder()
         {
             var repo = new FloorRepository();
 
-            
+
             DateTime orderDate = DateTime.Parse("01/14/1992");
             var orders = repo.GetAllOrderByDate(orderDate);
             Assert.AreEqual(1, orders[0].OrderNumber);
             Assert.AreEqual("Elle Miller", orders[0].FirstName + " " + orders[0].LastName);
-           Assert.AreEqual(100,orders[0].OrderArea);
+            Assert.AreEqual(100, orders[0].OrderArea);
         }
+
         [Test]
         public void CanAddOrder()
         {
@@ -34,7 +35,7 @@ namespace Flooring.Tests
             DateTime orderDate = DateTime.Parse("01/14/1992");
             var orders = repo.GetAllOrderByDate(orderDate);
 
-            int expectedCount = orders.Count +1;
+            int expectedCount = orders.Count + 1;
 
             var o = repo.CreateOrder(new Order()
             {
@@ -49,7 +50,7 @@ namespace Flooring.Tests
                 LaborperSqFt = 0,
                 OrderArea = 100
             });
-            
+
             var c = repo.GetAllOrderByDate(orderDate);
 
             Assert.AreEqual(expectedCount, c.Count);
@@ -58,7 +59,6 @@ namespace Flooring.Tests
             // var createOrder = repo.CreateOrder();
             //creat and order
             //check the order number
-            //deleat an order
             //checked the order count
         }
 
@@ -86,10 +86,10 @@ namespace Flooring.Tests
                 LaborperSqFt = 0,
                 OrderArea = 100
             });
-            repo.RemoveOrder(orderDate,o.OrderNumber);
+            repo.RemoveOrder(orderDate, o.OrderNumber);
             var c = repo.GetAllOrderByDate(orderDate);
 
-            Assert.AreEqual(expectedCount,c.Count);
+            Assert.AreEqual(expectedCount, c.Count);
 
 
             // var createOrder = repo.CreateOrder();
@@ -97,6 +97,45 @@ namespace Flooring.Tests
             //check the order number
             //deleat an order
             //checked the order count
+        }
+
+        //[Test]
+        //public void CanEditOrder()
+        //{
+        //    var repo = new FloorRepository();
+
+
+        //    DateTime orderDate = DateTime.Parse("01/14/1992");
+        //    var orders = repo.GetAllOrderByDate(orderDate);
+        //    var newOrder = new Order()
+        //    {
+        //        OrderDate = orderDate,
+        //        FirstName = "jill",
+        //        LastName = "bob",
+        //        StateAbbr = "OH",
+        //        StateFull = "Ohio",
+        //        TaxRate = 7,
+        //        ProductType = "Wood",
+        //        OrderArea = 100,
+        //        CostperSqFt =5,
+        //        LaborperSqFt = ,
+                
+                
+
+
+        //    };
+        //    var editedOrder = repo.UpdateOrder(orderDate, 1, newOrder);
+
+
+        //    //take an order
+        //    //edit a feild
+        //    //assert.are equal expected result and real result
+
+
+
+        //    var c = repo.GetAllOrderByDate(orderDate);
+
+        //    Assert.AreEqual(expectedCount, c.Count);
         }
     }
 }

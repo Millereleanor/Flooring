@@ -191,6 +191,27 @@ namespace Flooring.BLL.OrderOperations
             return response;
         }
 
+        public Response DeleteOrder(int orderNumber, DateTime date)
+        {
+            var repo = new FloorRepository();
+
+            var response = new Response();
+
+            var orders = repo.GetAllOrderByDate(date);
+            List<Order> orderList = new List<Order>();
+            if (orders.Count == 0)
+            {
+                response.Success = false;
+                response.Message = String.Format("ERROR: There were already 0 orders on {0}", date.ToShortDateString());
+                response.OrderList = orders;
+                return response;
+            }
+            repo.RemoveOrder(date,orderNumber);
+            response.Message = String.Format("Succesfully removed order {0} from {1}", orderNumber, date.ToShortDateString());
+            response.Success = true;
+            return response;
+        }
+
         private Product GetProduct(string productType)
         {
             Product p = new Product();
