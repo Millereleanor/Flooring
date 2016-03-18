@@ -14,7 +14,9 @@ namespace Flooring.UI.Workflows
         public DateTime Date;
         public int orderNumber;
         private Order _currentOrder;
-       
+        private string dateoforder;
+
+
         public void Execute()
         {
             DateTime Date = GetOrderDateFromUser();
@@ -29,17 +31,26 @@ namespace Flooring.UI.Workflows
             do
             {
                 Console.Clear();
-                Console.Write("Please enter the order date(MM/DD/YYYY or MM-DD-YYYY): ");
-                string dateoforder = Console.ReadLine();
-
+                Console.Write("Please enter the order date(MM/DD/YY or MM-DD-YY) or \"Q\" to quit: ");
+                dateoforder = Console.ReadLine();
+                if (dateoforder.ToUpper() == "Q")
+                {
+                    quit();
+                }
                 if (DateTime.TryParse(dateoforder, out Date))
                 {
                     return Date;
+                }
+                if (dateoforder.ToUpper() == "Q")
+                {
+                    MainMenuDisplay mm = new MainMenuDisplay();
+                    mm.Display();
                 }
                 Console.WriteLine("That is not a valid date");
                 Console.WriteLine("Press enter to continue...");
                 Console.ReadLine();
             } while (true);
+
         }
 
         public int GetOrderNumberFromUser()
@@ -49,6 +60,10 @@ namespace Flooring.UI.Workflows
                 Console.Clear();
                 Console.Write("Please enter the order number: ");
                 string numberoforder = Console.ReadLine();
+                if (numberoforder.ToUpper() == "Q")
+                {
+                    quit();
+                }
 
                 if (int.TryParse(numberoforder, out orderNumber))
                 {
@@ -149,6 +164,11 @@ namespace Flooring.UI.Workflows
             Console.Clear();
         }
 
+        public void quit()
+        {
+            MainMenuDisplay mm = new MainMenuDisplay();
+            mm.Display();
 
+        }
     }
 }
