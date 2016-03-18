@@ -9,7 +9,7 @@ namespace Flooring.Data
 {
     public class MockFloorRepository : IFloorRepository
     {
-       // Dictionary<date,string> orders = new Dictionary<date,string>();
+       private Dictionary<DateTime,List<Order>> orders = new Dictionary<DateTime,List<Order>>();
 
         //creat a dictionary using the key==date from the data file
 
@@ -19,12 +19,13 @@ namespace Flooring.Data
 
         public Order CreateOrder(Order order)
         {
-            throw new NotImplementedException();
+            orders[order.OrderDate].Add(order);
+            return order;
         }
 
         public Dictionary<DateTime, List<Order>> GetAllOrders()
         {
-            throw new NotImplementedException();
+            
         }
 
         public List<Order> GetAllOrderByDate(DateTime date)
@@ -46,11 +47,7 @@ namespace Flooring.Data
         {
             throw new NotImplementedException();
         }
-
-        public void WriteToFile(Dictionary<DateTime, List<Order>> Order)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 
     
