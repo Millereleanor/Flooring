@@ -52,6 +52,7 @@ namespace Flooring.UI.Workflows
             OrderOperations oop = new OrderOperations(Date);
             orderNumber = dispdatID.GetOrderNumberFromUser();
             Response validOrderNumber = oop.GetSpecificOrder(orderNumber, Date);
+            PrintOrderInformation(validOrderNumber);
 
             if (validOrderNumber.Success)
             {
@@ -104,7 +105,7 @@ namespace Flooring.UI.Workflows
                         {
                             Console.WriteLine("Please enter a valid state: ");
                         }
-                        state= ((States)stateID).ToString();
+                        state = ((States) stateID).ToString();
                     } while (stateID == 0 && !validstate);
                 }
                 else
@@ -116,7 +117,7 @@ namespace Flooring.UI.Workflows
                 disp.DisplayCatalog(productID);
                 Console.WriteLine("Please enter the Product Type you would like to order: ");
                 Console.WriteLine("1. Plush Carpet: ");
-                Console.WriteLine("2. Shiny Laminant: ");
+                Console.WriteLine("2. Shiny Laminate: ");
                 Console.WriteLine("3. Gorgeous Tile:  ");
                 Console.WriteLine("4. Cherrywood:  ");
                 Console.Write("Please enter your choice: ");
@@ -139,7 +140,7 @@ namespace Flooring.UI.Workflows
                         {
                             Console.WriteLine("Please enter a valid product type: ");
                         }
-                        product = ((Products)productID).ToString();
+                        product = ((Products) productID).ToString();
                     } while (productID == 0 && !validproduct);
                 }
 
@@ -179,6 +180,36 @@ namespace Flooring.UI.Workflows
                     Console.WriteLine("Press Enter to continue...");
                     Console.ReadLine();
                 }
+
+
+            }
+        }
+
+        public void PrintOrderInformation(Response response)
+        {
+
+            Console.Clear();
+            Console.WriteLine("Order Date: {0}", Date.ToShortDateString());
+            Console.WriteLine("{0} order(s) found on this date. ", response.OrderList.Count);
+            Console.WriteLine("******************************************************");
+            Console.WriteLine();
+            foreach (var order in response.OrderList)
+            {
+
+                Console.WriteLine();
+                Console.WriteLine("ORDER INFORMATION: ");
+                Console.WriteLine("=====================================");
+                Console.WriteLine("ORDER NUMBER: {0}", order.OrderNumber);
+                Console.WriteLine("CUSTOMER NAME: {0},{1}", order.LastName, order.FirstName);
+                Console.WriteLine("ORDER STATE: {0} ({1})          STATE TAX RATE: {2:P}",
+                    order.StateAbbr, order.StateFull, order.TaxRate);
+                Console.WriteLine("PRODUCT TYPE: {0}                  ORDER AREA: {1}", order.ProductType,
+                    order.OrderArea);
+                Console.WriteLine("MATERIAL COST PER Ft^2: {0}        LABOR COST PER Ft^2: {1}",
+                    order.CostperSqFt, order.LaborperSqFt);
+                Console.WriteLine("ORDER TOTAL: {0:C}",
+                    order.OrderTotal + order.TaxTotal);
+                Console.WriteLine();
 
 
             }
