@@ -18,7 +18,7 @@ namespace Flooring.Data
         void RemoveOrder(DateTime date, int orderId);
 
         //don't need write to file
-        void WriteToFile(Dictionary<DateTime, List<Order>> Order);
+       // void WriteToFile(Dictionary<DateTime, List<Order>> Order);
 
     }
 }

@@ -207,7 +207,7 @@ namespace Flooring.Data
         }
 
         //dictionary???
-        public void WriteToFile(Dictionary<DateTime, List<Order>> Order)
+        private void WriteToFile(Dictionary<DateTime, List<Order>> Order)
         {
 
 
