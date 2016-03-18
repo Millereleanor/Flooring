@@ -15,7 +15,7 @@ namespace Flooring.BLL.OrderOperations
 
         public OrderOperations(DateTime orderDate)
         {
-            repo = new FloorRepository(orderDate);
+            repo = new FloorRepository();
         }
         public Response GetOrders(DateTime date)
         {

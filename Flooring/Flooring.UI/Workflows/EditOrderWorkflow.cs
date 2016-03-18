@@ -158,6 +158,12 @@ namespace Flooring.UI.Workflows
 
 
             }
+            else
+            {
+                Console.WriteLine(validOrderNumber.Message);
+                Console.WriteLine("Press Enter to continue...");
+                Console.ReadLine();
+            }
         }
     }
 }
