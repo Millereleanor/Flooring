@@ -35,7 +35,7 @@ namespace Flooring.UI.Workflows
                 dateoforder = Console.ReadLine();
                 if (dateoforder.ToUpper() == "Q")
                 {
-                    quit();
+                    return DateTime.MinValue;
                 }
                 if (DateTime.TryParse(dateoforder, out Date))
                 {
@@ -62,7 +62,7 @@ namespace Flooring.UI.Workflows
                 string numberoforder = Console.ReadLine();
                 if (numberoforder.ToUpper() == "Q")
                 {
-                    quit();
+                    return -1;
                 }
 
                 if (int.TryParse(numberoforder, out orderNumber))

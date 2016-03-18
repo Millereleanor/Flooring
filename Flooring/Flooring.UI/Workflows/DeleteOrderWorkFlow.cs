@@ -14,8 +14,18 @@ namespace Flooring.UI.Workflows
         {
             DisplayOrderWorkflow disp = new DisplayOrderWorkflow();
             var Date = disp.GetOrderDateFromUser();
+
+            if (Date == DateTime.MinValue)
+            {
+                return;
+            }
             OrderOperations op = new OrderOperations(Date);
             var OrderNumber = disp.GetOrderNumberFromUser();
+
+            if (OrderNumber == -1)
+            {
+                return;
+            }
             Response response = op.GetSpecificOrder(OrderNumber, Date);
             PrintOrderInformation(response);
             if (response.Success)

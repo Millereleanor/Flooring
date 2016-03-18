@@ -31,10 +31,22 @@ namespace Flooring.UI.Workflows
         {
             DisplayOrderWorkflow dispdatID = new DisplayOrderWorkflow();
             Date = dispdatID.GetOrderDateFromUser();
+
+            if (Date == DateTime.MinValue)
+            {
+                return;
+            }
+
             OrderOperations oop = new OrderOperations(Date);
             List<Product> prodList = oop.GetProductNames();
             List<string> stateList = oop.GetStateNames();
             orderNumber = dispdatID.GetOrderNumberFromUser();
+
+            if (orderNumber == -1)
+            {
+                return;
+            }
+
             Response validOrderNumber = oop.GetSpecificOrder(orderNumber, Date);
             
 
@@ -56,7 +68,7 @@ namespace Flooring.UI.Workflows
                 }
                 else if (input.ToUpper() == "Q")
                 {
-                    quit();
+                    return;
                 }
                 else
                 {
@@ -70,7 +82,7 @@ namespace Flooring.UI.Workflows
                 }
                 else if (input.ToUpper() == "Q")
                 {
-                    quit();
+                    return;
                 }
                 else
                 {
@@ -80,14 +92,13 @@ namespace Flooring.UI.Workflows
                 for (int i = 1; i <= stateList.Count; i++)
                 {
                     Console.WriteLine("{0}. {1} ", i, stateList[i - 1]);
-                    //Console.WriteLine("1. Ohio: ");
-                    //Console.WriteLine("2. Pennsylvania: ");
-                    //Console.WriteLine("3. Michigan:  ");
-                    //Console.WriteLine("4. Indiana:  ");
-
                 }
                 Console.Write("Please enter your choice: ");
                 input = Console.ReadLine();
+                if (input.ToUpper() == "Q")
+                {
+                    return;
+                }
                 if (input != "")
                 {
 
@@ -111,10 +122,6 @@ namespace Flooring.UI.Workflows
                     state = validOrderNumber.OrderInfo.StateFull;
                 }
 
-                if (input.ToUpper() == "Q")
-                {
-                    quit();
-                }
                 AsciiProductDisplay disp = new AsciiProductDisplay();
                 disp.DisplayCatalog(productID);
                 Console.WriteLine("Please enter the Product Type you would like to order: ");
@@ -125,6 +132,11 @@ namespace Flooring.UI.Workflows
 
                 Console.Write("Please enter your choice: ");
                 input = Console.ReadLine();
+
+                if (input.ToUpper() == "Q")
+                {
+                    return;
+                }
 
                 if (input != "")
                 {
@@ -151,16 +163,15 @@ namespace Flooring.UI.Workflows
                     input = product;
                     product = validOrderNumber.OrderInfo.ProductType;
                 }
-                if (input.ToUpper() == "Q")
-                {
-                    quit();
-                }
+
                 Console.Write("Please enter the area in square feet you would like to order: ");
                 input = Console.ReadLine();
+
                 if (input.ToUpper() == "Q")
                 {
-                    quit();
+                    return;
                 }
+
                 if (input != "")
                 {
                     do
@@ -179,8 +190,8 @@ namespace Flooring.UI.Workflows
                 Console.WriteLine("EDITED ORDER");
                 Console.WriteLine("====================================================");
                 Console.WriteLine("CUSTOMER NAME: {0},{1}", nlast, nfirst);
-                Console.WriteLine("ORDERING STATE: {0}", stateList[stateID - 1]);
-                Console.WriteLine("PRODUCT TYPE: {0}", prodList[productID - 1].ProductType);
+                Console.WriteLine("ORDERING STATE: {0}", state);
+                Console.WriteLine("PRODUCT TYPE: {0}", product);
                 Console.WriteLine("AREA ORDERED (in Sq Ft.): {0} Ft^2", areanum);
                 Console.WriteLine();
                 Console.WriteLine("Would you like to submit your order? (Y/N): ");
@@ -199,10 +210,6 @@ namespace Flooring.UI.Workflows
                 Console.ReadLine();
             }
         }
-
-
-
-
 
         public void PrintOrderInformation(Response response)
         {
