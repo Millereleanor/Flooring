@@ -246,134 +246,206 @@ namespace Flooring.BLL.OrderOperations
 
         private Product GetProduct(string productType)
         {
+            ReadStateProduct readText = new ReadStateProduct();
+            List<Product> products = readText.GetProductfromTxt();
+
             Product p = new Product();
-            switch (productType)
+
+            for (int i = 1; i <= products.Count; i++)
             {
-                case "1":
-                    p.ProductType="Cherrywood Flooring";
-                    p.CostperSqFt = 15.00m;
-                    p.LaborperSqFt = 10.00m;
+                if (i.ToString() == productType)
+                {
+                    p.ProductType = products[i-1].ProductType;
+                    p.CostperSqFt = products[i-1].CostperSqFt;
+                    p.LaborperSqFt = products[i-1].LaborperSqFt;
                     return p;
-                case "2":
-                    p.ProductType="Plush Carpet";
-                    p.CostperSqFt = 5.00m;
-                    p.LaborperSqFt = 2.00m;
-                    return p;
-                case "3":
-                    p.ProductType="Shiny Laminant";
-                    p.CostperSqFt = 3.00m;
-                    p.LaborperSqFt = 1.00m;
-                    return p;
-                case "4":
-                    p.ProductType="Blingy Granite";
-                    p.CostperSqFt = 30.00m;
-                    p.LaborperSqFt = 15.00m;
-                    return p;
-                default:
-                    p.ProductType = "";
-                    p.CostperSqFt = 0m;
-                    p.LaborperSqFt = 0m;
-                    return p;
+                }
             }
+            p.ProductType = "";
+            p.CostperSqFt = 0m;
+            p.LaborperSqFt = 0m;
+            return p;
+            //switch (productType)
+            //{
+            //    case "1":
+            //        p.ProductType=products[0].ProductType;
+            //        p.CostperSqFt = products[0].CostperSqFt;
+            //        p.LaborperSqFt = products[0].CostperSqFt;
+            //        return p;
+            //    case "2":
+            //        p.ProductType = products[1].ProductType;
+            //        p.CostperSqFt = products[1].CostperSqFt;
+            //        p.LaborperSqFt = products[1].CostperSqFt;
+            //        return p;
+            //    case "3":
+            //        p.ProductType = products[2].ProductType;
+            //        p.CostperSqFt = products[2].CostperSqFt;
+            //        p.LaborperSqFt = products[2].CostperSqFt;
+            //        return p;
+            //    case "4":
+            //        p.ProductType = products[3].ProductType;
+            //        p.CostperSqFt = products[3].CostperSqFt;
+            //        p.LaborperSqFt = products[3].CostperSqFt;
+            //        return p;
+            //    default:
+            //        p.ProductType = "";
+            //        p.CostperSqFt = 0m;
+            //        p.LaborperSqFt = 0m;
+            //        return p;
+            //}
         }
 
         private State GetState(string state)
         {
+            ReadStateProduct readText = new ReadStateProduct();
+            List<State> states = readText.GetStatefromTxt();
+
             State s = new State();
-            switch (state)
+
+            for (int i = 1; i <= states.Count; i++)
             {
-                case "1":
-                    s.FullName = "Ohio";
-                    s.Abbr = "OH";
-                    s.TaxRate = .07m;
+                if (i.ToString() == state)
+                {
+                    s.FullName = states[i - 1].FullName;
+                    s.Abbr = states[i - 1].Abbr;
+                    s.TaxRate = states[i - 1].TaxRate;
                     return s;
-                case "2":
-                    s.FullName = "Florida";
-                    s.Abbr = "FL";
-                    s.TaxRate = .03m;
-                    return s;
-                case "3":
-                    s.FullName = "Illinois";
-                    s.Abbr = "IL";
-                    s.TaxRate = .09m;
-                    return s;
-                case "4":
-                    s.FullName = "Alaska";
-                    s.Abbr = "AK";
-                    s.TaxRate = .01m;
-                    return s;
-                default:
-                    s.Abbr = "";
-                    s.FullName = "";
-                    s.TaxRate = 0m;
-                    return s;
+                }
             }
+            s.Abbr = "";
+            s.FullName = "";
+            s.TaxRate = 0m;
+            return s;
+            //switch (state)
+            //{
+            //    case "1":
+            //        s.FullName = states[0].FullName;
+            //        s.Abbr = states[0].Abbr;
+            //        s.TaxRate = states[0].TaxRate;
+            //        return s;
+            //    case "2":
+            //        s.FullName = states[1].FullName;
+            //        s.Abbr = states[1].Abbr;
+            //        s.TaxRate = states[1].TaxRate;
+            //        return s;
+            //    case "3":
+            //        s.FullName = states[2].FullName;
+            //        s.Abbr = states[2].Abbr;
+            //        s.TaxRate = states[2].TaxRate;
+            //        return s;
+            //    case "4":
+            //        s.FullName = states[3].FullName;
+            //        s.Abbr = states[3].Abbr;
+            //        s.TaxRate = states[3].TaxRate;
+            //        return s;
+            //    default:
+            //        s.Abbr = "";
+            //        s.FullName = "";
+            //        s.TaxRate = 0m;
+            //        return s;
+            //}
         }
 
         private Product GetProductByType(string productType)
         {
+            ReadStateProduct readText = new ReadStateProduct();
+            List<Product> products = readText.GetProductfromTxt();
+
             Product p = new Product();
-            switch (productType)
+
+            for (int i = 0; i < products.Count; i++)
             {
-                case "Cherrywood Flooring":
-                    p.ProductType = "Cherrywood Flooring";
-                    p.CostperSqFt = 15.00m;
-                    p.LaborperSqFt = 10.00m;
+                if (products[i].ProductType == productType)
+                {
+                    p.ProductType = productType;
+                    p.CostperSqFt = products[i].CostperSqFt;
+                    p.LaborperSqFt = products[i].LaborperSqFt;
                     return p;
-                case "Plush Carpet":
-                    p.ProductType = "Plush Carpet";
-                    p.CostperSqFt = 5.00m;
-                    p.LaborperSqFt = 2.00m;
-                    return p;
-                case "Shiny Laminant":
-                    p.ProductType = "Shiny Laminant";
-                    p.CostperSqFt = 3.00m;
-                    p.LaborperSqFt = 1.00m;
-                    return p;
-                case "Blingy Granite":
-                    p.ProductType = "Blingy Granite";
-                    p.CostperSqFt = 30.00m;
-                    p.LaborperSqFt = 15.00m;
-                    return p;
-                default:
-                    p.ProductType = "";
-                    p.CostperSqFt = 0m;
-                    p.LaborperSqFt = 0m;
-                    return p;
+                }
             }
+            p.ProductType = "";
+            p.CostperSqFt = 0m;
+            p.LaborperSqFt = 0m;
+            return p;
+            //switch (productType)
+            //{
+            //    case "Cherrywood Flooring":
+            //        p.ProductType = "Cherrywood Flooring";
+            //        p.CostperSqFt = 15.00m;
+            //        p.LaborperSqFt = 10.00m;
+            //        return p;
+            //    case "Plush Carpet":
+            //        p.ProductType = "Plush Carpet";
+            //        p.CostperSqFt = 5.00m;
+            //        p.LaborperSqFt = 2.00m;
+            //        return p;
+            //    case "Shiny Laminant":
+            //        p.ProductType = "Shiny Laminant";
+            //        p.CostperSqFt = 3.00m;
+            //        p.LaborperSqFt = 1.00m;
+            //        return p;
+            //    case "Blingy Granite":
+            //        p.ProductType = "Blingy Granite";
+            //        p.CostperSqFt = 30.00m;
+            //        p.LaborperSqFt = 15.00m;
+            //        return p;
+            //    default:
+            //        p.ProductType = "";
+            //        p.CostperSqFt = 0m;
+            //        p.LaborperSqFt = 0m;
+            //        return p;
+            //}
         }
 
         private State GetStateByAbbr(string state)
         {
+            ReadStateProduct readText = new ReadStateProduct();
+            List<State> states = readText.GetStatefromTxt();
+
             State s = new State();
-            switch (state)
+
+            for (int i = 0; i < states.Count; i++)
             {
-                case "OH":
-                    s.FullName = "Ohio";
-                    s.Abbr = "OH";
-                    s.TaxRate = .07m;
+                if (states[i].Abbr == state)
+                {
+                    s.Abbr = states[i].Abbr;
+                    s.FullName = states[i].FullName;
+                    s.TaxRate = states[i].TaxRate;
                     return s;
-                case "FL":
-                    s.FullName = "Florida";
-                    s.Abbr = "FL";
-                    s.TaxRate = .03m;
-                    return s;
-                case "IL":
-                    s.FullName = "Illinois";
-                    s.Abbr = "IL";
-                    s.TaxRate = .09m;
-                    return s;
-                case "AK":
-                    s.FullName = "Alaska";
-                    s.Abbr = "AK";
-                    s.TaxRate = .01m;
-                    return s;
-                default:
-                    s.Abbr = "";
-                    s.FullName = "";
-                    s.TaxRate = 0m;
-                    return s;
+                }
             }
+            s.Abbr = "";
+            s.FullName = "";
+            s.TaxRate = 0m;
+            return s;
+            //switch (state)
+            //{
+            //    case "OH":
+            //        s.FullName = "Ohio";
+            //        s.Abbr = "OH";
+            //        s.TaxRate = .07m;
+            //        return s;
+            //    case "FL":
+            //        s.FullName = "Florida";
+            //        s.Abbr = "FL";
+            //        s.TaxRate = .03m;
+            //        return s;
+            //    case "IL":
+            //        s.FullName = "Illinois";
+            //        s.Abbr = "IL";
+            //        s.TaxRate = .09m;
+            //        return s;
+            //    case "AK":
+            //        s.FullName = "Alaska";
+            //        s.Abbr = "AK";
+            //        s.TaxRate = .01m;
+            //        return s;
+            //    default:
+            //        s.Abbr = "";
+            //        s.FullName = "";
+            //        s.TaxRate = 0m;
+            //        return s;
+            //}
         }
 
         private Order PopulateOrder(string orderInfo)

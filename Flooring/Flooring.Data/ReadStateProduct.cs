@@ -23,7 +23,7 @@ namespace Flooring.Data
                 string line;
                 while ((line = r.ReadLine()) != null)
                 {
-                    for (int i = 1; i < f.Length; i++)
+                    for (int i = 1; i < reader.Length; i++)
                     {
                         var newState = new State();
                         var columns = reader[i].Split(',');
@@ -50,7 +50,7 @@ namespace Flooring.Data
                 string line;
                 while ((line = r.ReadLine()) != null)
                 {
-                    for (int i = 1; i < f.Length; i++)
+                    for (int i = 1; i < reader.Length; i++)
                     {
                         var newProduct = new Product();
                         var columns = reader[i].Split(',');
