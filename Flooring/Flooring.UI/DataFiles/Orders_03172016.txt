@@ -1,2 +1,0 @@
-OrderNumber,Customer Name,State Abbreviation,State Name,TaxRate,Product type, Area, Cost/SQFT,Labor Cost/SQFT,Tax,and total
-1,thht kdkkdf,OH,Ohio,0.07,Plush Carpet,75,5.00,2.00,36.7500,525.00

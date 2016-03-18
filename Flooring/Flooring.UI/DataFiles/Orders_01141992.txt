@@ -1,4 +1,0 @@
-﻿OrderNumber,Customer Name,State Abbreviation,State Name,TaxRate,Product type, Area, Cost/SQFT,Labor Cost/SQFT,Tax,and total
-1,Elle Miller,FL,Flordia,0.07,Wood,100,5.00,0,35.00,535.00
-2,goo frob,OH,Ohio,0.05,Granite,500,2.00,1.00
-3,Donald Duck,OH,Ohio,0.05,Granite,500,2.00,0,50,1050.00
