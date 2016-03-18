@@ -27,7 +27,7 @@ namespace Flooring.Data
                         var columns = reader[i].Split(',');
                         newState.Abbr = columns[0];
                         newState.FullName = columns[1];
-                        newState.TaxRate = decimal.Parse(columns[2]);
+                        newState.TaxRate = decimal.Parse(columns[2])/100;
                         states.Add(newState);
                     
                 }
