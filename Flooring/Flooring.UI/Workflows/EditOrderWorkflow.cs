@@ -18,6 +18,8 @@ namespace Flooring.UI.Workflows
         public int productID;
         public int areanum;
         public int stateID;
+        public string state;
+        public string product;
 
         public enum Products
         {
@@ -63,11 +65,19 @@ namespace Flooring.UI.Workflows
                 {
                     nfirst = input;
                 }
+                else
+                {
+                    nfirst = validOrderNumber.OrderInfo.FirstName;
+                }
                 Console.Write("Please enter your last name: ");
                 input = Console.ReadLine();
                 if (input != "")
                 {
                     nlast = input;
+                }
+                else
+                {
+                    nlast = validOrderNumber.OrderInfo.LastName;
                 }
                 Console.WriteLine("Please enter the state abbreviation you are ordering from: ");
 
@@ -94,9 +104,13 @@ namespace Flooring.UI.Workflows
                         {
                             Console.WriteLine("Please enter a valid state: ");
                         }
+                        state= ((States)stateID).ToString();
                     } while (stateID == 0 && !validstate);
                 }
-
+                else
+                {
+                    state = validOrderNumber.OrderInfo.StateFull;
+                }
 
                 AsciiProductDisplay disp = new AsciiProductDisplay();
                 disp.DisplayCatalog(productID);
@@ -125,7 +139,7 @@ namespace Flooring.UI.Workflows
                         {
                             Console.WriteLine("Please enter a valid product type: ");
                         }
-
+                        product = ((Products)productID).ToString();
                     } while (productID == 0 && !validproduct);
                 }
 
@@ -146,8 +160,8 @@ namespace Flooring.UI.Workflows
                 Console.WriteLine("EDITED ORDER");
                 Console.WriteLine("====================================================");
                 Console.WriteLine("CUSTOMER NAME: {0},{1}", nlast, nfirst);
-                Console.WriteLine("ORDERING STATE: {0}", ((States) stateID).ToString());
-                Console.WriteLine("PRODUCT TYPE: {0}", ((Products) productID).ToString());
+                Console.WriteLine("ORDERING STATE: {0}", state);
+                Console.WriteLine("PRODUCT TYPE: {0}", product);
                 Console.WriteLine("AREA ORDERED (in Sq Ft.): {0} Ft^2", areanum);
                 Console.WriteLine();
                 Console.WriteLine("Would you like to submit your order? (Y/N): ");
