@@ -21,9 +21,8 @@ namespace Flooring.Data
             using (StreamReader r = new StreamReader(f))
             {
                 string line;
-                while ((line = r.ReadLine()) != null)
-                {
-                    for (int i = 1; i < f.Length; i++)
+                
+                    for (int i = 1; i < reader.Length; i++)
                     {
                         var newState = new State();
                         var columns = reader[i].Split(',');
@@ -31,7 +30,7 @@ namespace Flooring.Data
                         newState.FullName = columns[1];
                         newState.TaxRate = decimal.Parse(columns[2]);
                         states.Add(newState);
-                    }
+                    
                 }
             }
             return states;
@@ -48,9 +47,8 @@ namespace Flooring.Data
             using (StreamReader r = new StreamReader(f))
             {
                 string line;
-                while ((line = r.ReadLine()) != null)
-                {
-                    for (int i = 1; i < f.Length; i++)
+                
+                    for (int i = 1; i < reader.Length; i++)
                     {
                         var newProduct = new Product();
                         var columns = reader[i].Split(',');
@@ -59,7 +57,7 @@ namespace Flooring.Data
                         newProduct.LaborperSqFt = decimal.Parse(columns[2]);
                         products.Add(newProduct);
                     }
-                }
+                
             }
         return products;
         }
