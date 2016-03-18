@@ -159,16 +159,15 @@ namespace Flooring.UI.Workflows
 
                     oop.EditOrder(Date, orderNumber, orderedit);
                 }
-            else
-            {
-                Console.WriteLine(validOrderNumber.Message);
-                Console.WriteLine("Press Enter to continue...");
-                Console.ReadLine();
+                else
+                {
+                    Console.WriteLine(validOrderNumber.Message);
+                    Console.WriteLine("Press Enter to continue...");
+                    Console.ReadLine();
+                }
+
+
             }
-
-
-        }
-            
         }
     }
 }

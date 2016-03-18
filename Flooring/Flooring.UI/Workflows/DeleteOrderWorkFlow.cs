@@ -14,24 +14,28 @@ namespace Flooring.UI.Workflows
         {
             DisplayOrderWorkflow disp = new DisplayOrderWorkflow();
             var Date =disp.GetOrderDateFromUser();
+            OrderOperations op = new OrderOperations(Date);
             var OrderNumber =disp.GetOrderNumberFromUser();
+            Response response = op.GetSpecificOrder(OrderNumber,Date);
             disp.DisplayOrderbyDateID(Date,OrderNumber);
            
             Console.Write("Are you sure you want to delete this order? (Yes/No): ");
             string input = Console.ReadLine();
             if (input.ToUpper() == "YES")
             {
-                //op.DeleteOrder(order);
+                op.DeleteOrder(OrderNumber,Date);
                 Console.WriteLine("Press enter to continue... Goodbye!");
                 Console.ReadLine();
                 MainMenuDisplay back = new MainMenuDisplay();
                 back.Display();
                 return;
             }
+
             if (input.ToUpper() == "NO")
             {
                 return;
             }
+
             Console.WriteLine("ERROR: That was not a valid input!");
             Console.WriteLine("Press enter to continue");
             Console.ReadLine();

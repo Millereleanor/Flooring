@@ -12,7 +12,7 @@ namespace Flooring.Tests
     [TestFixture]
     public class Tests
     {
-        //testing the floor repo
+
         [Test]
         public void CanLoadOrder()
         {
