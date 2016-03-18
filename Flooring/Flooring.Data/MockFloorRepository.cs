@@ -49,7 +49,7 @@ namespace Flooring.Data
         public void RemoveOrder(DateTime date, int orderId)
         {
             var order = orders[date][orderId];
-            order
+            //order
             //var order = CreateOrder(new Order());
             //var stringOrder = order.ToString();
 
