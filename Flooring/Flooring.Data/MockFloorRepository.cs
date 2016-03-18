@@ -11,12 +11,6 @@ namespace Flooring.Data
     {
        private Dictionary<DateTime,List<Order>> orders = new Dictionary<DateTime,List<Order>>();
 
-        //creat a dictionary using the key==date from the data file
-
-
-        //get dictionary list 
-                //group by date then print out orderinfo
-
         public Order CreateOrder(Order order)
         {
             orders[order.OrderDate].Add(order);
@@ -25,14 +19,12 @@ namespace Flooring.Data
 
         public Dictionary<DateTime, List<Order>> GetAllOrders()
         {
-
             return orders;
         }
 
         public List<Order> GetAllOrderByDate(DateTime date)
         {
             return orders[date];
-
         }
 
         public Order GetOrderByDateId(DateTime date, int orderId)
@@ -49,14 +41,7 @@ namespace Flooring.Data
         public void RemoveOrder(DateTime date, int orderId)
         {
             var order = orders[date][orderId];
-            //order
-            //var order = CreateOrder(new Order());
-            //var stringOrder = order.ToString();
-
-            //return orders[date].RemoveRange(orderId, stringOrder.Length);
+            orders[date].Remove(order);
         }
-        
     }
-
-    
 }
