@@ -225,6 +225,25 @@ namespace Flooring.BLL.OrderOperations
             return response;
         }
 
+        public List<string> GetStateNames()
+        {
+            ReadStateProduct readText = new ReadStateProduct();
+            List<State> stateList = readText.GetStatefromTxt();
+            List<string> stateNames = new List<string>();
+            //Enum stateEnum;
+            foreach (var state in stateList)
+            {
+                stateNames.Add(state.FullName);
+            }
+            return stateNames;
+        }
+
+        public List<Product> GetProductNames()
+        {
+            ReadStateProduct readText = new ReadStateProduct();
+            return readText.GetProductfromTxt();
+        }
+
         private Product GetProduct(string productType)
         {
             Product p = new Product();
