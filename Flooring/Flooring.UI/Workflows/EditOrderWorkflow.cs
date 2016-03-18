@@ -90,7 +90,7 @@ namespace Flooring.UI.Workflows
                     {
                         nlast = validOrderNumber.OrderInfo.LastName;
                     }
-                    Console.WriteLine("Please enter the state abbreviation you are ordering from: ");
+                    Console.WriteLine("Please enter the state you are ordering from: ");
 
                     Console.WriteLine("1. Ohio: ");
                     Console.WriteLine("2. Pennsylvania: ");

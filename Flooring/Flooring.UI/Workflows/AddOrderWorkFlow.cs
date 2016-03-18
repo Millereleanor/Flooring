@@ -45,6 +45,7 @@ namespace Flooring.UI.Workflows
 
                 do
                 {
+                Console.Write("Enter \"Q\" to go back to the main menu at any time. ");
                     Console.Write("Please enter your first name: ");
                     input = Console.ReadLine();
 
@@ -83,7 +84,7 @@ namespace Flooring.UI.Workflows
             input = last;
                 do
                 {
-                    Console.WriteLine("Please enter the state abbreviation you are ordering from: ");
+                    Console.WriteLine("Please enter the state you are ordering from: ");
 
                     Console.WriteLine("1. Ohio: ");
                     Console.WriteLine("2. Pennsylvania: ");
