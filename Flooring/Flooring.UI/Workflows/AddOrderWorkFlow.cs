@@ -130,12 +130,23 @@ namespace Flooring.UI.Workflows
             Console.WriteLine("PRODUCT TYPE: {0}", ((Products)productID).ToString());
             Console.WriteLine("AREA ORDERED (in Sq Ft.): {0} Ft^2",areanum);
             Console.WriteLine();
-            Console.WriteLine("Press enter to submit order: ");
-            Console.ReadLine();
-            string ordertemp = String.Format(first + ',' + last + ',' + stateID + ',' + productID + ',' + areanum);
-            OrderOperations oop = new OrderOperations(DateTime.Now);
-            oop.AddOrder(ordertemp);
-            return ordertemp;
+            Console.WriteLine("Would you like to submit your order? (Y/N): ");
+            string uinput = Console.ReadLine();
+            if (uinput.ToUpper() == "Y")
+            {
+                string ordertemp = String.Format(first + ',' + last + ',' + stateID + ',' + productID + ',' + areanum);
+                OrderOperations oop = new OrderOperations(DateTime.Now);
+                oop.AddOrder(ordertemp);
+                return ordertemp;
+            }
+            else
+            {
+                
+                Console.WriteLine("Press Enter to continue...");
+                Console.ReadLine();
+            }
+
+            return null;
 
         }
     }
