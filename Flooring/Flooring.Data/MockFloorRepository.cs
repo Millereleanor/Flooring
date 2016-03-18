@@ -25,27 +25,34 @@ namespace Flooring.Data
 
         public Dictionary<DateTime, List<Order>> GetAllOrders()
         {
-            
+            return orders;
         }
 
         public List<Order> GetAllOrderByDate(DateTime date)
         {
-            throw new NotImplementedException();
+            return orders[date];
+
         }
 
         public Order GetOrderByDateId(DateTime date, int orderId)
         {
-            throw new NotImplementedException();
+            return orders[date][orderId];
         }
 
         public void UpdateOrder(DateTime date, int orderId, Order updateOrder)
         {
-            throw new NotImplementedException();
+            orders[date][orderId] = updateOrder;
+           
         }
 
         public void RemoveOrder(DateTime date, int orderId)
         {
-            throw new NotImplementedException();
+            var order = orders[date][orderId];
+            order
+            //var order = CreateOrder(new Order());
+            //var stringOrder = order.ToString();
+
+            //return orders[date].RemoveRange(orderId, stringOrder.Length);
         }
         
     }
