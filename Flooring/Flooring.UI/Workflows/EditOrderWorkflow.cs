@@ -20,23 +20,6 @@ namespace Flooring.UI.Workflows
         public int stateID;
         public string state;
         public string product;
-
-        public enum Products
-        {
-            Carpet = 1,
-            Laminate = 2,
-            Tile = 3,
-            Cherrywood = 4
-        };
-
-        public enum States
-        {
-            Ohio = 1,
-            Pennsylvania = 2,
-            Michigan = 3,
-            Indiana = 4
-        };
-
         private bool validproduct = false;
         private bool validstate = false;
         public DateTime Date;
@@ -49,173 +32,178 @@ namespace Flooring.UI.Workflows
             DisplayOrderWorkflow dispdatID = new DisplayOrderWorkflow();
             Date = dispdatID.GetOrderDateFromUser();
             OrderOperations oop = new OrderOperations(Date);
+            List<Product> prodList = oop.GetProductNames();
+            List<string> stateList = oop.GetStateNames();
             orderNumber = dispdatID.GetOrderNumberFromUser();
             Response validOrderNumber = oop.GetSpecificOrder(orderNumber, Date);
             PrintOrderInformation(validOrderNumber);
-           
-                if (validOrderNumber.Success)
+
+            if (validOrderNumber.Success)
+            {
+                Console.WriteLine();
+                Console.WriteLine("===========================================================================");
+                Console.WriteLine("EDIT ORDER MENU: ");
+                Console.WriteLine("Press Enter if you want to skip a field");
+                Console.WriteLine("Enter \"Q\" to go back to the main menu");
+                Console.WriteLine("-----------------------------------------");
+                Console.WriteLine();
+                Console.Write("Please enter your first name: ");
+                input = Console.ReadLine();
+                if (input != "")
                 {
-                    Console.WriteLine();
-                    Console.WriteLine("===========================================================================");
-                    Console.WriteLine("EDIT ORDER MENU: ");
-                    Console.WriteLine("Press Enter if you want to skip a field");
-                    Console.WriteLine("Enter \"Q\" to go back to the main menu");
-                    Console.WriteLine("-----------------------------------------");
-                    Console.WriteLine();
-                    Console.Write("Please enter your first name: ");
-                    input = Console.ReadLine();
-                    if (input != "")
-                    {
-                        nfirst = input;
-                    }
-                    else if (input.ToUpper()=="Q")
-                    {
-                      quit();  
-                    }
-                    else
-                    {
-                        nfirst = validOrderNumber.OrderInfo.FirstName;
-                    }
-                    Console.Write("Please enter your last name: ");
-                    input = Console.ReadLine();
-                    if (input != "")
-                    {
-                        nlast = input;
-                    }
-                    else if (input.ToUpper() == "Q")
-                    {
-                        quit();
-                    }
-                    else
-                    {
-                        nlast = validOrderNumber.OrderInfo.LastName;
-                    }
-                    Console.WriteLine("Please enter the state you are ordering from: ");
-
-                    Console.WriteLine("1. Ohio: ");
-                    Console.WriteLine("2. Pennsylvania: ");
-                    Console.WriteLine("3. Michigan:  ");
-                    Console.WriteLine("4. Indiana:  ");
-                    Console.Write("Please enter your choice: ");
-                    input = Console.ReadLine();
-                    if (input.ToUpper() == "Q")
-                    {
-                        quit();
-                    }
-                    States states;
-                    if (input != "")
-                    {
-                        do
-                        {
-                            if (!int.TryParse(input, out stateID))
-                            {
-                                Console.WriteLine("Please choose a valid state by number: ");
-                            }
-                            if (Enum.TryParse<States>(input, out states))
-                            {
-                                validstate = true;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Please enter a valid state: ");
-                            }
-                            state = ((States) stateID).ToString();
-                        } while (stateID == 0 && !validstate);
-                    }
-                    else
-                    {
-                        state = validOrderNumber.OrderInfo.StateFull;
-                    }
-
-                    AsciiProductDisplay disp = new AsciiProductDisplay();
-                    disp.DisplayCatalog(productID);
-                    Console.WriteLine("Please enter the Product Type you would like to order: ");
-                    Console.WriteLine("1. Plush Carpet: ");
-                    Console.WriteLine("2. Shiny Laminate: ");
-                    Console.WriteLine("3. Gorgeous Tile:  ");
-                    Console.WriteLine("4. Cherrywood:  ");
-                    Console.Write("Please enter your choice: ");
-                    input = Console.ReadLine();
-                    Products products;
-                    if (input.ToUpper() == "Q")
-                    {
-                        quit();
-                    }
-                    if (input != "")
-                    {
-                        do
-                        {
-                            if (!int.TryParse(input, out productID))
-                            {
-                                Console.WriteLine("Please enter a valid product type by number: ");
-                            }
-
-                            if (Enum.TryParse<Products>(input, out products))
-                            {
-                                validproduct = true;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Please enter a valid product type: ");
-                            }
-
-                        } while (productID == 0 && !validproduct);
-                    }
-                    else
-                    {
-                        input = product;
-                        product = validOrderNumber.OrderInfo.ProductType;
-                    }
-
-                    Console.Write("Please enter the area in square feet you would like to order: ");
-                    input = Console.ReadLine();
-                    if (input.ToUpper() == "Q")
-                    {
-                        quit();
-                    }
-                    if (input != "")
-                    {
-                        do
-                        {
-                            if (!int.TryParse(input, out areanum))
-                            {
-                                Console.WriteLine("Please enter a valid number of square feet: ");
-                            }
-                        } while (areanum == 0);
-                    }
-                    else
-                    {
-                        areanum = validOrderNumber.OrderInfo.OrderArea;
-                    }
-                    Console.WriteLine();
-                    Console.WriteLine("EDITED ORDER");
-                    Console.WriteLine("====================================================");
-                    Console.WriteLine("CUSTOMER NAME: {0},{1}", nlast, nfirst);
-                    Console.WriteLine("ORDERING STATE: {0}", state);
-                    Console.WriteLine("PRODUCT TYPE: {0}", product);
-                    Console.WriteLine("AREA ORDERED (in Sq Ft.): {0} Ft^2", areanum);
-                    Console.WriteLine();
-                    Console.WriteLine("Would you like to submit your order? (Y/N): ");
-                    string uinput = Console.ReadLine();
-                    if (uinput.ToUpper() == "Y")
-                    {
-                        string orderedit =
-                            String.Format(nfirst + ',' + nlast + ',' + stateID + ',' + productID + ',' + areanum);
-                        oop.EditOrder(Date, orderNumber, orderedit);
-                    }
-                    else
-                    {
-
-                        Console.WriteLine("Press Enter to continue...");
-                        Console.ReadLine();
-                    }
+                    nfirst = input;
+                }
+                else if (input.ToUpper() == "Q")
+                {
+                    quit();
+                }
+                else
+                {
+                    nfirst = validOrderNumber.OrderInfo.FirstName;
+                }
+                Console.Write("Please enter your last name: ");
+                input = Console.ReadLine();
+                if (input != "")
+                {
+                    nlast = input;
+                }
+                else if (input.ToUpper() == "Q")
+                {
+                    quit();
+                }
+                else
+                {
+                    nlast = validOrderNumber.OrderInfo.LastName;
+                }
+                Console.WriteLine("Please enter the state you are ordering from: ");
+                for (int i = 1; i <= stateList.Count; i++)
+                {
+                    Console.WriteLine("{0}. {1}: ", i, stateList[i - 1]);
+                    //Console.WriteLine("1. Ohio: ");
+                    //Console.WriteLine("2. Pennsylvania: ");
+                    //Console.WriteLine("3. Michigan:  ");
+                    //Console.WriteLine("4. Indiana:  ");
 
                 }
-            
+                Console.Write("Please enter your choice: ");
+                input = Console.ReadLine();
+                if (input != "")
+                {
 
+                    if (!int.TryParse(input, out stateID))
+                    {
+                        Console.WriteLine("Please choose a valid state by number: ");
+                    }
+                    if (stateID > 0 && stateID <= stateList.Count)
+                    {
+                        validstate = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please enter a valid state: ");
+                    }
 
+                    state = (stateList[stateID - 1]);
+                }
+                else
+                {
+                    state = validOrderNumber.OrderInfo.StateFull;
+                }
+            }
+            while (stateID == 0 && !validstate && input.ToUpper() != "Q");
+
+            if (input.ToUpper() == "Q")
+            {
+                quit();
+            }
+            AsciiProductDisplay disp = new AsciiProductDisplay();
+            disp.DisplayCatalog(productID);
+            Console.WriteLine("Please enter the Product Type you would like to order: ");
+            for (int i = 1; i <= prodList.Count; i++)
+            {
+                Console.WriteLine("{0}. {1}: ", i, prodList[i - 1].ProductType);
+            }
+
+            Console.Write("Please enter your choice: ");
+            input = Console.ReadLine();
+
+            if (input != "")
+            {
+                do
+                {
+                    if (!int.TryParse(input, out productID))
+                    {
+                        Console.WriteLine("Please enter a valid product type by number: ");
+                    }
+
+                    if (productID > 0 && productID <= prodList.Count)
+                    {
+                        validproduct = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please enter a valid product type: ");
+                    }
+
+                } while (productID == 0 && !validproduct);
+            }
+            else if (input == "")
+            {
+                input = product;
+                product = validOrderNumber.OrderInfo.ProductType;
+            }
+            if (input.ToUpper() == "Q")
+            {
+                quit();
+            }
+            Console.Write("Please enter the area in square feet you would like to order: ");
+            input = Console.ReadLine();
+            if (input.ToUpper() == "Q")
+            {
+                quit();
+            }
+            if (input != "")
+            {
+                do
+                {
+                    if (!int.TryParse(input, out areanum))
+                    {
+                        Console.WriteLine("Please enter a valid number of square feet: ");
+                    }
+                } while (areanum == 0);
+            }
+            else
+            {
+                areanum = validOrderNumber.OrderInfo.OrderArea;
+            }
+            Console.WriteLine();
+            Console.WriteLine("EDITED ORDER");
+            Console.WriteLine("====================================================");
+            Console.WriteLine("CUSTOMER NAME: {0},{1}", nlast, nfirst);
+            Console.WriteLine("ORDERING STATE: {0}", stateList[stateID - 1]);
+            Console.WriteLine("PRODUCT TYPE: {0}", prodList[productID - 1].ProductType);
+            Console.WriteLine("AREA ORDERED (in Sq Ft.): {0} Ft^2", areanum);
+            Console.WriteLine();
+            Console.WriteLine("Would you like to submit your order? (Y/N): ");
+            string uinput = Console.ReadLine();
+            if (uinput.ToUpper() == "Y")
+            {
+                string orderedit =
+                    String.Format(nfirst + ',' + nlast + ',' + stateID + ',' + productID + ',' + areanum);
+                oop.EditOrder(Date, orderNumber, orderedit);
+            }
+            else
+            {
+
+                Console.WriteLine("Press Enter to continue...");
+                Console.ReadLine();
+            }
 
         }
+
+
+
+
 
         public void PrintOrderInformation(Response response)
         {
@@ -246,11 +234,13 @@ namespace Flooring.UI.Workflows
 
             }
         }
+
         public void quit()
         {
             MainMenuDisplay mm = new MainMenuDisplay();
             mm.Display();
 
         }
+
     }
 }

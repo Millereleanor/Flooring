@@ -49,7 +49,7 @@ namespace Flooring.UI.Workflows
             {
                 quit();
             }
-                input = first;
+                first=input;
                 do
                 {
                     Console.Write("Please enter your last name: ");
@@ -68,7 +68,7 @@ namespace Flooring.UI.Workflows
                 quit();
             }
 
-            input = last;
+            last = input;
                 do
                 {
                     Console.WriteLine("Please enter the state you are ordering from: ");
