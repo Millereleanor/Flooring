@@ -56,6 +56,8 @@ namespace Flooring.UI.Workflows
 
             if (validOrderNumber.Success)
             {
+                Console.WriteLine();
+                Console.WriteLine("===========================================================================");
                 Console.WriteLine("EDIT ORDER MENU: ");
                 Console.WriteLine("Press Enter if you want to skip a field");
                 Console.WriteLine("-----------------------------------------");
@@ -140,8 +142,12 @@ namespace Flooring.UI.Workflows
                         {
                             Console.WriteLine("Please enter a valid product type: ");
                         }
-                        product = ((Products) productID).ToString();
+                        
                     } while (productID == 0 && !validproduct);
+                }
+                else
+                {
+                   product = validOrderNumber.OrderInfo.ProductType;
                 }
 
 
@@ -156,6 +162,10 @@ namespace Flooring.UI.Workflows
                             Console.WriteLine("Please enter a valid number of square feet: ");
                         }
                     } while (areanum == 0);
+                }
+                else
+                {
+                    areanum = validOrderNumber.OrderInfo.OrderArea;
                 }
                 Console.WriteLine();
                 Console.WriteLine("EDITED ORDER");
@@ -176,7 +186,7 @@ namespace Flooring.UI.Workflows
                 }
                 else
                 {
-                    Console.WriteLine(validOrderNumber.Message);
+                    
                     Console.WriteLine("Press Enter to continue...");
                     Console.ReadLine();
                 }
