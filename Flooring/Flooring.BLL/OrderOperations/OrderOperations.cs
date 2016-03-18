@@ -183,7 +183,7 @@ namespace Flooring.BLL.OrderOperations
             tempOrder.OrderDate = savedOrder.OrderDate;
             
 
-            repo.UpdateOrder(tempOrder.OrderDate, tempOrder.OrderNumber, tempOrder);
+            repo.UpdateOrder(date, tempOrder.OrderNumber, tempOrder);
             response.Success = true;
             response.Message = String.Format("Order {0} placed on {1} was updated.", tempOrder.OrderNumber,
                 tempOrder.OrderDate);
