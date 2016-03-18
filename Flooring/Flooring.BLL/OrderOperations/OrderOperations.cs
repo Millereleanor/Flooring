@@ -21,7 +21,7 @@ namespace Flooring.BLL.OrderOperations
         {
 
             var response = new Response();
-            
+            response.OrderList = new List<Order>();
             var orders = repo.GetAllOrderByDate(date);
 
             if (orders.Count == 0)
@@ -43,7 +43,8 @@ namespace Flooring.BLL.OrderOperations
             var repo = new FloorRepository();
 
             var response = new Response();
-
+            response.OrderList = new List<Order>();
+            response.OrderInfo = new Order();
             var orders = repo.GetAllOrderByDate(date);
             List<Order> orderList = new List<Order>();
             foreach (var order in orders)
@@ -70,7 +71,8 @@ namespace Flooring.BLL.OrderOperations
             var repo = new FloorRepository();
 
             var response = new Response();
-
+            response.OrderList = new List<Order>();
+            response.OrderInfo = new Order();
             Order tempOrder = new Order();
 
             string[] inputSplit = userInput.Split(',');
@@ -131,7 +133,8 @@ namespace Flooring.BLL.OrderOperations
             var repo = new FloorRepository();
 
             var response = new Response();
-
+            response.OrderList = new List<Order>();
+            response.OrderInfo = new Order();
             var tempOrder = PopulateOrder(newOrder);
 
             if (tempOrder == null)
@@ -196,6 +199,8 @@ namespace Flooring.BLL.OrderOperations
             var repo = new FloorRepository();
 
             var response = new Response();
+            response.OrderList = new List<Order>();
+            response.OrderInfo = new Order();
 
             var orders = repo.GetAllOrderByDate(date);
             List<Order> orderList = new List<Order>();
