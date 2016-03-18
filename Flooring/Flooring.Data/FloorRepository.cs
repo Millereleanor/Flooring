@@ -101,7 +101,7 @@ namespace Flooring.Data
         private string GetPath(DateTime OrderDate)
         {
       
-            string folderName = ConfigurationManager.AppSettings["FileName"];
+            string folderName = ConfigurationManager.AppSettings["FileName"];//look into this after we are done
             string fileName = folderName + "Orders_" + OrderDate.ToString("MMddyyyy") + ".txt";
             return fileName;
 
@@ -151,13 +151,13 @@ namespace Flooring.Data
                     return result;
                 }
             }
-            return null;
+            return null;//why null?
         }
 
         public void UpdateOrder(DateTime date, int orderId, Order updateOrder)
         {
             Order orderToUpdate = GetOrderByDateId(date, orderId);
-            //take old order and convert to string
+          
             //take each spot in oreder and check if they are the same
 
             for (var i = 0; i < orders[date].Count; i++)
