@@ -74,7 +74,7 @@ namespace Flooring.UI.Workflows
                     Console.WriteLine("Please enter the state you are ordering from: ");
                     for (int i = 1; i <= stateList.Count; i++)
                     {
-                    Console.WriteLine("{0}. {1}: ",i,stateList[i-1]);
+                    Console.WriteLine("{0}. {1} ",i,stateList[i-1]);
                         //Console.WriteLine("1. Ohio: ");
                         //Console.WriteLine("2. Pennsylvania: ");
                         //Console.WriteLine("3. Michigan:  ");
@@ -117,7 +117,7 @@ namespace Flooring.UI.Workflows
                     Console.WriteLine("Please enter the Product Type you would like to order: ");
                 for (int i = 1; i <= prodList.Count; i++)
                 {
-                    Console.WriteLine("{0}. {1}: ",i,prodList[i-1].ProductType);
+                    Console.WriteLine("{0}. {1} ",i,prodList[i-1].ProductType);
                 }
                 
                 //Console.WriteLine("1. Plush Carpet: ");

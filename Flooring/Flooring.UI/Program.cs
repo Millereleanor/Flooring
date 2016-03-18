@@ -13,7 +13,6 @@ namespace Flooring.UI
         {
             MainMenuDisplay mm = new MainMenuDisplay();
             mm.Display();
-            
         }
     }
 }

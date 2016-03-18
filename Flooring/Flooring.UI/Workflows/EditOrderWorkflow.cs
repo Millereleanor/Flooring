@@ -36,10 +36,11 @@ namespace Flooring.UI.Workflows
             List<string> stateList = oop.GetStateNames();
             orderNumber = dispdatID.GetOrderNumberFromUser();
             Response validOrderNumber = oop.GetSpecificOrder(orderNumber, Date);
-            PrintOrderInformation(validOrderNumber);
+            
 
             if (validOrderNumber.Success)
             {
+                PrintOrderInformation(validOrderNumber);
                 Console.WriteLine();
                 Console.WriteLine("===========================================================================");
                 Console.WriteLine("EDIT ORDER MENU: ");
@@ -78,7 +79,7 @@ namespace Flooring.UI.Workflows
                 Console.WriteLine("Please enter the state you are ordering from: ");
                 for (int i = 1; i <= stateList.Count; i++)
                 {
-                    Console.WriteLine("{0}. {1}: ", i, stateList[i - 1]);
+                    Console.WriteLine("{0}. {1} ", i, stateList[i - 1]);
                     //Console.WriteLine("1. Ohio: ");
                     //Console.WriteLine("2. Pennsylvania: ");
                     //Console.WriteLine("3. Michigan:  ");
@@ -109,96 +110,94 @@ namespace Flooring.UI.Workflows
                 {
                     state = validOrderNumber.OrderInfo.StateFull;
                 }
-            }
-            while (stateID == 0 && !validstate && input.ToUpper() != "Q");
 
-            if (input.ToUpper() == "Q")
-            {
-                quit();
-            }
-            AsciiProductDisplay disp = new AsciiProductDisplay();
-            disp.DisplayCatalog(productID);
-            Console.WriteLine("Please enter the Product Type you would like to order: ");
-            for (int i = 1; i <= prodList.Count; i++)
-            {
-                Console.WriteLine("{0}. {1}: ", i, prodList[i - 1].ProductType);
-            }
-
-            Console.Write("Please enter your choice: ");
-            input = Console.ReadLine();
-
-            if (input != "")
-            {
-                do
+                if (input.ToUpper() == "Q")
                 {
-                    if (!int.TryParse(input, out productID))
-                    {
-                        Console.WriteLine("Please enter a valid product type by number: ");
-                    }
-
-                    if (productID > 0 && productID <= prodList.Count)
-                    {
-                        validproduct = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please enter a valid product type: ");
-                    }
-
-                } while (productID == 0 && !validproduct);
-            }
-            else if (input == "")
-            {
-                input = product;
-                product = validOrderNumber.OrderInfo.ProductType;
-            }
-            if (input.ToUpper() == "Q")
-            {
-                quit();
-            }
-            Console.Write("Please enter the area in square feet you would like to order: ");
-            input = Console.ReadLine();
-            if (input.ToUpper() == "Q")
-            {
-                quit();
-            }
-            if (input != "")
-            {
-                do
+                    quit();
+                }
+                AsciiProductDisplay disp = new AsciiProductDisplay();
+                disp.DisplayCatalog(productID);
+                Console.WriteLine("Please enter the Product Type you would like to order: ");
+                for (int i = 1; i <= prodList.Count; i++)
                 {
-                    if (!int.TryParse(input, out areanum))
+                    Console.WriteLine("{0}. {1} ", i, prodList[i - 1].ProductType);
+                }
+
+                Console.Write("Please enter your choice: ");
+                input = Console.ReadLine();
+
+                if (input != "")
+                {
+                    do
                     {
-                        Console.WriteLine("Please enter a valid number of square feet: ");
-                    }
-                } while (areanum == 0);
+                        if (!int.TryParse(input, out productID))
+                        {
+                            Console.WriteLine("Please enter a valid product type by number: ");
+                        }
+
+                        if (productID > 0 && productID <= prodList.Count)
+                        {
+                            validproduct = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please enter a valid product type: ");
+                        }
+
+                    } while (productID == 0 && !validproduct);
+                }
+                else if (input == "")
+                {
+                    input = product;
+                    product = validOrderNumber.OrderInfo.ProductType;
+                }
+                if (input.ToUpper() == "Q")
+                {
+                    quit();
+                }
+                Console.Write("Please enter the area in square feet you would like to order: ");
+                input = Console.ReadLine();
+                if (input.ToUpper() == "Q")
+                {
+                    quit();
+                }
+                if (input != "")
+                {
+                    do
+                    {
+                        if (!int.TryParse(input, out areanum))
+                        {
+                            Console.WriteLine("Please enter a valid number of square feet: ");
+                        }
+                    } while (areanum == 0);
+                }
+                else
+                {
+                    areanum = validOrderNumber.OrderInfo.OrderArea;
+                }
+                Console.WriteLine();
+                Console.WriteLine("EDITED ORDER");
+                Console.WriteLine("====================================================");
+                Console.WriteLine("CUSTOMER NAME: {0},{1}", nlast, nfirst);
+                Console.WriteLine("ORDERING STATE: {0}", stateList[stateID - 1]);
+                Console.WriteLine("PRODUCT TYPE: {0}", prodList[productID - 1].ProductType);
+                Console.WriteLine("AREA ORDERED (in Sq Ft.): {0} Ft^2", areanum);
+                Console.WriteLine();
+                Console.WriteLine("Would you like to submit your order? (Y/N): ");
+                string uinput = Console.ReadLine();
+                if (uinput.ToUpper() == "Y")
+                {
+                    string orderedit =
+                        String.Format(nfirst + ',' + nlast + ',' + stateID + ',' + productID + ',' + areanum);
+                    oop.EditOrder(Date, orderNumber, orderedit);
+                }
             }
             else
             {
-                areanum = validOrderNumber.OrderInfo.OrderArea;
-            }
-            Console.WriteLine();
-            Console.WriteLine("EDITED ORDER");
-            Console.WriteLine("====================================================");
-            Console.WriteLine("CUSTOMER NAME: {0},{1}", nlast, nfirst);
-            Console.WriteLine("ORDERING STATE: {0}", stateList[stateID - 1]);
-            Console.WriteLine("PRODUCT TYPE: {0}", prodList[productID - 1].ProductType);
-            Console.WriteLine("AREA ORDERED (in Sq Ft.): {0} Ft^2", areanum);
-            Console.WriteLine();
-            Console.WriteLine("Would you like to submit your order? (Y/N): ");
-            string uinput = Console.ReadLine();
-            if (uinput.ToUpper() == "Y")
-            {
-                string orderedit =
-                    String.Format(nfirst + ',' + nlast + ',' + stateID + ',' + productID + ',' + areanum);
-                oop.EditOrder(Date, orderNumber, orderedit);
-            }
-            else
-            {
-
+                Console.WriteLine(validOrderNumber.Message);
                 Console.WriteLine("Press Enter to continue...");
                 Console.ReadLine();
             }
-
         }
 
 
@@ -230,8 +229,6 @@ namespace Flooring.UI.Workflows
                 Console.WriteLine("ORDER TOTAL: {0:C}",
                     order.OrderTotal + order.TaxTotal);
                 Console.WriteLine();
-
-
             }
         }
 
@@ -239,8 +236,6 @@ namespace Flooring.UI.Workflows
         {
             MainMenuDisplay mm = new MainMenuDisplay();
             mm.Display();
-
         }
-
     }
 }
