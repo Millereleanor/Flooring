@@ -156,9 +156,23 @@ namespace Flooring.Data
 
         public void UpdateOrder(DateTime date, int orderId, Order updateOrder)
         {
-            
-            
+            {
+                Order orderToUpdate = GetOrderByDateId(date, orderId);
 
+                //take each spot in oreder and check if they are the same
+
+                for (var i = 0; i < orders[date].Count; i++)
+                {
+                    if (orders[date][i].OrderNumber == orderId)
+                    {
+                        orders[date][i] = updateOrder;
+                        break;
+                    }
+                }
+                WriteToFile(orders);
+
+
+            }
         }
 
         public void RemoveOrder(DateTime date, int orderId)
