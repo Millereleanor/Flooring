@@ -25,7 +25,7 @@ namespace Flooring.Data
 
         public Dictionary<DateTime, List<Order>> GetAllOrders()
         {
-            
+            return new Dictionary<DateTime, List<Order>>();
         }
 
         public List<Order> GetAllOrderByDate(DateTime date)
