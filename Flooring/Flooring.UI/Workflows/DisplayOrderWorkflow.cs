@@ -144,7 +144,8 @@ namespace Flooring.UI.Workflows
             
             Console.WriteLine("Please press enter to continue...");
             Console.ReadLine();
-            Console.ResetColor();
+            Console.BackgroundColor= ConsoleColor.Gray;
+            Console.ForegroundColor=ConsoleColor.DarkCyan;
             Console.Clear();
         }
 
