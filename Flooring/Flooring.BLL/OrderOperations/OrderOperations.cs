@@ -12,10 +12,12 @@ namespace Flooring.BLL.OrderOperations
     {
         private Order _currentOrder;
         private IFloorRepository repo;
+        private ErrorRepository errors;
 
         public OrderOperations(DateTime orderDate)
         {
             repo = new FloorRepository();
+            errors = new ErrorRepository();
         }
         public Response GetOrders(DateTime date)
         {
@@ -28,6 +30,7 @@ namespace Flooring.BLL.OrderOperations
             {
                 response.Success = false;
                 response.Message = String.Format("There were no orders on date {0}.", date.ToShortDateString());
+                errors.LogError(response.Message);
             }
             else
             {
@@ -62,6 +65,7 @@ namespace Flooring.BLL.OrderOperations
             }
             response.Message = String.Format("Order {0} does not exist on {1}.",orderNumber,date.ToShortDateString());
             response.Success = false;
+            errors.LogError(response.Message);
             return response;
         }
 
@@ -85,12 +89,14 @@ namespace Flooring.BLL.OrderOperations
             {
                 response.Success = false;
                 response.Message = String.Format("The area {0} is not a number!", inputSplit[4]);
+                errors.LogError(response.Message);
                 return response;
             }
             if (orderArea < 0)
             {
                 response.Success = false;
                 response.Message = "Please enter a positive number for area!";
+                errors.LogError(response.Message);
                 return response;
             }
             tempOrder.OrderArea = orderArea;
@@ -141,6 +147,7 @@ namespace Flooring.BLL.OrderOperations
             {
                 response.Success = false;
                 response.Message = String.Format("Please enter a posivie number for the area.");
+                errors.LogError(response.Message);
                 return response;
             }
 
@@ -208,6 +215,7 @@ namespace Flooring.BLL.OrderOperations
             {
                 response.Success = false;
                 response.Message = String.Format("ERROR: There were already 0 orders on {0}", date.ToShortDateString());
+                errors.LogError(response.Message);
                 response.OrderList = orders;
                 return response;
             }

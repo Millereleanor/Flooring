@@ -57,7 +57,7 @@ namespace Flooring.Data
                     newOrder.LastName = nameParts[1];
 
                     newOrder.OrderNumber = int.Parse(columns[0]);
-                    newOrder.OrderArea = int.Parse(columns[6]);
+                    newOrder.OrderArea = int.Parse(columns[6]); // To Double
                     newOrder.ProductType = columns[5];
                     newOrder.StateAbbr = columns[2];
                     newOrder.StateFull = columns[3];
@@ -117,7 +117,7 @@ namespace Flooring.Data
             return false;
         }
 
-        Dictionary<DateTime, List<Order>> IFloorRepository.GetAllOrders()
+        public Dictionary<DateTime, List<Order>> GetAllOrders()
         {
             //find all txt files
             //run ReadOrders() for all the txt files
@@ -199,18 +199,8 @@ namespace Flooring.Data
 
         }
 
-        public Dictionary<DateTime, Order> GetAllOrders()
-        {
-            //todo:take this out its a duplicate
-            return null;
-            //return orders;
-        }
-
-        //dictionary???
-        private void WriteToFile(Dictionary<DateTime, List<Order>> Order)
-        {
-
-
+        public void WriteToFile(Dictionary<DateTime, List<Order>> Order)
+        { 
 
             foreach (var key in orders.Keys)
             {

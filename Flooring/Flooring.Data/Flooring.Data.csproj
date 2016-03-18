@@ -41,11 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorRepository.cs" />
     <Compile Include="FlooringRepositoryFactory.cs" />
     <Compile Include="FloorRepository.cs" />
     <Compile Include="IFloorRepository.cs" />
     <Compile Include="MockFloorRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadStateProduct.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Flooring.Models\Flooring.Models.csproj">

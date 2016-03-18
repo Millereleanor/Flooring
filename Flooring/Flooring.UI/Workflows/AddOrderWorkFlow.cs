@@ -41,11 +41,14 @@ namespace Flooring.UI.Workflows
             do
             {
                 Console.Write("Please enter your first name: ");
-                first = Console.ReadLine().Trim();
+                first = Console.ReadLine();
 
                 if (first == "")
                 {
                     Console.WriteLine("Please enter a valid first name: ");
+                    Console.WriteLine("Press enter to continue...");
+                    Console.ReadLine();
+                    Console.Clear();
                 }
             } while (first == "");
 
@@ -57,6 +60,9 @@ namespace Flooring.UI.Workflows
                 if (last == "")
                 {
                     Console.WriteLine("Please enter a valid last name: ");
+                    Console.WriteLine("Press enter to continue...");
+                    Console.ReadLine();
+                    Console.Clear();
                 }
             } while (last == "");
 
@@ -82,6 +88,9 @@ namespace Flooring.UI.Workflows
                 else
                 {
                     Console.WriteLine("Please enter a valid state: ");
+                    Console.WriteLine("Press enter to continue...");
+                    Console.ReadLine();
+                    Console.Clear();
                 }
             } while (stateID == 0 && !validstate);
 
@@ -108,6 +117,9 @@ namespace Flooring.UI.Workflows
                 else
                 {
                     Console.WriteLine("Please enter a valid product type: ");
+                    Console.WriteLine("Press enter to continue...");
+                    Console.ReadLine();
+                    Console.Clear();
                 }
 
             } while (productID == 0 && !validproduct);
@@ -119,6 +131,9 @@ namespace Flooring.UI.Workflows
                 if (!int.TryParse(area, out areanum))
                 {
                     Console.WriteLine("Please enter a valid number of square feet: ");
+                    Console.WriteLine("Press enter to continue...");
+                    Console.ReadLine();
+                    Console.Clear();
                 }
             } while (areanum == 0);
 
