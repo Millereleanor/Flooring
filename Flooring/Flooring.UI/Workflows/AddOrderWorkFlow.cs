@@ -41,7 +41,7 @@ namespace Flooring.UI.Workflows
             do
             {
                 Console.Write("Please enter your first name: ");
-                first = Console.ReadLine().Trim(new []{ ' ', ',' });
+                first = Console.ReadLine().Trim();
 
                 if (first == "")
                 {
