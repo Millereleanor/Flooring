@@ -104,14 +104,14 @@ namespace Flooring.BLL.OrderOperations
             tempOrder.TaxRate = s.TaxRate;
             tempOrder.OrderDate = DateTime.Today;
 
-            if (repo.DictionaryContainsKey(tempOrder.OrderDate)) //fix this
-            {
-                tempOrder.OrderNumber = 1;
-            }
-            else
-            {
-                tempOrder.OrderNumber = (repo.GetAllOrderByDate(tempOrder.OrderDate).Count) + 1;
-            }
+            //if (repo.DictionaryContainsKey(tempOrder.OrderDate)) //fix this
+            //{
+            //    tempOrder.OrderNumber = 1;
+            //}
+            //else
+            //{
+            //    tempOrder.OrderNumber = (repo.GetAllOrderByDate(tempOrder.OrderDate).Count) + 1;
+            //}
 
             repo.CreateOrder(tempOrder);
 
@@ -178,8 +178,8 @@ namespace Flooring.BLL.OrderOperations
             {
                 tempOrder.OrderArea = savedOrder.OrderArea;
             }
-            
 
+            tempOrder.OrderNumber = savedOrder.OrderNumber;
             tempOrder.OrderDate = savedOrder.OrderDate;
             
 
