@@ -171,6 +171,10 @@ namespace Flooring.Data
             WriteToFile(orders);
            
 
+            //todo:if file is empty get ride of it!!!!
+
+
+
             //what elle had before...
             //Order orderToRemove = GetOrderByDateId(date, orderId);
             //string orderToDeleat = orderToRemove.ToString();
