@@ -12,9 +12,8 @@ namespace Flooring.UI.Workflows
     public class DisplayOrderWorkflow
     {
         public DateTime Date;
-        public int orderNumber;
-        private Order _currentOrder;
-        private string dateoforder;
+        public int OrderNumber;
+        private string _dateoforder;
 
 
         public void Execute()
@@ -32,16 +31,16 @@ namespace Flooring.UI.Workflows
             {
                 Console.Clear();
                 Console.Write("Please enter the order date(MM/DD/YY or MM-DD-YY) or \"Q\" to quit: ");
-                dateoforder = Console.ReadLine();
-                if (dateoforder.ToUpper() == "Q")
+                _dateoforder = Console.ReadLine();
+                if (_dateoforder.ToUpper() == "Q")
                 {
                     return DateTime.MinValue;
                 }
-                if (DateTime.TryParse(dateoforder, out Date))
+                if (DateTime.TryParse(_dateoforder, out Date))
                 {
                     return Date;
                 }
-                if (dateoforder.ToUpper() == "Q")
+                if (_dateoforder.ToUpper() == "Q")
                 {
                     MainMenuDisplay mm = new MainMenuDisplay();
                     mm.Display();
@@ -65,9 +64,9 @@ namespace Flooring.UI.Workflows
                     return -1;
                 }
 
-                if (int.TryParse(numberoforder, out orderNumber))
+                if (int.TryParse(numberoforder, out OrderNumber))
                 {
-                    return orderNumber;
+                    return OrderNumber;
                 }
                 Console.WriteLine("That is not a valid order number");
                 Console.WriteLine("Press enter to continue...");
@@ -77,17 +76,13 @@ namespace Flooring.UI.Workflows
 
         public void DisplayOrderbyDate(DateTime Date)
         {
-            var ops = new OrderOperations(Date);
+            var ops = new OrderOperations();
             var getOrdersResponse = ops.GetOrders(Date);
 
 
             if (getOrdersResponse.Success)
-            {
-                _currentOrder = getOrdersResponse.OrderInfo;
-                
-                
+            {         
                 PrintOrderInformation(getOrdersResponse);
-
             }
             else
             {
@@ -100,15 +95,13 @@ namespace Flooring.UI.Workflows
 
         public void DisplayOrderbyDateID(DateTime Date, int orderNumber)
         {
-            var ops = new OrderOperations(Date);
+            var ops = new OrderOperations();
             var response = ops.GetSpecificOrder(orderNumber, Date);
 
 
             if (response.Success)
             {
-                _currentOrder = response.OrderInfo;
                 PrintOrderInformation(response);
-
             }
             else
             {

@@ -11,21 +11,21 @@ namespace Flooring.UI.Workflows
 {
     public class AddOrderWorkFlow
     {
-        public int productID;
-        public int areanum;
-        public int stateID;
-        public string area;
-        public string input;
-        public string first;
-        public string last;
-        public string statestr;
-        public string product;
-        private bool validproduct = false;
-        private bool validstate = false;
+        public int ProductId;
+        public int Areanum;
+        public int StateId;
+        public string Area;
+        public string Input;
+        public string First;
+        public string Last;
+        public string Statestr;
+        public string Product;
+        private bool _validproduct = false;
+        private bool _validstate = false;
 
         public void Execute()
         {
-            OrderOperations oop = new OrderOperations(DateTime.Now);
+            OrderOperations oop = new OrderOperations();
             List<Product> prodList = oop.GetProductNames();
             List<string> stateList = oop.GetStateNames();
             Console.Clear();
@@ -34,9 +34,9 @@ namespace Flooring.UI.Workflows
             {
                 Console.WriteLine("Enter \"Q\" to go back to the main menu at any time. ");
                 Console.Write("Please enter your first name: ");
-                input = Console.ReadLine();
+                Input = Console.ReadLine();
 
-                if (input == "")
+                if (Input == "")
                 {
                     Console.WriteLine("Please enter a valid first name: ");
                     Console.WriteLine("Press enter to continue...");
@@ -44,31 +44,31 @@ namespace Flooring.UI.Workflows
                     Console.Clear();
                 }
 
-            } while (input == "" && input.ToUpper() != "Q");
-            if (input.ToUpper() == "Q")
+            } while (Input == "" && Input.ToUpper() != "Q");
+            if (Input.ToUpper() == "Q")
             {
                 return;
             }
-            first = input;
+            First = Input;
             do
             {
                 Console.Write("Please enter your last name: ");
-                input = Console.ReadLine();
+                Input = Console.ReadLine();
 
-                if (input == "")
+                if (Input == "")
                 {
                     Console.WriteLine("Please enter a valid last name: ");
                     Console.WriteLine("Press enter to continue...");
                     Console.ReadLine();
                     Console.Clear();
                 }
-            } while (input == "" && input.ToUpper() != "Q");
-            if (input.ToUpper() == "Q")
+            } while (Input == "" && Input.ToUpper() != "Q");
+            if (Input.ToUpper() == "Q")
             {
                 return;
             }
 
-            last = input;
+            Last = Input;
             do
             {
                 Console.WriteLine("Please enter the state you are ordering from: ");
@@ -77,40 +77,41 @@ namespace Flooring.UI.Workflows
                     Console.WriteLine("{0}. {1} ", i, stateList[i - 1]);
                 }
                 Console.Write("Please enter your choice: ");
-                input = Console.ReadLine();
+                Input = Console.ReadLine();
 
-                if (input.ToUpper() == "Q")
+                if (Input.ToUpper() == "Q")
                 {
                     return;
                 }
 
-                if (input != "")
+                if (Input != "")
                 {
-                    statestr = input;
+                    Statestr = Input;
 
-                    if (!int.TryParse(statestr, out stateID))
+                    if (!int.TryParse(Statestr, out StateId))
                     {
                         Console.WriteLine("Please choose a valid state by number: ");
                     }
-                    if (stateID > 0 && stateID <= stateList.Count)
+                    if (StateId > 0 && StateId <= stateList.Count)
                     {
-                        validstate = true;
+                        _validstate = true;
                     }
                     else
                     {
+                        _validproduct = false;
                         Console.WriteLine("Please enter a valid state: ");
                         Console.WriteLine("Press enter to continue...");
                         Console.ReadLine();
                         Console.Clear();
                     }
                 }
-            } while (stateID == 0 && !validstate && input.ToUpper() != "Q");
+            } while (!_validstate && Input.ToUpper() != "Q");
 
 
             do
             {
                 AsciiProductDisplay disp = new AsciiProductDisplay();
-                disp.DisplayCatalog(productID);
+                disp.DisplayCatalog(ProductId);
                 Console.WriteLine("Please enter the Product Type you would like to order: ");
                 for (int i = 1; i <= prodList.Count; i++)
                 {
@@ -118,48 +119,49 @@ namespace Flooring.UI.Workflows
                 }
 
                 Console.Write("Please enter your choice: ");
-                input = Console.ReadLine();
+                Input = Console.ReadLine();
 
-                if (input.ToUpper() == "Q")
+                if (Input.ToUpper() == "Q")
                 {
                     return;
                 }
 
-                if (input != "")
+                if (Input != "")
                 {
-                    product = input;
-                    if (!int.TryParse(product, out productID))
+                    Product = Input;
+                    if (!int.TryParse(Product, out ProductId))
                     {
                         Console.WriteLine("Please enter a valid product type by number: ");
                     }
-                    if (productID > 0 && productID <= prodList.Count)
+                    if (ProductId > 0 && ProductId <= prodList.Count)
                     {
-                        validproduct = true;
+                        _validproduct = true;
                     }
                     else
                     {
+                        _validproduct = false;
                         Console.WriteLine("Please enter a valid product type: ");
                         Console.WriteLine("Press enter to continue...");
                         Console.ReadLine();
                         Console.Clear();
                     }
                 }
-            } while (productID == 0 && !validproduct && input.ToUpper() != "Q");
+            } while (!_validproduct && Input.ToUpper() != "Q");
 
             do
             {
                 Console.Write("Please enter the area in square feet you would like to order: ");
-                input = Console.ReadLine();
+                Input = Console.ReadLine();
 
-                if (input.ToUpper() == "Q")
+                if (Input.ToUpper() == "Q")
                 {
                     return;
                 }
 
-                if (input != "")
+                if (Input != "")
                 {
-                    area = input;
-                    if (!int.TryParse(area, out areanum))
+                    Area = Input;
+                    if (!int.TryParse(Area, out Areanum))
                     {
                         Console.WriteLine("Please enter a valid number of square feet: ");
                         Console.WriteLine("Press enter to continue...");
@@ -167,22 +169,22 @@ namespace Flooring.UI.Workflows
                         Console.Clear();
                     }
                 }
-            } while (areanum == 0 && input.ToUpper() != "Q");
+            } while (Areanum <= 0 && Input.ToUpper() != "Q");
 
             Console.WriteLine();
             Console.WriteLine("NEW ORDER");
             Console.WriteLine("====================================================");
-            Console.WriteLine("CUSTOMER NAME: {0},{1}", last, first);
-            Console.WriteLine("ORDERING STATE: {0}", (stateList[stateID - 1]));
-            Console.WriteLine("PRODUCT TYPE: {0}", (prodList[productID - 1].ProductType));
-            Console.WriteLine("AREA ORDERED (in Sq Ft.): {0} Ft^2", areanum);
+            Console.WriteLine("CUSTOMER NAME: {0},{1}", Last, First);
+            Console.WriteLine("ORDERING STATE: {0}", (stateList[StateId - 1]));
+            Console.WriteLine("PRODUCT TYPE: {0}", (prodList[ProductId - 1].ProductType));
+            Console.WriteLine("AREA ORDERED (in Sq Ft.): {0} Ft^2", Areanum);
             Console.WriteLine();
             Console.WriteLine("Would you like to submit your order? (Y/N): ");
             string uinput = Console.ReadLine();
             if (uinput.ToUpper() == "Y")
             {
                 string ordertemp =
-                    String.Format(first + ',' + last + ',' + stateID + ',' + productID + ',' + areanum);
+                    String.Format(First + ',' + Last + ',' + StateId + ',' + ProductId + ',' + Areanum);
 
                 oop.AddOrder(ordertemp);
                 return;

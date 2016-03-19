@@ -8,27 +8,25 @@ namespace Flooring.BLL.OrderOperations
 {
     public class OrderOperations
     {
-        private Order _currentOrder;
-        private IFloorRepository repo;
-        private ErrorRepository errors;
+        private IFloorRepository _repo;
+        private ErrorRepository _errors;
 
-        public OrderOperations(DateTime orderDate)
+        public OrderOperations()
         {
-            repo = new FloorRepository();
-            errors = new ErrorRepository();
+            _repo = new FloorRepository();
+            _errors = new ErrorRepository();
         }
 
         public Response GetOrders(DateTime date)
         {
-            var response = new Response();
-            response.OrderList = new List<Order>();
-            var orders = repo.GetAllOrderByDate(date);
+            var response = new Response {OrderList = new List<Order>()};
+            var orders = _repo.GetAllOrderByDate(date);
 
             if (orders.Count == 0)
             {
                 response.Success = false;
                 response.Message = $"There were no orders on date {date.ToShortDateString()}.";
-                errors.LogError(response.Message);
+                _errors.LogError(response.Message);
             }
             else
             {
@@ -63,7 +61,7 @@ namespace Flooring.BLL.OrderOperations
             }
             response.Message = $"Order {orderNumber} does not exist on {date.ToShortDateString()}.";
             response.Success = false;
-            errors.LogError(response.Message);
+            _errors.LogError(response.Message);
             return response;
         }
 
@@ -71,9 +69,12 @@ namespace Flooring.BLL.OrderOperations
         {
             var repo = new FloorRepository();
 
-            var response = new Response();
-            response.OrderList = new List<Order>();
-            response.OrderInfo = new Order();
+            var response = new Response
+            {
+                OrderList = new List<Order>(),
+                OrderInfo = new Order()
+            };
+
             Order tempOrder = new Order();
 
             string[] inputSplit = userInput.Split(',');
@@ -86,14 +87,14 @@ namespace Flooring.BLL.OrderOperations
             {
                 response.Success = false;
                 response.Message = $"The area {inputSplit[4]} is not a number!";
-                errors.LogError(response.Message);
+                _errors.LogError(response.Message);
                 return response;
             }
             if (orderArea < 0)
             {
                 response.Success = false;
                 response.Message = "Please enter a positive number for area!";
-                errors.LogError(response.Message);
+                _errors.LogError(response.Message);
                 return response;
             }
             tempOrder.OrderArea = orderArea;
@@ -126,16 +127,19 @@ namespace Flooring.BLL.OrderOperations
 
             var repo = new FloorRepository();
 
-            var response = new Response();
-            response.OrderList = new List<Order>();
-            response.OrderInfo = new Order();
+            var response = new Response
+            {
+                OrderList = new List<Order>(),
+                OrderInfo = new Order()
+            };
+
             var tempOrder = PopulateOrder(newOrder);
 
             if (tempOrder == null)
             {
                 response.Success = false;
-                response.Message = String.Format("Please enter a posivie number for the area.");
-                errors.LogError(response.Message);
+                response.Message = "Please enter a posivie number for the area.";
+                _errors.LogError(response.Message);
                 return response;
             }
 
@@ -191,17 +195,18 @@ namespace Flooring.BLL.OrderOperations
         {
             var repo = new FloorRepository();
 
-            var response = new Response();
-            response.OrderList = new List<Order>();
-            response.OrderInfo = new Order();
+            var response = new Response
+            {
+                OrderList = new List<Order>(),
+                OrderInfo = new Order()
+            };
 
             var orders = repo.GetAllOrderByDate(date);
-            List<Order> orderList = new List<Order>();
             if (orders.Count == 0)
             {
                 response.Success = false;
                 response.Message = $"ERROR: There were already 0 orders on {date.ToShortDateString()}";
-                errors.LogError(response.Message);
+                _errors.LogError(response.Message);
                 response.OrderList = orders;
                 return response;
             }
@@ -278,16 +283,14 @@ namespace Flooring.BLL.OrderOperations
 
             Product p = new Product();
 
-            for (int i = 0; i < products.Count; i++)
+            foreach (Product product in products.Where(product => product.ProductType == productType))
             {
-                if (products[i].ProductType == productType)
-                {
-                    p.ProductType = productType;
-                    p.CostperSqFt = products[i].CostperSqFt;
-                    p.LaborperSqFt = products[i].LaborperSqFt;
-                    return p;
-                }
+                p.ProductType = productType;
+                p.CostperSqFt = product.CostperSqFt;
+                p.LaborperSqFt = product.LaborperSqFt;
+                return p;
             }
+
             p.ProductType = "";
             p.CostperSqFt = 0m;
             p.LaborperSqFt = 0m;
@@ -301,15 +304,12 @@ namespace Flooring.BLL.OrderOperations
 
             State s = new State();
 
-            foreach (State tempState in states)
+            foreach (State tempState in states.Where(tempState => tempState.Abbr == state))
             {
-                if (tempState.Abbr == state)
-                {
-                    s.Abbr = tempState.Abbr;
-                    s.FullName = tempState.FullName;
-                    s.TaxRate = tempState.TaxRate;
-                    return s;
-                }
+                s.Abbr = tempState.Abbr;
+                s.FullName = tempState.FullName;
+                s.TaxRate = tempState.TaxRate;
+                return s;
             }
             s.Abbr = "";
             s.FullName = "";
@@ -321,9 +321,11 @@ namespace Flooring.BLL.OrderOperations
         {
             FloorRepository repo = new FloorRepository();
             string[] inputSplit = orderInfo.Split(',');
-            Order tempOrder = new Order();
-            tempOrder.FirstName = inputSplit[0];
-            tempOrder.LastName = inputSplit[1];
+            Order tempOrder = new Order
+            {
+                FirstName = inputSplit[0],
+                LastName = inputSplit[1]
+            };
 
             int orderArea;
             if (!int.TryParse(inputSplit[4], out orderArea))

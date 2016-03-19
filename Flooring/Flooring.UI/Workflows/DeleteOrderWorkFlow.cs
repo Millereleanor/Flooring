@@ -19,7 +19,7 @@ namespace Flooring.UI.Workflows
             {
                 return;
             }
-            OrderOperations op = new OrderOperations(Date);
+            OrderOperations op = new OrderOperations();
             var OrderNumber = disp.GetOrderNumberFromUser();
 
             if (OrderNumber == -1)
@@ -28,9 +28,10 @@ namespace Flooring.UI.Workflows
             }
             Response response = op.GetSpecificOrder(OrderNumber, Date);
             PrintOrderInformation(response);
+
             if (response.Success)
             {
-                 Console.Write("Are you sure you want to delete this order? (Y/N): ");
+                Console.Write("Are you sure you want to delete this order? (Y/N): ");
                 string input = Console.ReadLine();
                 if (input.ToUpper() == "Y")
                 {
@@ -47,7 +48,7 @@ namespace Flooring.UI.Workflows
                     return;
                 }
             }
-           
+
             Console.ReadLine();
 
 
@@ -56,7 +57,7 @@ namespace Flooring.UI.Workflows
         public void PrintOrderInformation(Response response)
         {
             Console.Clear();
-            if(response.Success)
+            if (response.Success)
             {
                 Console.WriteLine("Order Date: {0}", response.OrderInfo.OrderDate.ToShortDateString());
                 Console.WriteLine("{0} order(s) found on this date. ", response.OrderList.Count);
@@ -90,6 +91,7 @@ namespace Flooring.UI.Workflows
                 Console.WriteLine("Press enter to continue.");
             }
         }
+
         public void quit()
         {
             MainMenuDisplay mm = new MainMenuDisplay();
