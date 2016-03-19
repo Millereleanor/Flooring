@@ -116,7 +116,7 @@ namespace Flooring.UI.Workflows
             do
             {
                 AsciiProductDisplay disp = new AsciiProductDisplay();
-                disp.DisplayCatalog(ProductId);
+                disp.DisplayCatalog();
                 Console.WriteLine("Please enter the Product Type you would like to order: ");
                 for (int i = 1; i <= prodList.Count; i++)
                 {
@@ -195,23 +195,12 @@ namespace Flooring.UI.Workflows
                 oop.AddOrder(ordertemp);
                 return;
             }
-            else
-            {
-
                 Console.WriteLine("Press Enter to continue...");
                 Console.ReadLine();
-            }
-
-            return;
+          
 
         }
 
-        public void quit()
-        {
-            MainMenuDisplay mm = new MainMenuDisplay();
-            mm.Display();
-
-        }
     }
 }
 

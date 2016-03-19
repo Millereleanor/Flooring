@@ -96,12 +96,5 @@ namespace Flooring.UI.Workflows
                 Console.WriteLine("Press enter to continue.");
             }
         }
-
-        public void quit()
-        {
-            MainMenuDisplay mm = new MainMenuDisplay();
-            mm.Display();
-
-        }
     }
 }

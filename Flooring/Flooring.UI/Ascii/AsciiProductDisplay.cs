@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using Flooring.BLL.OrderOperations;
+using Flooring.Models;
 
 namespace Flooring.UI.Ascii
 {
     public class AsciiProductDisplay
     {
-        public void DisplayCatalog(int productID)
+        public void DisplayCatalog()
         {
+          OrderOperations oop = new OrderOperations();
+        List<Product> prodList = oop.GetProductNames();
             Console.WriteLine("Get Floored! Product Catalog: ");
             Console.WriteLine(@"
                                 ________________       __________________       _______________
@@ -20,53 +25,10 @@ namespace Flooring.UI.Ascii
         |^^^^^^^^^^^^^^^^|     | ║ ▌║ ║ ▌║ ║ ▌║ |     |/ /\ \/ /\ \/ /\ \|     |   |(@)|   |   |
         |▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒|     | ╚══╝ ╚══╝ ╚══╝ |     | /  \  /  \  /  \ |     |(@)|___|(@)|(@)|
         ╙╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╜     |________________|     |_\__/__\__/__\__/_|     |___|___|___|___|
-          
-           Plush Carpet          Shiny Laminate          Gorgeous Tile            Cherrywood    
-Material: $2.23 per SqFt         $1.75 per SqFt          $3.50 per SqFt         $5.15 per SqFt
-Labor:    $2.10 per SqFt         $2.10 per SqFt          $4.15 per SqFt         $4.75 per SqFt
-");
-            
-
-//            switch (productID)
-//            {
-//                case 1:
-//                    Console.WriteLine(@"
-
-
-
-
-
-//");
-//                    break;
-//                case 2:
-//                    Console.WriteLine(@"
-
-
-
-
-
-//");
-//                    break;
-//                case 3:
-//                    Console.WriteLine(@"
-
-
-
-
-
-//");
-//                    break;
-//                case 4:
-//                    Console.WriteLine(@"
-
-
-
-
-
-//");
-//                    break;
-//                default:
-//                    break;
+");          
+            Console.WriteLine("Name:         {0}                {1}                  {2}                    {3}", prodList[0].ProductType, prodList[1].ProductType,prodList[2].ProductType,prodList[3].ProductType);
+            Console.WriteLine("Material:     {0:C}                  {1:C}                    {2:C}                   {3:C}",prodList[0].CostperSqFt,prodList[1].CostperSqFt,prodList[2].CostperSqFt,prodList[3].CostperSqFt);
+            Console.WriteLine("Labor:        {0:C}                  {1:C}                    {2:C}                   {3:C}",prodList[0].LaborperSqFt,prodList[1].LaborperSqFt,prodList[2].LaborperSqFt,prodList[3].LaborperSqFt);
             }
         }
 

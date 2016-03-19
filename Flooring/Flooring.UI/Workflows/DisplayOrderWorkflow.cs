@@ -159,11 +159,6 @@ namespace Flooring.UI.Workflows
             Console.Clear();
         }
 
-        public void quit()
-        {
-            MainMenuDisplay mm = new MainMenuDisplay();
-            mm.Display();
-
-        }
+       
     }
 }
