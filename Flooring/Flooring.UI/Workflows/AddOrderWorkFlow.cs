@@ -22,10 +22,14 @@ namespace Flooring.UI.Workflows
         public string Product;
         private bool _validproduct = false;
         private bool _validstate = false;
+        private OrderOperations oop;
 
+        public AddOrderWorkFlow()
+        {
+            oop = MainMenuDisplay.GetOps();
+        }
         public void Execute()
         {
-            OrderOperations oop = new OrderOperations();
             List<Product> prodList = oop.GetProductNames();
             List<string> stateList = oop.GetStateNames();
             Console.Clear();
@@ -91,6 +95,7 @@ namespace Flooring.UI.Workflows
                     if (!int.TryParse(Statestr, out StateId))
                     {
                         Console.WriteLine("Please choose a valid state by number: ");
+                        _validstate = false;
                     }
                     if (StateId > 0 && StateId <= stateList.Count)
                     {
@@ -98,7 +103,7 @@ namespace Flooring.UI.Workflows
                     }
                     else
                     {
-                        _validproduct = false;
+                        _validstate = false;
                         Console.WriteLine("Please enter a valid state: ");
                         Console.WriteLine("Press enter to continue...");
                         Console.ReadLine();
@@ -132,6 +137,7 @@ namespace Flooring.UI.Workflows
                     if (!int.TryParse(Product, out ProductId))
                     {
                         Console.WriteLine("Please enter a valid product type by number: ");
+                        _validproduct = false;
                     }
                     if (ProductId > 0 && ProductId <= prodList.Count)
                     {

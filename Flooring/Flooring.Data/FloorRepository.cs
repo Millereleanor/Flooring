@@ -189,8 +189,9 @@ namespace Flooring.Data
         }
 
         public void WriteToFile(Dictionary<DateTime, List<Order>> Order)
-        { 
-
+        {
+            DateTime emptyKey = DateTime.MinValue;
+            string emptyPath = "";
             foreach (var key in orders.Keys)
             {
 
@@ -204,9 +205,28 @@ namespace Flooring.Data
                     tw.WriteLine(order.ToString());
 
                 }
+        
                 tw.Close();
+                if (orders[key].Count == 0) //added need to refactor
+                {
+                    emptyKey = key;
+                    emptyPath = fileName;
+                }
             }
 
+            if (emptyKey != DateTime.MinValue)//added need to refactor
+            {
+                orders.Remove(DateTime.MinValue);
+                File.Delete(emptyPath);
+            }
+
+            orders.Clear();//added need to refactor
+            var files = Directory.GetFiles(ConfigurationManager.AppSettings["FileName"], "Orders_*.txt",
+                SearchOption.TopDirectoryOnly);
+            foreach (string file in files)
+            {
+                ReadOrders(file);//added need to refactor
+            }
         }
     }
 }

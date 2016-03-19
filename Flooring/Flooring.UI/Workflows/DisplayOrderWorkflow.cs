@@ -14,8 +14,12 @@ namespace Flooring.UI.Workflows
         public DateTime Date;
         public int OrderNumber;
         private string _dateoforder;
+        private OrderOperations ops;
 
-
+        public DisplayOrderWorkflow()
+        {
+            ops = MainMenuDisplay.GetOps();
+        }
         public void Execute()
         {
             DateTime Date = GetOrderDateFromUser();
@@ -76,7 +80,6 @@ namespace Flooring.UI.Workflows
 
         public void DisplayOrderbyDate(DateTime Date)
         {
-            var ops = new OrderOperations();
             var getOrdersResponse = ops.GetOrders(Date);
 
 
@@ -95,7 +98,6 @@ namespace Flooring.UI.Workflows
 
         public void DisplayOrderbyDateID(DateTime Date, int orderNumber)
         {
-            var ops = new OrderOperations();
             var response = ops.GetSpecificOrder(orderNumber, Date);
 
 

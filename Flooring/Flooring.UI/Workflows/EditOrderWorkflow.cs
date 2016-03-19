@@ -24,7 +24,12 @@ namespace Flooring.UI.Workflows
         private string _nfirst;
         private string _nlast;
         private string _input;
+        private OrderOperations oop;
 
+        public EditOrderWorkflow()
+        {
+            oop = MainMenuDisplay.GetOps();
+        }
         public void Execute()
         {
             DisplayOrderWorkflow dispdatId = new DisplayOrderWorkflow();
@@ -35,7 +40,6 @@ namespace Flooring.UI.Workflows
                 return;
             }
 
-            OrderOperations oop = new OrderOperations();
             List<Product> prodList = oop.GetProductNames();
             List<string> stateList = oop.GetStateNames();
             OrderNumber = dispdatId.GetOrderNumberFromUser();

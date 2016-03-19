@@ -10,6 +10,12 @@ namespace Flooring.UI.Workflows
 {
     class DeleteOrderWorkFlow
     {
+        private OrderOperations op;
+
+        public DeleteOrderWorkFlow()
+        {
+            op = MainMenuDisplay.GetOps();
+        }
         public void DeleteOrder()
         {
             DisplayOrderWorkflow disp = new DisplayOrderWorkflow();
@@ -19,7 +25,7 @@ namespace Flooring.UI.Workflows
             {
                 return;
             }
-            OrderOperations op = new OrderOperations();
+
             var OrderNumber = disp.GetOrderNumberFromUser();
 
             if (OrderNumber == -1)
@@ -38,13 +44,12 @@ namespace Flooring.UI.Workflows
                     op.DeleteOrder(OrderNumber, Date);
                     Console.WriteLine("Order succesfully deleted. Press enter to continue...");
                     Console.ReadLine();
-                    MainMenuDisplay back = new MainMenuDisplay();
-                    back.Display();
                     return;
                 }
 
                 if (input.ToUpper() == "N")
                 {
+                    Console.WriteLine("File Not Deleted!");
                     return;
                 }
             }

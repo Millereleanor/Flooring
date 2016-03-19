@@ -15,9 +15,9 @@ namespace Flooring.Data
         void UpdateOrder(DateTime date, int orderId, Order updateOrder);
         //todo:test remove order
         void RemoveOrder(DateTime date, int orderId);
-
+        bool DictionaryContainsKey(DateTime orderDate);
         //don't need write to file
-       // void WriteToFile(Dictionary<DateTime, List<Order>> Order);
+        // void WriteToFile(Dictionary<DateTime, List<Order>> Order);
 
     }
 }

@@ -2,6 +2,7 @@
 using Flooring.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 
 namespace Flooring.BLL.OrderOperations
@@ -10,10 +11,12 @@ namespace Flooring.BLL.OrderOperations
     {
         private IFloorRepository _repo;
         private ErrorRepository _errors;
+        private string _folderName;
 
         public OrderOperations()
         {
-            _repo = new FloorRepository();
+            _folderName = ConfigurationManager.AppSettings["FileName"];
+            _repo = FlooringRepositoryFactory.CreateFloorRepository(_folderName);
             _errors = new ErrorRepository();
         }
 
@@ -39,12 +42,10 @@ namespace Flooring.BLL.OrderOperations
 
         public Response GetSpecificOrder(int orderNumber, DateTime date)
         {
-            var repo = new FloorRepository();
-
             var response = new Response();
             response.OrderList = new List<Order>();
             response.OrderInfo = new Order();
-            var orders = repo.GetAllOrderByDate(date);
+            var orders = _repo.GetAllOrderByDate(date);
             List<Order> orderList = new List<Order>();
             foreach (var order in orders)
             {
@@ -67,8 +68,6 @@ namespace Flooring.BLL.OrderOperations
 
         public Response AddOrder(string userInput)
         {
-            var repo = new FloorRepository();
-
             var response = new Response
             {
                 OrderList = new List<Order>(),
@@ -110,7 +109,7 @@ namespace Flooring.BLL.OrderOperations
             tempOrder.TaxRate = s.TaxRate;
             tempOrder.OrderDate = DateTime.Today;
 
-            repo.CreateOrder(tempOrder);
+            _repo.CreateOrder(tempOrder);
 
             return response;
         }
@@ -124,8 +123,6 @@ namespace Flooring.BLL.OrderOperations
             }
 
             Order savedOrder = oldOrderResponse.OrderInfo;
-
-            var repo = new FloorRepository();
 
             var response = new Response
             {
@@ -184,7 +181,7 @@ namespace Flooring.BLL.OrderOperations
             tempOrder.OrderNumber = savedOrder.OrderNumber;
             tempOrder.OrderDate = savedOrder.OrderDate;
 
-            repo.UpdateOrder(date, tempOrder.OrderNumber, tempOrder);
+            _repo.UpdateOrder(date, tempOrder.OrderNumber, tempOrder);
             response.Success = true;
             response.Message = $"Order {tempOrder.OrderNumber} placed on {tempOrder.OrderDate} was updated.";
             response.OrderInfo = tempOrder;
@@ -193,15 +190,13 @@ namespace Flooring.BLL.OrderOperations
 
         public Response DeleteOrder(int orderNumber, DateTime date)
         {
-            var repo = new FloorRepository();
-
             var response = new Response
             {
                 OrderList = new List<Order>(),
                 OrderInfo = new Order()
             };
 
-            var orders = repo.GetAllOrderByDate(date);
+            var orders = _repo.GetAllOrderByDate(date);
             if (orders.Count == 0)
             {
                 response.Success = false;
@@ -210,7 +205,7 @@ namespace Flooring.BLL.OrderOperations
                 response.OrderList = orders;
                 return response;
             }
-            repo.RemoveOrder(date, orderNumber);
+            _repo.RemoveOrder(date, orderNumber);
             response.Message = $"Succesfully removed order {orderNumber} from {date.ToShortDateString()}";
             response.Success = true;
             return response;
@@ -319,7 +314,6 @@ namespace Flooring.BLL.OrderOperations
 
         private Order PopulateOrder(string orderInfo)
         {
-            FloorRepository repo = new FloorRepository();
             string[] inputSplit = orderInfo.Split(',');
             Order tempOrder = new Order
             {
@@ -357,13 +351,13 @@ namespace Flooring.BLL.OrderOperations
             tempOrder.TaxRate = s.TaxRate;
             tempOrder.OrderDate = DateTime.Today;
 
-            if (repo.DictionaryContainsKey(tempOrder.OrderDate))
+            if (_repo.DictionaryContainsKey(tempOrder.OrderDate))
             {
                 tempOrder.OrderNumber = 1;
             }
             else
             {
-                tempOrder.OrderNumber = (repo.GetAllOrderByDate(tempOrder.OrderDate).Count) + 1;
+                tempOrder.OrderNumber = (_repo.GetAllOrderByDate(tempOrder.OrderDate).Count) + 1;
             }
             return tempOrder;
         }

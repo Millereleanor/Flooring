@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Flooring.BLL.OrderOperations;
 using Flooring.UI.Ascii;
 using Flooring.Models;
 
@@ -10,6 +11,12 @@ namespace Flooring.UI.Workflows
 {
     public class MainMenuDisplay
     {
+        DisplayOrderWorkflow orderDisplay = new DisplayOrderWorkflow();
+        AddOrderWorkFlow addOrder = new AddOrderWorkFlow();
+        EditOrderWorkflow editOrder = new EditOrderWorkflow();
+        DeleteOrderWorkFlow deleteOrder = new DeleteOrderWorkFlow();
+        static OrderOperations ops = new OrderOperations();
+
         public void Display()
         {
             string input = "";
@@ -38,28 +45,28 @@ namespace Flooring.UI.Workflows
                 }
 
             } while (input.ToUpper() != "Q");
-
-
         }
+
+        public static OrderOperations GetOps()
+        {
+            return ops;
+        }
+
         private void ProcessChoice(string choice)
         {
             switch (choice)
             {
                 case "1":
-                    DisplayOrderWorkflow orderDisplay = new DisplayOrderWorkflow();
                     orderDisplay.Execute();
                     break;
                 case "2":
-                    AddOrderWorkFlow addOrder = new AddOrderWorkFlow();
                     addOrder.Execute();
                     break;
                 case "3":
-                    EditOrderWorkflow editOrder = new EditOrderWorkflow();
                     editOrder.Execute();
                     break;
 
                 case "4":
-                    DeleteOrderWorkFlow deleteOrder = new DeleteOrderWorkFlow();
                     deleteOrder.DeleteOrder();
                     break;
                 default:
