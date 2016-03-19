@@ -8,7 +8,6 @@ namespace Flooring.Models
 {
     public class Order
     {
-        private decimal _orderTotal;
         public int OrderNumber { get; set; }
         public int OrderArea { get; set; }
         public string FirstName { get; set; }
@@ -22,7 +21,7 @@ namespace Flooring.Models
 
         public decimal TaxTotal
         {
-            get { return this.TaxRate*this.OrderTotal; }
+            get { return TaxRate*OrderTotal; }
         }
 
         public decimal OrderTotal

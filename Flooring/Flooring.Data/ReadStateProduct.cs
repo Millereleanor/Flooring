@@ -20,25 +20,22 @@ namespace Flooring.Data
             var reader = File.ReadAllLines(f);
             using (StreamReader r = new StreamReader(f))
             {
-                string line;
-                while ((line = r.ReadLine()) != null)
+                for (int i = 1; i < reader.Length; i++)
                 {
-                    for (int i = 1; i < f.Length; i++)
-                    {
-                        var newState = new State();
-                        var columns = reader[i].Split(',');
-                        newState.Abbr = columns[0];
-                        newState.FullName = columns[1];
-                        newState.TaxRate = decimal.Parse(columns[2]);
-                        states.Add(newState);
-                    }
+                    var newState = new State();
+                    var columns = reader[i].Split(',');
+                    newState.Abbr = columns[0];
+                    newState.FullName = columns[1];
+                    newState.TaxRate = decimal.Parse(columns[2])/100;
+                    states.Add(newState);
+
                 }
             }
             return states;
         }
-    
 
-    public List<Product> GetProductfromTxt()
+
+        public List<Product> GetProductfromTxt()
         {
 
             string f = "Products.txt";
@@ -47,21 +44,18 @@ namespace Flooring.Data
             var reader = File.ReadAllLines(f);
             using (StreamReader r = new StreamReader(f))
             {
-                string line;
-                while ((line = r.ReadLine()) != null)
+                for (int i = 1; i < reader.Length; i++)
                 {
-                    for (int i = 1; i < f.Length; i++)
-                    {
-                        var newProduct = new Product();
-                        var columns = reader[i].Split(',');
-                        newProduct.ProductType = columns[0];
-                        newProduct.CostperSqFt = decimal.Parse(columns[1]);
-                        newProduct.LaborperSqFt = decimal.Parse(columns[2]);
-                        products.Add(newProduct);
-                    }
+                    var newProduct = new Product();
+                    var columns = reader[i].Split(',');
+                    newProduct.ProductType = columns[0];
+                    newProduct.CostperSqFt = decimal.Parse(columns[1]);
+                    newProduct.LaborperSqFt = decimal.Parse(columns[2]);
+                    products.Add(newProduct);
                 }
+
             }
-        return products;
+            return products;
         }
     }
 }

@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 
 namespace Flooring.Data
 {
-    public static class FlooringRepositoryFactory
+    public class FlooringRepositoryFactory
     {
-        public static IFloorRepository CreateFloorRepository(string type)
+        public static IFloorRepository CreateFloorRepository(string path)
         {
-            //TODO: THIS
-            return new FloorRepository();
+            switch (path)
+            {
+                case "DataFiles\\":
+                    return new FloorRepository();
+                default:
+                    return new MockFloorRepository();
+
+            }
         }
     }
 }

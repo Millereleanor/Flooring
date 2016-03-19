@@ -12,9 +12,14 @@ namespace Flooring.UI.Workflows
     public class DisplayOrderWorkflow
     {
         public DateTime Date;
-        public int orderNumber;
-        private Order _currentOrder;
-       
+        public int OrderNumber;
+        private string _dateoforder;
+        private OrderOperations ops;
+
+        public DisplayOrderWorkflow()
+        {
+            ops = MainMenuDisplay.GetOps();
+        }
         public void Execute()
         {
             DateTime Date = GetOrderDateFromUser();
@@ -29,17 +34,26 @@ namespace Flooring.UI.Workflows
             do
             {
                 Console.Clear();
-                Console.Write("Please enter the order date(MM/DD/YYYY or MM-DD-YYYY): ");
-                string dateoforder = Console.ReadLine();
-
-                if (DateTime.TryParse(dateoforder, out Date))
+                Console.Write("Please enter the order date(MM/DD/YY or MM-DD-YY) or \"Q\" to quit: ");
+                _dateoforder = Console.ReadLine();
+                if (_dateoforder.ToUpper() == "Q")
+                {
+                    return DateTime.MinValue;
+                }
+                if (DateTime.TryParse(_dateoforder, out Date))
                 {
                     return Date;
+                }
+                if (_dateoforder.ToUpper() == "Q")
+                {
+                    MainMenuDisplay mm = new MainMenuDisplay();
+                    mm.Display();
                 }
                 Console.WriteLine("That is not a valid date");
                 Console.WriteLine("Press enter to continue...");
                 Console.ReadLine();
             } while (true);
+
         }
 
         public int GetOrderNumberFromUser()
@@ -49,10 +63,14 @@ namespace Flooring.UI.Workflows
                 Console.Clear();
                 Console.Write("Please enter the order number: ");
                 string numberoforder = Console.ReadLine();
-
-                if (int.TryParse(numberoforder, out orderNumber))
+                if (numberoforder.ToUpper() == "Q")
                 {
-                    return orderNumber;
+                    return -1;
+                }
+
+                if (int.TryParse(numberoforder, out OrderNumber))
+                {
+                    return OrderNumber;
                 }
                 Console.WriteLine("That is not a valid order number");
                 Console.WriteLine("Press enter to continue...");
@@ -62,17 +80,12 @@ namespace Flooring.UI.Workflows
 
         public void DisplayOrderbyDate(DateTime Date)
         {
-            var ops = new OrderOperations(Date);
             var getOrdersResponse = ops.GetOrders(Date);
 
 
             if (getOrdersResponse.Success)
-            {
-                _currentOrder = getOrdersResponse.OrderInfo;
-                
-                
+            {         
                 PrintOrderInformation(getOrdersResponse);
-
             }
             else
             {
@@ -85,15 +98,12 @@ namespace Flooring.UI.Workflows
 
         public void DisplayOrderbyDateID(DateTime Date, int orderNumber)
         {
-            var ops = new OrderOperations(Date);
             var response = ops.GetSpecificOrder(orderNumber, Date);
 
 
             if (response.Success)
             {
-                _currentOrder = response.OrderInfo;
                 PrintOrderInformation(response);
-
             }
             else
             {
@@ -133,7 +143,7 @@ namespace Flooring.UI.Workflows
                 Console.WriteLine("ORDER STATE: {0} ({1})          STATE TAX RATE: {2:P}",
                     order.StateAbbr, order.StateFull, order.TaxRate);
                 Console.WriteLine("PRODUCT TYPE: {0}                  ORDER AREA: {1}", order.ProductType, order.OrderArea);
-                Console.WriteLine("MATERIAL COST PER Ft^2: {0}        LABOR COST PER Ft^2: {1}",
+                Console.WriteLine("MATERIAL COST PER Ft^2: {0:C}        LABOR COST PER Ft^2: {1:C}",
                     order.CostperSqFt, order.LaborperSqFt);
                 Console.WriteLine("ORDER TOTAL: {0:C}", 
                     order.OrderTotal+order.TaxTotal);
@@ -149,6 +159,11 @@ namespace Flooring.UI.Workflows
             Console.Clear();
         }
 
+        public void quit()
+        {
+            MainMenuDisplay mm = new MainMenuDisplay();
+            mm.Display();
 
+        }
     }
 }

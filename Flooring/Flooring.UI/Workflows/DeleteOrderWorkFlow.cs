@@ -10,34 +10,50 @@ namespace Flooring.UI.Workflows
 {
     class DeleteOrderWorkFlow
     {
+        private OrderOperations op;
+
+        public DeleteOrderWorkFlow()
+        {
+            op = MainMenuDisplay.GetOps();
+        }
         public void DeleteOrder()
         {
             DisplayOrderWorkflow disp = new DisplayOrderWorkflow();
             var Date = disp.GetOrderDateFromUser();
-            OrderOperations op = new OrderOperations(Date);
+
+            if (Date == DateTime.MinValue)
+            {
+                return;
+            }
+
             var OrderNumber = disp.GetOrderNumberFromUser();
+
+            if (OrderNumber == -1)
+            {
+                return;
+            }
             Response response = op.GetSpecificOrder(OrderNumber, Date);
             PrintOrderInformation(response);
+
             if (response.Success)
             {
-                 Console.Write("Are you sure you want to delete this order? (Y/N): ");
+                Console.Write("Are you sure you want to delete this order? (Y/N): ");
                 string input = Console.ReadLine();
                 if (input.ToUpper() == "Y")
                 {
                     op.DeleteOrder(OrderNumber, Date);
                     Console.WriteLine("Order succesfully deleted. Press enter to continue...");
                     Console.ReadLine();
-                    MainMenuDisplay back = new MainMenuDisplay();
-                    back.Display();
                     return;
                 }
 
                 if (input.ToUpper() == "N")
                 {
+                    Console.WriteLine("File Not Deleted!");
                     return;
                 }
             }
-           
+
             Console.ReadLine();
 
 
@@ -46,7 +62,7 @@ namespace Flooring.UI.Workflows
         public void PrintOrderInformation(Response response)
         {
             Console.Clear();
-            if(response.Success)
+            if (response.Success)
             {
                 Console.WriteLine("Order Date: {0}", response.OrderInfo.OrderDate.ToShortDateString());
                 Console.WriteLine("{0} order(s) found on this date. ", response.OrderList.Count);
@@ -79,6 +95,13 @@ namespace Flooring.UI.Workflows
                 Console.WriteLine(response.Message);
                 Console.WriteLine("Press enter to continue.");
             }
+        }
+
+        public void quit()
+        {
+            MainMenuDisplay mm = new MainMenuDisplay();
+            mm.Display();
+
         }
     }
 }

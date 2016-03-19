@@ -1,36 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Flooring.Data;
+﻿using Flooring.Data;
 using Flooring.Models;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
 
 namespace Flooring.BLL.OrderOperations
 {
     public class OrderOperations
     {
-        private Order _currentOrder;
-        private IFloorRepository repo;
-        private ErrorRepository errors;
+        private IFloorRepository _repo;
+        private ErrorRepository _errors;
+        private string _folderName;
 
-        public OrderOperations(DateTime orderDate)
+        public OrderOperations()
         {
-            repo = new FloorRepository();
-            errors = new ErrorRepository();
+            _folderName = ConfigurationManager.AppSettings["FileName"];
+            _repo = FlooringRepositoryFactory.CreateFloorRepository(_folderName);
+            _errors = new ErrorRepository();
         }
+
         public Response GetOrders(DateTime date)
         {
-
-            var response = new Response();
-            response.OrderList = new List<Order>();
-            var orders = repo.GetAllOrderByDate(date);
+            var response = new Response {OrderList = new List<Order>()};
+            var orders = _repo.GetAllOrderByDate(date);
 
             if (orders.Count == 0)
             {
                 response.Success = false;
-                response.Message = String.Format("There were no orders on date {0}.", date.ToShortDateString());
-                errors.LogError(response.Message);
+                response.Message = $"There were no orders on date {date.ToShortDateString()}.";
+                _errors.LogError(response.Message);
             }
             else
             {
@@ -43,12 +42,10 @@ namespace Flooring.BLL.OrderOperations
 
         public Response GetSpecificOrder(int orderNumber, DateTime date)
         {
-            var repo = new FloorRepository();
-
             var response = new Response();
             response.OrderList = new List<Order>();
             response.OrderInfo = new Order();
-            var orders = repo.GetAllOrderByDate(date);
+            var orders = _repo.GetAllOrderByDate(date);
             List<Order> orderList = new List<Order>();
             foreach (var order in orders)
             {
@@ -58,25 +55,25 @@ namespace Flooring.BLL.OrderOperations
                     response.OrderInfo = order;
                     orderList.Add(order);
                     response.OrderList = orderList;
-                    response.Message = String.Format("Here is the order information for order {0}.\n" +
-                                                     "This order was placed on {1}",orderNumber, date.ToShortDateString());
+                    response.Message = $"Here is the order information for order {orderNumber}.\n" +
+                                       $"This order was placed on {date.ToShortDateString()}";
                     return response;
                 }
             }
-            response.Message = String.Format("Order {0} does not exist on {1}.",orderNumber,date.ToShortDateString());
+            response.Message = $"Order {orderNumber} does not exist on {date.ToShortDateString()}.";
             response.Success = false;
-            errors.LogError(response.Message);
+            _errors.LogError(response.Message);
             return response;
         }
 
         public Response AddOrder(string userInput)
         {
+            var response = new Response
+            {
+                OrderList = new List<Order>(),
+                OrderInfo = new Order()
+            };
 
-            var repo = new FloorRepository();
-
-            var response = new Response();
-            response.OrderList = new List<Order>();
-            response.OrderInfo = new Order();
             Order tempOrder = new Order();
 
             string[] inputSplit = userInput.Split(',');
@@ -88,19 +85,19 @@ namespace Flooring.BLL.OrderOperations
             if (!int.TryParse(inputSplit[4], out orderArea))
             {
                 response.Success = false;
-                response.Message = String.Format("The area {0} is not a number!", inputSplit[4]);
-                errors.LogError(response.Message);
+                response.Message = $"The area {inputSplit[4]} is not a number!";
+                _errors.LogError(response.Message);
                 return response;
             }
             if (orderArea < 0)
             {
                 response.Success = false;
                 response.Message = "Please enter a positive number for area!";
-                errors.LogError(response.Message);
+                _errors.LogError(response.Message);
                 return response;
             }
             tempOrder.OrderArea = orderArea;
-            
+
             Product p = GetProduct(inputSplit[3]);
             tempOrder.ProductType = p.ProductType;
             tempOrder.CostperSqFt = p.CostperSqFt;
@@ -112,16 +109,7 @@ namespace Flooring.BLL.OrderOperations
             tempOrder.TaxRate = s.TaxRate;
             tempOrder.OrderDate = DateTime.Today;
 
-            //if (repo.DictionaryContainsKey(tempOrder.OrderDate)) //fix this
-            //{
-            //    tempOrder.OrderNumber = 1;
-            //}
-            //else
-            //{
-            //    tempOrder.OrderNumber = (repo.GetAllOrderByDate(tempOrder.OrderDate).Count) + 1;
-            //}
-
-            repo.CreateOrder(tempOrder);
+            _repo.CreateOrder(tempOrder);
 
             return response;
         }
@@ -136,18 +124,19 @@ namespace Flooring.BLL.OrderOperations
 
             Order savedOrder = oldOrderResponse.OrderInfo;
 
-            var repo = new FloorRepository();
+            var response = new Response
+            {
+                OrderList = new List<Order>(),
+                OrderInfo = new Order()
+            };
 
-            var response = new Response();
-            response.OrderList = new List<Order>();
-            response.OrderInfo = new Order();
             var tempOrder = PopulateOrder(newOrder);
 
             if (tempOrder == null)
             {
                 response.Success = false;
-                response.Message = String.Format("Please enter a posivie number for the area.");
-                errors.LogError(response.Message);
+                response.Message = "Please enter a posivie number for the area.";
+                _errors.LogError(response.Message);
                 return response;
             }
 
@@ -191,179 +180,146 @@ namespace Flooring.BLL.OrderOperations
 
             tempOrder.OrderNumber = savedOrder.OrderNumber;
             tempOrder.OrderDate = savedOrder.OrderDate;
-            
 
-            repo.UpdateOrder(date, tempOrder.OrderNumber, tempOrder);
+            _repo.UpdateOrder(date, tempOrder.OrderNumber, tempOrder);
             response.Success = true;
-            response.Message = String.Format("Order {0} placed on {1} was updated.", tempOrder.OrderNumber,
-                tempOrder.OrderDate);
+            response.Message = $"Order {tempOrder.OrderNumber} placed on {tempOrder.OrderDate} was updated.";
             response.OrderInfo = tempOrder;
             return response;
         }
 
         public Response DeleteOrder(int orderNumber, DateTime date)
         {
-            var repo = new FloorRepository();
+            var response = new Response
+            {
+                OrderList = new List<Order>(),
+                OrderInfo = new Order()
+            };
 
-            var response = new Response();
-            response.OrderList = new List<Order>();
-            response.OrderInfo = new Order();
-
-            var orders = repo.GetAllOrderByDate(date);
-            List<Order> orderList = new List<Order>();
+            var orders = _repo.GetAllOrderByDate(date);
             if (orders.Count == 0)
             {
                 response.Success = false;
-                response.Message = String.Format("ERROR: There were already 0 orders on {0}", date.ToShortDateString());
-                errors.LogError(response.Message);
+                response.Message = $"ERROR: There were already 0 orders on {date.ToShortDateString()}";
+                _errors.LogError(response.Message);
                 response.OrderList = orders;
                 return response;
             }
-            repo.RemoveOrder(date,orderNumber);
-            response.Message = String.Format("Succesfully removed order {0} from {1}", orderNumber, date.ToShortDateString());
+            _repo.RemoveOrder(date, orderNumber);
+            response.Message = $"Succesfully removed order {orderNumber} from {date.ToShortDateString()}";
             response.Success = true;
             return response;
         }
 
+        public List<string> GetStateNames()
+        {
+            ReadStateProduct readText = new ReadStateProduct();
+            List<State> stateList = readText.GetStatefromTxt();
+
+            return stateList.Select(state => state.FullName).ToList();
+        }
+
+        public List<Product> GetProductNames()
+        {
+            ReadStateProduct readText = new ReadStateProduct();
+            return readText.GetProductfromTxt();
+        }
+
         private Product GetProduct(string productType)
         {
+            ReadStateProduct readText = new ReadStateProduct();
+            List<Product> products = readText.GetProductfromTxt();
+
             Product p = new Product();
-            switch (productType)
+
+            for (int i = 1; i <= products.Count; i++)
             {
-                case "1":
-                    p.ProductType="Cherrywood Flooring";
-                    p.CostperSqFt = 15.00m;
-                    p.LaborperSqFt = 10.00m;
+                if (i.ToString() == productType)
+                {
+                    p.ProductType = products[i - 1].ProductType;
+                    p.CostperSqFt = products[i - 1].CostperSqFt;
+                    p.LaborperSqFt = products[i - 1].LaborperSqFt;
                     return p;
-                case "2":
-                    p.ProductType="Plush Carpet";
-                    p.CostperSqFt = 5.00m;
-                    p.LaborperSqFt = 2.00m;
-                    return p;
-                case "3":
-                    p.ProductType="Shiny Laminant";
-                    p.CostperSqFt = 3.00m;
-                    p.LaborperSqFt = 1.00m;
-                    return p;
-                case "4":
-                    p.ProductType="Blingy Granite";
-                    p.CostperSqFt = 30.00m;
-                    p.LaborperSqFt = 15.00m;
-                    return p;
-                default:
-                    p.ProductType = "";
-                    p.CostperSqFt = 0m;
-                    p.LaborperSqFt = 0m;
-                    return p;
+                }
             }
+            p.ProductType = "";
+            p.CostperSqFt = 0m;
+            p.LaborperSqFt = 0m;
+            return p;
         }
 
         private State GetState(string state)
         {
+            ReadStateProduct readText = new ReadStateProduct();
+            List<State> states = readText.GetStatefromTxt();
+
             State s = new State();
-            switch (state)
+
+            for (int i = 1; i <= states.Count; i++)
             {
-                case "1":
-                    s.FullName = "Ohio";
-                    s.Abbr = "OH";
-                    s.TaxRate = .07m;
+                if (i.ToString() == state)
+                {
+                    s.FullName = states[i - 1].FullName;
+                    s.Abbr = states[i - 1].Abbr;
+                    s.TaxRate = states[i - 1].TaxRate;
                     return s;
-                case "2":
-                    s.FullName = "Florida";
-                    s.Abbr = "FL";
-                    s.TaxRate = .03m;
-                    return s;
-                case "3":
-                    s.FullName = "Illinois";
-                    s.Abbr = "IL";
-                    s.TaxRate = .09m;
-                    return s;
-                case "4":
-                    s.FullName = "Alaska";
-                    s.Abbr = "AK";
-                    s.TaxRate = .01m;
-                    return s;
-                default:
-                    s.Abbr = "";
-                    s.FullName = "";
-                    s.TaxRate = 0m;
-                    return s;
+                }
             }
+            s.Abbr = "";
+            s.FullName = "";
+            s.TaxRate = 0m;
+            return s;
         }
 
         private Product GetProductByType(string productType)
         {
+            ReadStateProduct readText = new ReadStateProduct();
+            List<Product> products = readText.GetProductfromTxt();
+
             Product p = new Product();
-            switch (productType)
+
+            foreach (Product product in products.Where(product => product.ProductType == productType))
             {
-                case "Cherrywood Flooring":
-                    p.ProductType = "Cherrywood Flooring";
-                    p.CostperSqFt = 15.00m;
-                    p.LaborperSqFt = 10.00m;
-                    return p;
-                case "Plush Carpet":
-                    p.ProductType = "Plush Carpet";
-                    p.CostperSqFt = 5.00m;
-                    p.LaborperSqFt = 2.00m;
-                    return p;
-                case "Shiny Laminant":
-                    p.ProductType = "Shiny Laminant";
-                    p.CostperSqFt = 3.00m;
-                    p.LaborperSqFt = 1.00m;
-                    return p;
-                case "Blingy Granite":
-                    p.ProductType = "Blingy Granite";
-                    p.CostperSqFt = 30.00m;
-                    p.LaborperSqFt = 15.00m;
-                    return p;
-                default:
-                    p.ProductType = "";
-                    p.CostperSqFt = 0m;
-                    p.LaborperSqFt = 0m;
-                    return p;
+                p.ProductType = productType;
+                p.CostperSqFt = product.CostperSqFt;
+                p.LaborperSqFt = product.LaborperSqFt;
+                return p;
             }
+
+            p.ProductType = "";
+            p.CostperSqFt = 0m;
+            p.LaborperSqFt = 0m;
+            return p;
         }
 
         private State GetStateByAbbr(string state)
         {
+            ReadStateProduct readText = new ReadStateProduct();
+            List<State> states = readText.GetStatefromTxt();
+
             State s = new State();
-            switch (state)
+
+            foreach (State tempState in states.Where(tempState => tempState.Abbr == state))
             {
-                case "OH":
-                    s.FullName = "Ohio";
-                    s.Abbr = "OH";
-                    s.TaxRate = .07m;
-                    return s;
-                case "FL":
-                    s.FullName = "Florida";
-                    s.Abbr = "FL";
-                    s.TaxRate = .03m;
-                    return s;
-                case "IL":
-                    s.FullName = "Illinois";
-                    s.Abbr = "IL";
-                    s.TaxRate = .09m;
-                    return s;
-                case "AK":
-                    s.FullName = "Alaska";
-                    s.Abbr = "AK";
-                    s.TaxRate = .01m;
-                    return s;
-                default:
-                    s.Abbr = "";
-                    s.FullName = "";
-                    s.TaxRate = 0m;
-                    return s;
+                s.Abbr = tempState.Abbr;
+                s.FullName = tempState.FullName;
+                s.TaxRate = tempState.TaxRate;
+                return s;
             }
+            s.Abbr = "";
+            s.FullName = "";
+            s.TaxRate = 0m;
+            return s;
         }
 
         private Order PopulateOrder(string orderInfo)
         {
-            FloorRepository repo = new FloorRepository();
             string[] inputSplit = orderInfo.Split(',');
-            Order tempOrder = new Order();
-            tempOrder.FirstName = inputSplit[0];
-            tempOrder.LastName = inputSplit[1];
+            Order tempOrder = new Order
+            {
+                FirstName = inputSplit[0],
+                LastName = inputSplit[1]
+            };
 
             int orderArea;
             if (!int.TryParse(inputSplit[4], out orderArea))
@@ -389,19 +345,19 @@ namespace Flooring.BLL.OrderOperations
             tempOrder.LaborperSqFt = p.LaborperSqFt;
 
             State s = GetState(inputSplit[2]);
-            
+
             tempOrder.StateAbbr = s.Abbr;
             tempOrder.StateFull = s.FullName;
             tempOrder.TaxRate = s.TaxRate;
             tempOrder.OrderDate = DateTime.Today;
 
-            if (repo.DictionaryContainsKey(tempOrder.OrderDate))
+            if (_repo.DictionaryContainsKey(tempOrder.OrderDate))
             {
                 tempOrder.OrderNumber = 1;
             }
             else
             {
-                tempOrder.OrderNumber = (repo.GetAllOrderByDate(tempOrder.OrderDate).Count) + 1;
+                tempOrder.OrderNumber = (_repo.GetAllOrderByDate(tempOrder.OrderDate).Count) + 1;
             }
             return tempOrder;
         }

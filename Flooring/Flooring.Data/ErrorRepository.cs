@@ -11,7 +11,7 @@ namespace Flooring.Data
     {
         public ErrorRepository ()
         {
-            
+            Directory.CreateDirectory("ErrorLog\\");
         }
         public void LogError(string message)
         {
