@@ -27,8 +27,8 @@ namespace Flooring.UI.Ascii
         ╙╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╜     |________________|     |_\__/__\__/__\__/_|     |___|___|___|___|
 ");          
             Console.WriteLine("Name:         {0}                {1}                  {2}                    {3}", prodList[0].ProductType, prodList[1].ProductType,prodList[2].ProductType,prodList[3].ProductType);
-            Console.WriteLine("Material:     {0:C}                  {1:C}                    {2:C}                   {3:C}",prodList[0].CostperSqFt,prodList[1].CostperSqFt,prodList[2].CostperSqFt,prodList[3].CostperSqFt);
-            Console.WriteLine("Labor:        {0:C}                  {1:C}                    {2:C}                   {3:C}",prodList[0].LaborperSqFt,prodList[1].LaborperSqFt,prodList[2].LaborperSqFt,prodList[3].LaborperSqFt);
+            Console.WriteLine("Material:    {0:C}/SqFt            {1:C}/SqFt              {2:C}/SqFt              {3:C}/SqFt",prodList[0].CostperSqFt,prodList[1].CostperSqFt,prodList[2].CostperSqFt,prodList[3].CostperSqFt);
+            Console.WriteLine("Labor:       {0:C}/SqFt            {1:C}/SqFt              {2:C}/SqFt              {3:C}/SqFt",prodList[0].LaborperSqFt,prodList[1].LaborperSqFt,prodList[2].LaborperSqFt,prodList[3].LaborperSqFt);
             }
         }
 
