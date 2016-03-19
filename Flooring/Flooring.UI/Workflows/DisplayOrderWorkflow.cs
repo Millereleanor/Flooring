@@ -23,13 +23,16 @@ namespace Flooring.UI.Workflows
         public void Execute()
         {
             DateTime Date = GetOrderDateFromUser();
-            
+            if (Date == DateTime.MinValue)
+            {
+                return;
+            }
             DisplayOrderbyDate(Date);
 
 
         }
 
-        public DateTime GetOrderDateFromUser()
+        public DateTime GetOrderDateFromUser() //fix q
         {
             do
             {
