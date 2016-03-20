@@ -12,7 +12,7 @@ namespace Flooring.UI.Workflows
     public class AddOrderWorkFlow
     {
         public int ProductId;
-        public int Areanum;
+        public decimal Areanum;
         public int StateId;
         public string Area;
         public string Input;
@@ -38,15 +38,19 @@ namespace Flooring.UI.Workflows
             {
                 Console.WriteLine("Enter \"Q\" to go back to the main menu at any time. ");
                 Console.Write("Please enter your first name: ");
+
                 Input = Console.ReadLine();
+                Input = Input?.Replace(",", "");
 
                 if (Input == "")
                 {
                     Console.WriteLine("Please enter a valid first name: ");
+                    Console.WriteLine("Must have 1 one or more characters and no commas!");
                     Console.WriteLine("Press enter to continue...");
                     Console.ReadLine();
                     Console.Clear();
                 }
+
 
             } while (Input == "" && Input.ToUpper() != "Q");
             if (Input.ToUpper() == "Q")
@@ -58,10 +62,12 @@ namespace Flooring.UI.Workflows
             {
                 Console.Write("Please enter your last name: ");
                 Input = Console.ReadLine();
+                Input = Input?.Replace(",", "");
 
                 if (Input == "")
                 {
                     Console.WriteLine("Please enter a valid last name: ");
+                    Console.WriteLine("Must have 1 one or more characters and no commas!");
                     Console.WriteLine("Press enter to continue...");
                     Console.ReadLine();
                     Console.Clear();
@@ -73,13 +79,16 @@ namespace Flooring.UI.Workflows
             }
 
             Last = Input;
+
             do
             {
                 Console.WriteLine("Please enter the state you are ordering from: ");
+
                 for (int i = 1; i <= stateList.Count; i++)
                 {
                     Console.WriteLine("{0}. {1} ", i, stateList[i - 1]);
                 }
+
                 Console.Write("Please enter your choice: ");
                 Input = Console.ReadLine();
 
@@ -94,21 +103,20 @@ namespace Flooring.UI.Workflows
 
                     if (!int.TryParse(Statestr, out StateId))
                     {
-                        Console.WriteLine("Please choose a valid state by number: ");
                         _validstate = false;
                     }
                     if (StateId > 0 && StateId <= stateList.Count)
                     {
                         _validstate = true;
                     }
-                    else
-                    {
-                        _validstate = false;
-                        Console.WriteLine("Please enter a valid state: ");
-                        Console.WriteLine("Press enter to continue...");
-                        Console.ReadLine();
-                        Console.Clear();
-                    }
+                }
+                if (!_validstate)
+                {
+                    _validstate = false;
+                    Console.WriteLine("Please enter a valid state by number..");
+                    Console.WriteLine("Press enter to continue...");
+                    Console.ReadLine();
+                    Console.Clear();
                 }
             } while (!_validstate && Input.ToUpper() != "Q");
 
@@ -167,9 +175,9 @@ namespace Flooring.UI.Workflows
                 if (Input != "")
                 {
                     Area = Input;
-                    if (!int.TryParse(Area, out Areanum))
+                    if (!decimal.TryParse(Area, out Areanum)||Areanum<=0)
                     {
-                        Console.WriteLine("Please enter a valid number of square feet: ");
+                        Console.WriteLine("Please enter a positive number of square feet..");
                         Console.WriteLine("Press enter to continue...");
                         Console.ReadLine();
                         Console.Clear();
@@ -183,7 +191,7 @@ namespace Flooring.UI.Workflows
             Console.WriteLine("CUSTOMER NAME: {0},{1}", Last, First);
             Console.WriteLine("ORDERING STATE: {0}", (stateList[StateId - 1]));
             Console.WriteLine("PRODUCT TYPE: {0}", (prodList[ProductId - 1].ProductType));
-            Console.WriteLine("AREA ORDERED (in Sq Ft.): {0} Ft^2", Areanum);
+            Console.WriteLine("AREA ORDERED (in Sq Ft.): {0:F} Ft^2", Areanum);
             Console.WriteLine();
             Console.WriteLine("Would you like to submit your order? (Y/N): ");
             string uinput = Console.ReadLine();

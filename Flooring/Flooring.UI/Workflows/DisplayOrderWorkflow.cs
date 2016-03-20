@@ -145,7 +145,7 @@ namespace Flooring.UI.Workflows
                 Console.WriteLine("CUSTOMER NAME: {0},{1}", order.LastName, order.FirstName);
                 Console.WriteLine("ORDER STATE: {0} ({1})          STATE TAX RATE: {2:P}",
                     order.StateAbbr, order.StateFull, order.TaxRate);
-                Console.WriteLine("PRODUCT TYPE: {0}                  ORDER AREA: {1}", order.ProductType, order.OrderArea);
+                Console.WriteLine("PRODUCT TYPE: {0}                  ORDER AREA: {1:F}", order.ProductType, order.OrderArea);
                 Console.WriteLine("MATERIAL COST PER Ft^2: {0:C}        LABOR COST PER Ft^2: {1:C}",
                     order.CostperSqFt, order.LaborperSqFt);
                 Console.WriteLine("ORDER TOTAL: {0:C}", 

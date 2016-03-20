@@ -9,7 +9,7 @@ namespace Flooring.Models
     public class Order
     {
         public int OrderNumber { get; set; }
-        public int OrderArea { get; set; }
+        public decimal OrderArea { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ProductType { get; set; }

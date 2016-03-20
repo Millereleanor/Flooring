@@ -14,7 +14,7 @@ namespace Flooring.UI.Workflows
     {
         public int OrderNumber;
         public int ProductId;
-        public int Areanum;
+        public decimal Areanum;
         public int StateId;
         public string State;
         public string Product;
@@ -62,8 +62,11 @@ namespace Flooring.UI.Workflows
                 Console.WriteLine("Enter \"Q\" to go back to the main menu");
                 Console.WriteLine("-----------------------------------------");
                 Console.WriteLine();
+
                 Console.Write("Please enter your first name: ");
                 _input = Console.ReadLine();
+                _input = _input?.Replace(",", "");
+
                 if (_input != "")
                 {
                     _nfirst = _input;
@@ -76,8 +79,11 @@ namespace Flooring.UI.Workflows
                 {
                     _nfirst = validOrderNumber.OrderInfo.FirstName;
                 }
+
                 Console.Write("Please enter your last name: ");
                 _input = Console.ReadLine();
+                _input = _input?.Replace(",", "");
+
                 if (_input != "")
                 {
                     _nlast = _input;
@@ -182,7 +188,7 @@ namespace Flooring.UI.Workflows
 
                     if (_input != "")
                     {
-                        if (!int.TryParse(_input, out Areanum))
+                        if (!decimal.TryParse(_input, out Areanum))
                         {
                             Console.WriteLine("Please enter a valid number of square feet: ");
                             Console.WriteLine("Press enter to continue..");
@@ -238,9 +244,9 @@ namespace Flooring.UI.Workflows
                 Console.WriteLine("CUSTOMER NAME: {0},{1}", order.LastName, order.FirstName);
                 Console.WriteLine("ORDER STATE: {0} ({1})          STATE TAX RATE: {2:P}",
                     order.StateAbbr, order.StateFull, order.TaxRate);
-                Console.WriteLine("PRODUCT TYPE: {0}                  ORDER AREA: {1}", order.ProductType,
+                Console.WriteLine("PRODUCT TYPE: {0}                  ORDER AREA: {1:F}", order.ProductType,
                     order.OrderArea);
-                Console.WriteLine("MATERIAL COST PER Ft^2: {0}        LABOR COST PER Ft^2: {1}",
+                Console.WriteLine("MATERIAL COST PER Ft^2: {0:C}        LABOR COST PER Ft^2: {1:C}",
                     order.CostperSqFt, order.LaborperSqFt);
                 Console.WriteLine("ORDER TOTAL: {0:C}",
                     order.OrderTotal + order.TaxTotal);
