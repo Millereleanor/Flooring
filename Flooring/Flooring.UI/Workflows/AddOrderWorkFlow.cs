@@ -186,6 +186,7 @@ namespace Flooring.UI.Workflows
             } while (Areanum <= 0 && Input.ToUpper() != "Q");
 
             Console.WriteLine();
+            Console.ForegroundColor=ConsoleColor.DarkMagenta;
             Console.WriteLine("NEW ORDER");
             Console.WriteLine("====================================================");
             Console.WriteLine("CUSTOMER NAME: {0},{1}", Last, First);

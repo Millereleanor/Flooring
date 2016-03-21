@@ -75,19 +75,47 @@ namespace Flooring.UI.Workflows
 
                     Console.WriteLine();
                     Console.WriteLine("ORDER INFORMATION: ");
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
                     Console.WriteLine("=====================================");
-                    Console.WriteLine("ORDER NUMBER: {0}", order.OrderNumber);
-                    Console.WriteLine("CUSTOMER NAME: {0},{1}", order.LastName, order.FirstName);
-                    Console.WriteLine("ORDER STATE: {0} ({1})          STATE TAX RATE: {2:P}",
-                        order.StateAbbr, order.StateFull, order.TaxRate);
-                    Console.WriteLine("PRODUCT TYPE: {0}                  ORDER AREA: {1}", order.ProductType,
-                        order.OrderArea);
-                    Console.WriteLine("MATERIAL COST PER Ft^2: {0}        LABOR COST PER Ft^2: {1}",
-                        order.CostperSqFt, order.LaborperSqFt);
-                    Console.WriteLine("ORDER TOTAL: {0:C}",
-                        order.OrderTotal + order.TaxTotal);
+                    Console.BackgroundColor = ConsoleColor.Gray;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write("ORDER NUMBER: ");
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.WriteLine("{0}", order.OrderNumber);
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write("CUSTOMER NAME: ");
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.WriteLine("{0},{1}", order.LastName, order.FirstName);
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write("ORDER STATE: ");
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.Write("{0} ({1})", order.StateAbbr, order.StateFull);
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write("                STATE TAX RATE: ");
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.WriteLine("{0:P}", order.TaxRate);
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write("PRODUCT TYPE: ");
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.Write("{0}", order.ProductType);
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write("               ORDER AREA: ");
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.WriteLine("{0:F}", order.OrderArea);
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write("MATERIAL COST PER Ft^2: ");
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.Write("{0:C}", order.CostperSqFt);
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write("            LABOR COST PER Ft^2: ");
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.WriteLine("{0:C}");
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write("ORDER TOTAL: ");
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.WriteLine("{0:C}", order.OrderTotal + order.TaxTotal);
                     Console.WriteLine();
-
+                    Console.ForegroundColor=ConsoleColor.DarkCyan;
 
                 }
             }
