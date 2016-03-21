@@ -56,10 +56,7 @@ namespace Flooring.Tests
             Assert.AreEqual(expectedCount, c.Count);
 
 
-            // var createOrder = repo.CreateOrder();
-            //creat and order
-            //check the order number
-            //checked the order count
+
         }
 
         [Test]
@@ -92,50 +89,42 @@ namespace Flooring.Tests
             Assert.AreEqual(expectedCount, c.Count);
 
 
-            // var createOrder = repo.CreateOrder();
+            
             //creat and order
             //check the order number
             //deleat an order
             //checked the order count
         }
 
-        //[Test]
-        //public void CanEditOrder()
-        //{
-        //    var repo = new FloorRepository();
+        [Test]
+        public void CanEditOrder()
+        {
+            var repo = new FloorRepository();
 
 
-        //    DateTime orderDate = DateTime.Parse("01/14/1992");
-        //    var orders = repo.GetAllOrderByDate(orderDate);
-        //    var newOrder = new Order()
-        //    {
-        //        OrderDate = orderDate,
-        //        FirstName = "jill",
-        //        LastName = "bob",
-        //        StateAbbr = "OH",
-        //        StateFull = "Ohio",
-        //        TaxRate = 7,
-        //        ProductType = "Wood",
-        //        OrderArea = 100,
-        //        CostperSqFt =5,
-        //        LaborperSqFt = ,
-                
-                
+            DateTime orderDate = DateTime.Parse("01/14/1992");
+            var orders = repo.GetAllOrderByDate(orderDate);
+            var newOrder = new Order()
+            {
+                OrderNumber = 1,
+                OrderDate = orderDate,
+                FirstName = "jill",
+                LastName = "bob",
+                StateAbbr = "OH",
+                StateFull = "Ohio",
+                TaxRate = 7,
+                ProductType = "Wood",
+                OrderArea = 100,
+                CostperSqFt = 5,
+                LaborperSqFt = 5,
 
+            };
+            repo.UpdateOrder(orderDate, 1, newOrder);
 
-        //    };
-        //    var editedOrder = repo.UpdateOrder(orderDate, 1, newOrder);
-
-
-        //    //take an order
-        //    //edit a feild
-        //    //assert.are equal expected result and real result
-
-
-
-        //    var c = repo.GetAllOrderByDate(orderDate);
-
-        ////    Assert.AreEqual(expectedCount, c.Count);
-        //}
+            Assert.AreEqual("jill", orders[0].FirstName);
+            Assert.AreEqual("bob",orders[0].LastName);
+            Assert.AreEqual("goo",orders[1].FirstName);
+          
+        }
     }
 }
