@@ -63,7 +63,7 @@ namespace Flooring.UI.Workflows
                 Console.WriteLine("-----------------------------------------");
                 Console.WriteLine();
 
-                Console.Write("Please enter your first name: ");
+                Console.Write("Please enter your first name ({0}): ",validOrderNumber.OrderInfo.FirstName);
                 _input = Console.ReadLine();
                 _input = _input?.Replace(",", "");
 
@@ -80,7 +80,7 @@ namespace Flooring.UI.Workflows
                     _nfirst = validOrderNumber.OrderInfo.FirstName;
                 }
 
-                Console.Write("Please enter your last name: ");
+                Console.Write("Please enter your last name ({0}): ",validOrderNumber.OrderInfo.LastName);
                 _input = Console.ReadLine();
                 _input = _input?.Replace(",", "");
 
@@ -103,7 +103,7 @@ namespace Flooring.UI.Workflows
                     {
                         Console.WriteLine("{0}. {1} ", i, stateList[i - 1]);
                     }
-                    Console.Write("Please enter your choice: ");
+                    Console.Write("Please enter your choice ({0}): ",validOrderNumber.OrderInfo.StateFull);
                     _input = Console.ReadLine();
                     if (_input.ToUpper() == "Q")
                     {
@@ -143,7 +143,7 @@ namespace Flooring.UI.Workflows
                         Console.WriteLine("{0}. {1} ", i, prodList[i - 1].ProductType);
                     }
 
-                    Console.Write("Please enter your choice: ");
+                    Console.Write("Please enter your choice ({0}): ",validOrderNumber.OrderInfo.ProductType);
                     _input = Console.ReadLine();
 
                     if (_input.ToUpper() == "Q")
@@ -162,6 +162,7 @@ namespace Flooring.UI.Workflows
                         if (ProductId > 0 && ProductId <= prodList.Count)
                         {
                             _validproduct = true;
+                            Product = prodList[ProductId-1].ProductType;
                         }
                         else
                         {
@@ -172,13 +173,13 @@ namespace Flooring.UI.Workflows
                     else if (_input == "")
                     {
                         _validproduct = true;
-                        _input = Product;
+                        Product = _input;
                         Product = validOrderNumber.OrderInfo.ProductType;
                     }
                 } while (!_validproduct);
                 do
                 {
-                    Console.Write("Please enter the area in square feet you would like to order: ");
+                    Console.Write("Please enter the area in square feet you would like to order ({0:F}): ", validOrderNumber.OrderInfo.OrderArea);
                     _input = Console.ReadLine();
 
                     if (_input.ToUpper() == "Q")
@@ -216,6 +217,12 @@ namespace Flooring.UI.Workflows
                     string orderedit =
                         String.Format(_nfirst + ',' + _nlast + ',' + StateId + ',' + ProductId + ',' + Areanum);
                     oop.EditOrder(Date, OrderNumber, orderedit);
+                }
+                else
+                {
+                    Console.WriteLine("\nProduct was not edited!");
+                    Console.WriteLine("Press Enter to continue...");
+                    Console.ReadLine();
                 }
             }
             else

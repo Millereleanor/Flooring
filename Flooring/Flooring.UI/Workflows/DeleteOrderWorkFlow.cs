@@ -46,10 +46,11 @@ namespace Flooring.UI.Workflows
                     Console.ReadLine();
                     return;
                 }
-
-                if (input.ToUpper() == "N")
+                else
                 {
-                    Console.WriteLine("File Not Deleted!");
+                    Console.WriteLine("Order Not Deleted!");
+                    Console.WriteLine("Press enter to continue...");
+                    Console.ReadLine();
                     return;
                 }
             }

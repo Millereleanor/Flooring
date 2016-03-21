@@ -201,12 +201,17 @@ namespace Flooring.UI.Workflows
                     String.Format(First + ',' + Last + ',' + StateId + ',' + ProductId + ',' + Areanum);
 
                 oop.AddOrder(ordertemp);
+                Console.WriteLine("Order Added for {0}.", DateTime.Now.ToShortDateString());
+                Console.WriteLine("Press enter to continue...");
+                Console.ReadLine();
                 return;
             }
-                Console.WriteLine("Press Enter to continue...");
+            else
+            {
+                Console.WriteLine("Order Not Added!");
+                Console.WriteLine("Press enter to continue...");
                 Console.ReadLine();
-          
-
+            }
         }
 
     }
