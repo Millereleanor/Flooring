@@ -126,5 +126,39 @@ namespace Flooring.Tests
             Assert.AreEqual("goo",orders[1].FirstName);
           
         }
+        [Test]
+        public void CanReadStates()
+        {
+            var repo = new ReadStateProduct();
+
+            var states = repo.GetStatefromTxt();
+            var testState = new State();
+            {
+                testState.Abbr = "MI";
+                testState.FullName = "Michigan";
+                testState.TaxRate = 5.75m;
+            };
+
+            Assert.AreEqual(states[2].Abbr, testState.Abbr);
+            Assert.AreEqual(states[2].FullName, testState.FullName);
+            Assert.AreEqual(states[2].TaxRate, testState.TaxRate/100);
+        }
+        [Test]
+        public void CanReadProducts()
+        {
+            var repo = new ReadStateProduct();
+
+            var products = repo.GetProductfromTxt();
+            var testProduct = new Product();
+            {
+                testProduct.ProductType = "Wood";
+                testProduct.CostperSqFt = 5.15m;
+                testProduct.LaborperSqFt = 4.75m;
+            };
+
+            Assert.AreEqual(products[3].ProductType, testProduct.ProductType);
+            Assert.AreEqual(products[3].CostperSqFt, testProduct.CostperSqFt);
+            Assert.AreEqual(products[3].LaborperSqFt, testProduct.LaborperSqFt);
+        }
     }
 }

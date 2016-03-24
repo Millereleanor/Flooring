@@ -211,6 +211,13 @@ namespace Flooring.Data
                 }
         
                 tw.Close();
+
+
+
+
+
+
+
                 if (orders[key].Count == 0) //added need to refactor
                 {
                     emptyKey = key;
